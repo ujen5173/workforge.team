@@ -2,16 +2,29 @@
 
 <br />
 
-# 🏢 Workforge
-### The All-in-One Company Operating System
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./public/logo-dark.svg">
+  <img alt="Workforge" src="./public/logo-light.svg" height="40">
+</picture>
 
-*One platform for hiring, communicating, managing, and growing your team — from day one to day done.*
+<br />
+<br />
+
+**The All-in-One Company Operating System**
+
+One platform for hiring, communicating, managing, and growing your team —
+from day one to day done.
 
 <br />
 
-![Status](https://img.shields.io/badge/status-in%20development-yellow?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)
+[![Status](https://img.shields.io/badge/status-in%20development-f59e0b?style=flat-square&labelColor=1a1a1a)](https://workforge.team)
+[![License](https://img.shields.io/badge/license-MIT-3b82f6?style=flat-square&labelColor=1a1a1a)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-22c55e?style=flat-square&labelColor=1a1a1a)](./CONTRIBUTING.md)
+[![Built with Next.js](https://img.shields.io/badge/built%20with-Next.js%2015-000000?style=flat-square&labelColor=1a1a1a)](https://nextjs.org)
+
+<br />
+
+[Website](https://workforge.team) · [Documentation](https://docs.workforge.team) · [Report a Bug](https://github.com/ujen5173/workforge.team/issues) · [Request a Feature](https://github.com/ujen5173/workforge.team/discussions)
 
 <br />
 
@@ -19,46 +32,48 @@
 
 ---
 
-## 📖 Table of Contents
+## Overview
 
-- [Overview](#-overview)
-- [Core Features](#-core-features)
-  - [Company & Employee Onboarding](#1--company--employee-onboarding)
-  - [Communication Suite](#2--communication-suite)
-  - [Task & Project Management](#3--task--project-management)
-  - [Workload Intelligence](#4--workload-intelligence)
-  - [Performance Tracking](#5--performance-tracking)
-  - [Company Culture Hub](#6--company-culture-hub)
-  - [Calendar & Leave Management](#7--calendar--leave-management)
-  - [HR & Payroll](#8--hr--payroll)
-  - [Document & Knowledge Base](#9--document--knowledge-base)
-  - [Recruitment Pipeline](#10--recruitment-pipeline)
-  - [Security & Compliance](#11--security--compliance)
-  - [AI Layer](#12--ai-layer)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Contributing](#-contributing)
-- [License](#-license)
+**Workforge** eliminates the need for 10+ fragmented workplace tools by bringing everything a company needs into a single, cohesive system — communication, HR, task management, performance tracking, payroll, recruitment, and more.
 
----
-
-## 🌐 Overview
-
-**Workforge** is a unified workplace platform that eliminates the need for 10+ fragmented tools by bringing everything a company needs into one cohesive system — communication, HR, task management, performance tracking, payroll, and more.
-
-> Think Rippling + Slack + Notion, but purpose-built as a single product.
+Built for teams that want clarity over chaos.
 
 **Who is it for?**
-- 🏢 Companies of all sizes — from 5-person startups to 500-person enterprises
-- 👤 Employees who want clarity on their work, growth, and culture
-- 🧑‍💼 HR teams managing the full employee lifecycle
-- 📋 Managers who need visibility without micromanagement
+
+| Audience               | What they get                                    |
+| ---------------------- | ------------------------------------------------ |
+| Companies of all sizes | A unified operating system from 5 to 500+ people |
+| HR teams               | Full employee lifecycle management in one place  |
+| Managers               | Real-time visibility without micromanagement     |
+| Employees              | Clarity on their work, growth, and culture       |
 
 ---
 
-## ✨ Core Features
+## Table of Contents
 
-### 1. 🏗️ Company & Employee Onboarding
+- [Core Features](#core-features)
+  - [Company & Employee Onboarding](#1-company--employee-onboarding)
+  - [Communication Suite](#2-communication-suite)
+  - [Task & Project Management](#3-task--project-management)
+  - [Workload Intelligence](#4-workload-intelligence)
+  - [Performance Tracking](#5-performance-tracking)
+  - [Company Culture Hub](#6-company-culture-hub)
+  - [Calendar & Leave Management](#7-calendar--leave-management)
+  - [HR & Payroll](#8-hr--payroll)
+  - [Document & Knowledge Base](#9-document--knowledge-base)
+  - [Recruitment Pipeline](#10-recruitment-pipeline)
+  - [Security & Compliance](#11-security--compliance)
+  - [AI Layer](#12-ai-layer)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Core Features
+
+### 1. Company & Employee Onboarding
 
 - Company registration with org profile, branding, industry tags, and team size
 - Custom onboarding flows per role and department — forms, documents, and e-signatures
@@ -71,37 +86,42 @@
 
 ---
 
-### 2. 💬 Communication Suite
+### 2. Communication Suite
 
 **Messenger**
+
 - Direct messages, group chats, threaded replies, reactions, and @mentions
 - Pinned messages, bookmarks, and message search
-- Async voice and video messages (Loom-style clips in chat)
+- Async voice and video messages
 - Message translation for multilingual teams
 
 **Channels**
+
 - Organized by team, project, or topic
 - Public, private, and read-only broadcast channels
 
-**Video / Audio Conferencing**
+**Video & Audio Conferencing**
+
 - 1:1 and group calls with screen sharing and virtual backgrounds
 - Session recording with auto-generated transcripts
 - Scheduled and instant meeting support
 
 **Presence & Status**
+
 - Status indicators — Online, Busy, Away, In a meeting, Focus mode
 - Do Not Disturb scheduling
 
 **Announcements**
+
 - Company-wide broadcasts from leadership with read receipts
 
 ---
 
-### 3. ✅ Task & Project Management
+### 3. Task & Project Management
 
 - Task creation with title, description, priority, deadline, attachments, and multiple assignees
 - Subtasks, checklists, and task dependencies
-- **Multiple views** — Kanban board, List, Timeline (Gantt), and Calendar
+- Multiple views — Kanban board, List, Timeline (Gantt), and Calendar
 - Project-level dashboards with milestones and progress tracking
 - Task templates for recurring and standardized workflows
 - Time tracking per task — manual entry and built-in timer
@@ -111,7 +131,7 @@
 
 ---
 
-### 4. 📊 Workload Intelligence
+### 4. Workload Intelligence
 
 - **Overload detection** — flags employees exceeding their set capacity thresholds
 - **Idle detection** — surfaces underutilized employees available for task redistribution
@@ -123,7 +143,7 @@
 
 ---
 
-### 5. 📈 Performance Tracking
+### 5. Performance Tracking
 
 - KPI definition and tracking per employee, team, and department
 - Customizable performance review cycles — quarterly, bi-annual, or annual
@@ -136,7 +156,7 @@
 
 ---
 
-### 6. 🎭 Company Culture Hub
+### 6. Company Culture Hub
 
 - **Culture board** — showcase company values, mission, team milestones, and photos
 - **Employee spotlight** — rotating features to highlight team members
@@ -144,15 +164,15 @@
 - Virtual watercooler — casual non-work channels for interests, clubs, and hobbies
 - **Mood check-ins** — optional daily emotional pulse with aggregated HR insights
 - Celebration board — birthdays, work anniversaries, and promotions
-- Learning & Development section — share resources, courses, reading lists, and internal workshops
+- Learning & development section — share resources, courses, reading lists, and internal workshops
 - Community spaces for ERGs (Employee Resource Groups)
 
 ---
 
-### 7. 📅 Calendar & Leave Management
+### 7. Calendar & Leave Management
 
 - Shared team and company-wide calendars
-- **Leave management** — apply, approve, reject, with real-time balance tracking
+- **Leave management** — apply, approve, and reject requests with real-time balance tracking
 - Leave types — paid, unpaid, sick, parental, casual, and compensatory
 - Public holiday calendar auto-populated by country and region
 - Meeting scheduler with cross-team availability detection
@@ -161,20 +181,15 @@
 
 ---
 
-### 8. 💰 HR & Payroll
+### 8. HR & Payroll
 
 - Employee contracts, offer letters, and legal document storage with version history
-- Payroll processing with configurable tax rules per country and region
 - Payslip generation, download, and history for employees
 - Expense claims — submit receipts, track approvals, and manage reimbursements
-- Benefits management — health insurance, equity, perks tracking, and enrollment
-- Compensation bands per role, level, and department
-- Contractor and freelancer payment management
-- Headcount planning and budget forecasting tools
 
 ---
 
-### 9. 📁 Document & Knowledge Base
+### 9. Document & Knowledge Base
 
 - Internal wiki and knowledge base per team, project, or company-wide
 - Rich document editor — text, tables, embeds, code blocks, and images
@@ -185,66 +200,64 @@
 
 ---
 
-### 10. 🔍 Recruitment Pipeline
+### 10. Recruitment Pipeline
 
-- Job posting creation with an internal and public job board
-- Applicant tracking system (ATS) — pipeline stages from Applied → Screened → Interviewed → Offered → Hired
-- Interview scheduling linked directly to the built-in calendar
-- Collaborative hiring — share notes, scorecards, and decisions across the hiring team
-- Candidate profile storage with communication history
-- Seamless handoff from candidate to employee onboarding — no duplicate data entry
+- **Job Board** — HR creates and publishes listings to an internal board (for referrals) and a public-facing board (for external candidates), with rich job descriptions, requirements, and application forms — all hosted on your Workforge subdomain (e.g., `careers.acme.workforge.team`)
+- **One-Click Apply** — candidates apply directly through the public listing; submissions land instantly in the ATS with no manual import
+- **Applicant Tracking (ATS)** — visual pipeline with drag-and-drop stage management: `Applied → Screened → Interviewed → Offered → Hired`
+- **In-Platform Screening** — HR conducts async video or written screening rounds directly inside the platform; no need for external tools
+- **Interview Scheduling** — schedule live interview rounds linked to the built-in calendar; candidates receive an invite link, HR sees it on their dashboard
+- **In-Platform Interviews** — conduct video and audio interviews natively with live note-taking alongside the call, powered by the built-in conferencing layer
+- **Collaborative Hiring** — share scorecards, structured feedback, and hiring decisions across the hiring team; each member sees only what their role permits
+- **Candidate Profiles** — full communication history, resume, screening responses, interview notes, and scores in one place
+- **Offer Management** — generate and send offer letters directly from the platform; candidates accept or negotiate in the same thread
+- **Onboarding Handoff** — once hired, candidate data converts to an employee profile with zero duplicate data entry
 
 ---
 
-### 11. 🔐 Security & Compliance
+### 11. Security & Compliance
 
-- SSO (Single Sign-On) — Google, Microsoft, Okta
+- SSO (Single Sign-On) with Google
 - Two-factor authentication (2FA) and device management
 - Full audit logs — who did what, when, and from where
-- Data residency options for enterprise clients (US, EU, APAC)
-- GDPR and SOC 2 compliance tooling
-- Customizable data retention and deletion policies
-- Permission levels granular down to individual documents and tasks
 - IP allowlist and session timeout controls
 
 ---
 
-### 12. 🤖 AI Layer
+### 12. AI Layer
 
 - **Meeting summaries** — auto-generated notes and action items after every call
 - **Task suggestions** — creates tasks automatically from meeting notes or messages
-- **Smart scheduling** — finds the optimal meeting slot across all participants
 - Writing assistant in messenger, documents, and performance reviews
-- Anomaly detection — flags unusual workload spikes, disengagement patterns, or performance drops
 - AI-generated performance review drafts for managers, pre-filled from logged data
-- Natural language search across all platform content
+- Contextual AI guidance across every module — everything is connected, so suggestions are always informed by the full picture
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js, TailwindCSS, Zustand |
-| Backend | Node.js, tRPC |
-| Database | PostgreSQL + Prisma |
-| Cache | Redis |
-| Real-time | WebSockets |
-| File Storage | S3-compatible |
-| Auth | NextAuth.js / Clerk |
-| Payments | Stripe |
-| Email | Resend |
-| Deployments | Docker, Vercel |
-| Analytics | PostHog |
+| Layer        | Technology                          |
+| ------------ | ----------------------------------- |
+| Frontend     | Next.js 15, Tailwind CSS, shadcn/ui |
+| Backend      | Node.js, tRPC                       |
+| Database     | PostgreSQL, Drizzle ORM             |
+| Cache        | Redis                               |
+| Real-time    | WebSockets                          |
+| File Storage | S3-compatible                       |
+| Auth         | NextAuth.js                         |
+| Payments     | Stripe                              |
+| Email        | Resend                              |
+| Deployment   | Vercel, Docker                      |
+| Analytics    | PostHog                             |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Clone the repository
 git clone https://github.com/ujen5173/workforge.team.git
-cd Workforge
+cd workforge.team
 
 # Install dependencies
 pnpm install
@@ -253,26 +266,29 @@ pnpm install
 cp .env.example .env.local
 
 # Run database migrations
-npx prisma migrate dev
+pnpm db:migrate
 
 # Start the development server
-pnpm run dev
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
+> See the [documentation](https://docs.workforge.team) for full environment variable reference and configuration options.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, issues, and feature requests are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to get started.
+Contributions, issues, and feature requests are welcome.
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request.
 
 ```bash
 # Create a feature branch
 git checkout -b feature/your-feature-name
 
-# Commit your changes
-git commit -m "feat: add your feature"
+# Commit your changes using conventional commits
+git commit -m "feat: describe your change"
 
 # Push and open a pull request
 git push origin feature/your-feature-name
@@ -280,7 +296,7 @@ git push origin feature/your-feature-name
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](./LICENSE).
 
@@ -288,6 +304,12 @@ This project is licensed under the [MIT License](./LICENSE).
 
 <div align="center">
 
-Built with ❤️ by [Ujen Basi](https://ujenbasi.vercel.app) · [@ujen5173](https://github.com/ujen5173)
+<br />
+
+Built by [Ujen Basi](https://ujenbasi.vercel.app)
+
+[@ujen5173](https://github.com/ujen5173) · [workforge.team](https://workforge.team)
+
+<br />
 
 </div>

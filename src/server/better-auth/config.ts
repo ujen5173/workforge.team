@@ -6,7 +6,7 @@ import { db } from "~/server/db";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg", // or "pg" or "mysql"
+    provider: "pg",
   }),
   emailAndPassword: {
     enabled: true,
@@ -16,7 +16,7 @@ export const auth = betterAuth({
       clientId: env.BETTER_AUTH_GOOGLE_CLIENT_ID,
       clientSecret: env.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
 
-      redirectURI: "http://localhost:3000/api/auth/callback/google",
+      redirectURI: `${env.NEXT_PUBLIC_APP_URL}/api/auth/callback/google`,
     },
   },
 });

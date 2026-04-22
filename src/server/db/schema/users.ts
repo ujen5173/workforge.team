@@ -11,8 +11,9 @@ import { company } from "./company";
 
 export const userTypeEnum = pgEnum("user_type", [
   "employee",
-  "contractor",
-  "freelancer",
+  "hr",
+  "ceo-founder",
+  "manager-team-lead",
 ]);
 
 export const userStatusEnum = pgEnum("user_status", [

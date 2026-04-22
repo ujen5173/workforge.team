@@ -1,0 +1,146 @@
+// ─── Mock data for development / testing ──────────────────────────────────────
+// Replace with your tRPC/API call in the real page.
+
+import type { Project } from "./types";
+
+export const mockProjects: Project[] = [
+  {
+    id: "proj_01",
+    title: "WorkForge Onboarding Redesign",
+    logo: "https://cdn.dribbble.com/assets/apple-touch-icon-precomposed-182fb6df572b99fd9f7c870e5bd4441188121518640c0fa57782b258434d1e0f.png",
+    description:
+      "Revamp the 4-step company onboarding flow to improve completion rates and reduce time-to-value for new teams.",
+    status: "active",
+    priority: "high",
+    manager: { id: "u1", name: "Anika Sharma", role: "PM" },
+    assignees: [
+      { id: "u1", name: "Anika Sharma", role: "PM" },
+      { id: "u2", name: "Priya Nair", role: "Design" },
+      { id: "u3", name: "Bikash Rana", role: "Frontend" },
+      { id: "u4", name: "Sara Kim", role: "Backend" },
+    ],
+    client: "Internal",
+    tags: ["onboarding", "ux"],
+    startDate: new Date("2025-03-01"),
+    dueDate: new Date("2025-05-15"),
+    progress: 62,
+    tasks: { total: 18, completed: 11 },
+    createdAt: new Date("2025-02-20"),
+    updatedAt: new Date("2025-04-10"),
+  },
+  {
+    id: "proj_02",
+    title: "Payroll Module — Phase 1",
+    logo: null,
+    description:
+      "Build the core payroll visibility layer for HR and Managers. Includes salary slips, payment history, and export.",
+    status: "planning",
+    priority: "urgent",
+    manager: { id: "u5", name: "Rohan Mehta", role: "Lead" },
+    assignees: [
+      { id: "u5", name: "Rohan Mehta", role: "Lead" },
+      { id: "u6", name: "Deepa Rao", role: "Backend" },
+    ],
+    client: "Outsourcing",
+    tags: ["payroll", "hr", "backend"],
+    startDate: new Date("2025-05-01"),
+    dueDate: new Date("2025-07-31"),
+    progress: 8,
+    tasks: { total: 24, completed: 2 },
+    createdAt: new Date("2025-04-01"),
+    updatedAt: new Date("2025-04-18"),
+  },
+  {
+    id: "proj_03",
+    title: "Performance Review Cycle Q2",
+    logo: null,
+    description:
+      "Set up self-assessments, manager reviews, and calibration flows for the Q2 performance cycle.",
+    status: "completed",
+    priority: "medium",
+    manager: { id: "u7", name: "Lena Fischer", role: "HR Lead" },
+    assignees: [
+      { id: "u7", name: "Lena Fischer", role: "HR Lead" },
+      { id: "u8", name: "Tom Okafor", role: "Frontend" },
+    ],
+    client: "Internal Tool",
+    tags: ["performance", "q2"],
+    startDate: new Date("2025-01-10"),
+    dueDate: new Date("2025-03-31"),
+    progress: 100,
+    tasks: { total: 12, completed: 12 },
+    createdAt: new Date("2025-01-05"),
+    updatedAt: new Date("2025-03-31"),
+  },
+  {
+    id: "proj_04",
+    title: "Team Directory & Org Chart",
+    logo: "https://s.pinimg.com/webapp/logo_transparent_144x144-3da7a67b.png",
+    description:
+      "Public employee directory with search, department tree, and profile pages. Visible to all roles.",
+    status: "on_hold",
+    priority: "low",
+    manager: { id: "u3", name: "Bikash Rana", role: "Frontend" },
+    assignees: [{ id: "u3", name: "Bikash Rana", role: "Frontend" }],
+    client: "Internal",
+    tags: ["directory"],
+    startDate: new Date("2025-02-15"),
+    dueDate: new Date("2025-06-01"),
+    progress: 35,
+    tasks: { total: 10, completed: 3 },
+    createdAt: new Date("2025-02-10"),
+    updatedAt: new Date("2025-03-20"),
+  },
+  {
+    id: "proj_05",
+    title: "Leave Management System",
+    logo: "https://www.alignui.com/images/logo/apex.svg",
+    description:
+      "Employee leave requests, approvals, balance tracking, and calendar integration.",
+    status: "active",
+    priority: "high",
+    manager: { id: "u7", name: "Lena Fischer", role: "HR Lead" },
+    assignees: [
+      { id: "u7", name: "Lena Fischer", role: "HR Lead" },
+      { id: "u6", name: "Deepa Rao", role: "Backend" },
+      { id: "u8", name: "Tom Okafor", role: "Frontend" },
+      { id: "u9", name: "Meera Joshi", role: "QA" },
+      { id: "u10", name: "Carlos Vega", role: "Design" },
+    ],
+    client: "Outsourcing",
+    tags: ["leave", "hr", "calendar"],
+    startDate: new Date("2025-04-01"),
+    dueDate: new Date("2025-06-30"),
+    progress: 28,
+    tasks: { total: 30, completed: 8 },
+    createdAt: new Date("2025-03-25"),
+    updatedAt: new Date("2025-04-19"),
+  },
+];
+
+// ─── Example page.tsx usage ───────────────────────────────────────────────────
+/*
+// app/dashboard/projects/page.tsx
+
+import { ProjectsTable } from "@/features/projects/projects-table";
+import { mockProjects } from "@/features/projects/mock-data";
+// Replace with: const projects = await api.projects.list()
+
+export default function ProjectsPage() {
+  return (
+    <div className="flex flex-col gap-6 p-6">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Manage and track all your team projects.
+        </p>
+      </div>
+
+      <ProjectsTable
+        data={mockProjects}
+        onCreateProject={() => console.log("open create dialog")}
+      />
+    </div>
+  );
+}
+*/

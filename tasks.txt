@@ -1,0 +1,8 @@
+TASKS:
+- Channels
+- Messages and calls
+- Higher authority features and things
+- Logics in timer and other things
+- Global context for things like timezones, timer, currency
+
+- Backend
