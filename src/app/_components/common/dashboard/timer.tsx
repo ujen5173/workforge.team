@@ -5,20 +5,15 @@ import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
-import { useElapsedMs, useTimerStatus } from "~/stores";
+import { useTimer } from "~/stores/hooks";
 
 const Timer = () => {
-  const timerStatus = useTimerStatus();
-  const elapsedMs = useElapsedMs();
+  const { elapsedMs, isRunning } = useTimer();
 
-  const hh = String(Math.floor(elapsedMs / 3_600_000)).padStart(2, "0");
-  const mm = String(Math.floor((elapsedMs % 3_600_000) / 60_000)).padStart(
-    2,
-    "0",
-  );
-  const ss = String(Math.floor((elapsedMs % 60_000) / 1000)).padStart(2, "0");
-
-  console.log([hh, mm, ss], timerStatus);
+  console.log({
+    elapsedMs,
+    isRunning,
+  });
 
   return (
     <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">

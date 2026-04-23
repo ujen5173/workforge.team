@@ -38,6 +38,8 @@ const ProjectsTasks = () => {
                 icon={Notification01Icon}
               />
             </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
+
             <div className="flex items-center gap-2">
               <Button size="sm" variant={"ghost"} icon={FolderExportIcon}>
                 Export

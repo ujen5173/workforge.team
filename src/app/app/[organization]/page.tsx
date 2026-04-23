@@ -1,4 +1,4 @@
-import { Notification01Icon, Search01Icon, Timer02Icon } from "hugeicons-react";
+import { Notification01Icon, Timer02Icon } from "hugeicons-react";
 import { PlusIcon } from "lucide-react";
 import Image from "next/image";
 import DashboardCalendar from "~/app/_components/common/dashboard/current-calendar";
@@ -7,6 +7,7 @@ import NextHoliday from "~/app/_components/common/dashboard/next-holiday";
 import Notes from "~/app/_components/common/dashboard/notes";
 import StatusTracker from "~/app/_components/common/dashboard/status-tracker";
 import Timer from "~/app/_components/common/dashboard/timer";
+import GlobalSearch from "~/app/_components/common/global-search";
 import { Button } from "~/components/ui/button";
 
 const App = () => {
@@ -30,12 +31,15 @@ const App = () => {
         </div>
         <div className="flex items-center justify-end gap-4">
           <div className="flex items-center gap-2">
-            <Button variant={"ghost"} size="icon-sm" icon={Search01Icon} />
+            <GlobalSearch />
             <Button
               variant={"ghost"}
               size="icon-sm"
               icon={Notification01Icon}
             />
+          </div>
+          <div className="bg-border mx-1 h-6 w-px"></div>
+          <div className="flex items-center gap-2">
             <div className="flex items-center gap-2">
               <Button size="sm" variant={"secondary"} icon={PlusIcon}>
                 Create Invoice

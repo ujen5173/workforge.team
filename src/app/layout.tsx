@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { constructMetadata } from "~/lib/site";
 import { cn } from "~/lib/utils";
+import { StoreProvider } from "~/stores/StoreProvider";
 import "~/styles/globals.css";
 import { TRPCReactProvider } from "~/trpc/react";
 import Header from "./_components/headers/main-header";
@@ -21,11 +22,13 @@ export default function RootLayout({
     >
       <body>
         <TRPCReactProvider>
-          <TooltipProvider>
-            <Header />
+          <StoreProvider>
+            <TooltipProvider>
+              <Header />
 
-            {children}
-          </TooltipProvider>
+              {children}
+            </TooltipProvider>
+          </StoreProvider>
         </TRPCReactProvider>
       </body>
     </html>

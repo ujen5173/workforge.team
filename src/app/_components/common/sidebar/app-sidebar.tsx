@@ -40,7 +40,8 @@ import {
   ArrowRight01Icon,
   ArrowUpDownIcon,
   Calendar01Icon,
-  CalendarRemove01Icon, ChartIncreaseIcon,
+  CalendarRemove01Icon,
+  ChartIncreaseIcon,
   CircleLock02Icon,
   CreditCardPosIcon,
   DashboardSquare01Icon,
@@ -58,7 +59,7 @@ import {
   Tick01Icon,
   UserCircleIcon,
   UserGroup03Icon,
-  Video01Icon
+  Video01Icon,
 } from "hugeicons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -99,8 +100,8 @@ interface Channel {
 const companies: Company[] = [
   {
     id: "1",
-    name: "Deel Pvt Ltd.",
-    slug: "acme",
+    name: "Workforge Pvt Ltd.",
+    slug: "workforge",
     color: "#6366f1",
     current: true,
     image: "deel.jpg",

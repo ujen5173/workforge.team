@@ -1,21 +1,22 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
+
+import { createDateSlice, type DateSlice } from "./slices/date.slice";
 import { createTimerSlice, type TimerSlice } from "./slices/timer.slice";
 
-export type RootStore = TimerSlice;
+export type RootStore = TimerSlice & DateSlice;
 
 export const useStore = create<RootStore>()(
   devtools(
     persist(
       (...args) => ({
+        ...createDateSlice(...args),
         ...createTimerSlice(...args),
       }),
       {
         name: "workforge-store",
         storage: createJSONStorage(() => localStorage),
-        partialize: (s) => ({
-          timerCategory: s.timerCategory,
-        }),
+        partialize: (s) => ({}),
         version: 1,
       },
     ),

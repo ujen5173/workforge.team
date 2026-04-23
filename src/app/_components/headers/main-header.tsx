@@ -31,9 +31,6 @@ const Header = () => {
           href="/"
           className="flex flex-1 items-center gap-2 text-neutral-900"
         >
-          {/* <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-neutral-900 text-white">
-            <Sparkles className="h-4 w-4" />
-          </span> */}
           <Logo size="xl" color="text-neutral-900" />
         </Link>
 
@@ -42,13 +39,12 @@ const Header = () => {
             <Link
               key={item.label}
               href={item.href}
-              className="hover:text-primary text-sm font-medium text-neutral-600 underline-offset-2 transition hover:text-neutral-900 hover:underline"
+              className="hover:text-primary text-sm font-medium text-neutral-600 underline-offset-2 transition hover:underline"
             >
               {item.label}
             </Link>
           ))}
         </nav>
-
         <div className="flex flex-1 items-center justify-end gap-2">
           <Button
             variant="ghost"

@@ -1,7 +1,10 @@
+"use client";
+
 import { Calendar03Icon, GiftIcon } from "hugeicons-react";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { cn } from "~/lib/utils";
+import { useDate } from "~/stores/hooks";
 
 type HolidayType = "public" | "optional" | "restricted";
 
@@ -107,6 +110,13 @@ const DaysLeftRing = ({ days }: { days: number }) => {
 };
 
 const NextHoliday = () => {
+  const { selectedDate, setSelectedDate } = useDate();
+
+  console.log({
+    selectedDate,
+    setSelectedDate,
+  });
+
   return (
     <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between gap-4">

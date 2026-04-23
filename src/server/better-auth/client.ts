@@ -1,5 +1,10 @@
+import { emailOTPClient } from "better-auth/client/plugins";
+import { organization } from "better-auth/plugins";
 import { createAuthClient } from "better-auth/react";
 
-export const authClient = createAuthClient();
+export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
+  plugins: [emailOTPClient(), organization()],
+});
 
-export type Session = typeof authClient.$Infer.Session;
+export const { signIn, signUp, signOut, useSession } = authClient;

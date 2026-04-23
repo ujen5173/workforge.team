@@ -95,14 +95,18 @@ const leaveRequests = [
 ];
 
 export default function LeaveManagementPage() {
-  const [activeTab, setActiveTab] = useState<"requests" | "policies">("requests");
+  const [activeTab, setActiveTab] = useState<"requests" | "policies">(
+    "requests",
+  );
   const [filter, setFilter] = useState("all");
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
   const filteredRequests = useMemo(() => {
     if (filter === "all") return leaveRequests;
-    return leaveRequests.filter((request) => request.status.toLowerCase() === filter);
+    return leaveRequests.filter(
+      (request) => request.status.toLowerCase() === filter,
+    );
   }, [filter]);
 
   const calculatedDays = useMemo(() => {
@@ -115,10 +119,10 @@ export default function LeaveManagementPage() {
   const formatDate = (date: Date | undefined) =>
     date
       ? date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      })
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })
       : "Select date";
 
   return (
@@ -148,7 +152,8 @@ export default function LeaveManagementPage() {
                 <DialogHeader>
                   <DialogTitle>Create leave request</DialogTitle>
                   <DialogDescription>
-                    Submit details once. The system routes it to your manager and HR.
+                    Submit details once. The system routes it to your manager
+                    and HR.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -168,7 +173,10 @@ export default function LeaveManagementPage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-medium">Total days</label>
-                    <Input value={calculatedDays > 0 ? `${calculatedDays}` : ""} readOnly />
+                    <Input
+                      value={calculatedDays > 0 ? `${calculatedDays}` : ""}
+                      readOnly
+                    />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-medium">Start date</label>
@@ -211,7 +219,11 @@ export default function LeaveManagementPage() {
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="w-fit p-3">
-                        <Calendar mode="single" selected={endDate} onSelect={setEndDate} />
+                        <Calendar
+                          mode="single"
+                          selected={endDate}
+                          onSelect={setEndDate}
+                        />
                         <DialogFooter className="pt-2">
                           <DialogClose asChild>
                             <Button size="sm">Done</Button>
@@ -228,10 +240,13 @@ export default function LeaveManagementPage() {
                     />
                   </div>
                   <div className="space-y-1.5 sm:col-span-2">
-                    <label className="text-xs font-medium">Attachment (optional)</label>
+                    <label className="text-xs font-medium">
+                      Attachment (optional)
+                    </label>
                     <Input type="file" />
                     <p className="text-muted-foreground text-xs">
-                      Upload supporting document such as medical note or event proof.
+                      Upload supporting document such as medical note or event
+                      proof.
                     </p>
                   </div>
                 </div>
@@ -251,7 +266,9 @@ export default function LeaveManagementPage() {
               <CardTitle className="text-xl">13 Days</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">18 allocated • 5 already used</p>
+              <p className="text-muted-foreground text-xs">
+                18 allocated • 5 already used
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -260,7 +277,9 @@ export default function LeaveManagementPage() {
               <CardTitle className="text-xl">1 Request</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">Expected decision within 24 hours</p>
+              <p className="text-muted-foreground text-xs">
+                Expected decision within 24 hours
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -289,13 +308,18 @@ export default function LeaveManagementPage() {
 
         <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Leave balance breakdown</CardTitle>
-              <CardDescription>Usage and remaining quota by leave type</CardDescription>
+            <CardHeader className="mb-4">
+              <CardTitle className="text-base">
+                Leave balance breakdown
+              </CardTitle>
+              <CardDescription>
+                Usage and remaining quota by leave type
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {balanceData.map((item) => {
-                const percentage = item.total === 999 ? 0 : (item.used / item.total) * 100;
+                const percentage =
+                  item.total === 999 ? 0 : (item.used / item.total) * 100;
                 return (
                   <div key={item.type} className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
@@ -314,22 +338,29 @@ export default function LeaveManagementPage() {
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Conflict and planning insights</CardTitle>
-              <CardDescription>Actionable checks before submitting leave</CardDescription>
+            <CardHeader className="mb-4">
+              <CardTitle className="text-base">
+                Conflict and planning insights
+              </CardTitle>
+              <CardDescription>
+                Actionable checks before submitting leave
+              </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-2.5">
               <div className="border-border flex items-start gap-2 rounded-lg border p-3">
-                <TriangleAlertIcon className="mt-0.5 size-4 text-warning" />
+                <TriangleAlertIcon className="text-warning mt-0.5 size-4" />
                 <div>
-                  <p className="text-sm font-medium">No critical overlap detected</p>
+                  <p className="text-sm font-medium">
+                    No critical overlap detected
+                  </p>
                   <p className="text-muted-foreground text-xs">
-                    Your selected leave dates do not clash with your team backup.
+                    Your selected leave dates do not clash with your team
+                    backup.
                   </p>
                 </div>
               </div>
               <div className="border-border flex items-start gap-2 rounded-lg border p-3">
-                <InfoIcon className="mt-0.5 size-4 text-primary" />
+                <InfoIcon className="text-primary mt-0.5 size-4" />
                 <div>
                   <p className="text-sm font-medium">Best submission window</p>
                   <p className="text-muted-foreground text-xs">
@@ -338,11 +369,14 @@ export default function LeaveManagementPage() {
                 </div>
               </div>
               <div className="border-border flex items-start gap-2 rounded-lg border p-3">
-                <Link2Icon className="mt-0.5 size-4 text-primary" />
+                <Link2Icon className="text-primary mt-0.5 size-4" />
                 <div>
-                  <p className="text-sm font-medium">Backup handover required</p>
+                  <p className="text-sm font-medium">
+                    Backup handover required
+                  </p>
                   <p className="text-muted-foreground text-xs">
-                    Add task handover links in your reason notes for faster approval.
+                    Add task handover links in your reason notes for faster
+                    approval.
                   </p>
                 </div>
               </div>
@@ -365,12 +399,15 @@ export default function LeaveManagementPage() {
                     <DialogHeader>
                       <DialogTitle>Create leave request</DialogTitle>
                       <DialogDescription>
-                        Submit details once. The system routes it to your manager and HR.
+                        Submit details once. The system routes it to your
+                        manager and HR.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium">Leave type</label>
+                        <label className="text-xs font-medium">
+                          Leave type
+                        </label>
                         <Select defaultValue="annual">
                           <SelectTrigger className="w-full">
                             <SelectValue />
@@ -378,17 +415,26 @@ export default function LeaveManagementPage() {
                           <SelectContent position="popper">
                             <SelectItem value="annual">Annual leave</SelectItem>
                             <SelectItem value="sick">Sick leave</SelectItem>
-                            <SelectItem value="personal">Personal leave</SelectItem>
+                            <SelectItem value="personal">
+                              Personal leave
+                            </SelectItem>
                             <SelectItem value="unpaid">Unpaid leave</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium">Total days</label>
-                        <Input value={calculatedDays > 0 ? `${calculatedDays}` : ""} readOnly />
+                        <label className="text-xs font-medium">
+                          Total days
+                        </label>
+                        <Input
+                          value={calculatedDays > 0 ? `${calculatedDays}` : ""}
+                          readOnly
+                        />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium">Start date</label>
+                        <label className="text-xs font-medium">
+                          Start date
+                        </label>
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
@@ -428,7 +474,11 @@ export default function LeaveManagementPage() {
                             </Button>
                           </DialogTrigger>
                           <DialogContent className="w-fit p-3">
-                            <Calendar mode="single" selected={endDate} onSelect={setEndDate} />
+                            <Calendar
+                              mode="single"
+                              selected={endDate}
+                              onSelect={setEndDate}
+                            />
                             <DialogFooter className="pt-2">
                               <DialogClose asChild>
                                 <Button size="sm">Done</Button>
@@ -445,7 +495,9 @@ export default function LeaveManagementPage() {
                         />
                       </div>
                       <div className="space-y-1.5 sm:col-span-2">
-                        <label className="text-xs font-medium">Attachment (optional)</label>
+                        <label className="text-xs font-medium">
+                          Attachment (optional)
+                        </label>
                         <Input type="file" />
                       </div>
                     </div>
@@ -459,19 +511,21 @@ export default function LeaveManagementPage() {
               <div className="border-border mt-4 flex space-x-5 overflow-x-auto border-b pb-px">
                 <button
                   onClick={() => setActiveTab("requests")}
-                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap ${activeTab === "requests"
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground"
-                    }`}
+                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap ${
+                    activeTab === "requests"
+                      ? "border-primary text-primary"
+                      : "text-muted-foreground border-transparent"
+                  }`}
                 >
                   My Requests
                 </button>
                 <button
                   onClick={() => setActiveTab("policies")}
-                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap ${activeTab === "policies"
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground"
-                    }`}
+                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap ${
+                    activeTab === "policies"
+                      ? "border-primary text-primary"
+                      : "text-muted-foreground border-transparent"
+                  }`}
                 >
                   Policies & Rules
                 </button>
@@ -509,7 +563,9 @@ export default function LeaveManagementPage() {
                     <TableBody>
                       {filteredRequests.map((request) => (
                         <TableRow key={request.id}>
-                          <TableCell className="font-medium">{request.id}</TableCell>
+                          <TableCell className="font-medium">
+                            {request.id}
+                          </TableCell>
                           <TableCell>{request.type}</TableCell>
                           <TableCell>
                             {request.from} → {request.to}
@@ -541,19 +597,24 @@ export default function LeaveManagementPage() {
                   <div className="border-border rounded-lg border p-3">
                     <p className="text-sm font-medium">Notice period</p>
                     <p className="text-muted-foreground mt-1 text-sm">
-                      Apply annual leave at least 3 working days before start date unless emergency.
+                      Apply annual leave at least 3 working days before start
+                      date unless emergency.
                     </p>
                   </div>
                   <div className="border-border rounded-lg border p-3">
-                    <p className="text-sm font-medium">Sick leave documentation</p>
+                    <p className="text-sm font-medium">
+                      Sick leave documentation
+                    </p>
                     <p className="text-muted-foreground mt-1 text-sm">
-                      For 2+ consecutive days, upload basic medical document to HR.
+                      For 2+ consecutive days, upload basic medical document to
+                      HR.
                     </p>
                   </div>
                   <div className="border-border rounded-lg border p-3">
                     <p className="text-sm font-medium">Conflict prevention</p>
                     <p className="text-muted-foreground mt-1 text-sm">
-                      The portal flags overlapping critical-role absences before submission.
+                      The portal flags overlapping critical-role absences before
+                      submission.
                     </p>
                   </div>
                 </div>
