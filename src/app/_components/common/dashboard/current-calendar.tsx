@@ -1,6 +1,7 @@
 "use client";
 
 import { Calendar01Icon } from "hugeicons-react";
+import NepaliDate from "nepali-date-converter";
 import { useState } from "react";
 import { Calendar } from "~/components/ui/calendar";
 import { Separator } from "~/components/ui/separator";
@@ -24,19 +25,6 @@ const NEPALI_MONTHS = [
   "Chaitra",
 ] as const;
 
-const toNepaliApprox = (date: Date) => {
-  // Very rough approximation: BS year ≈ AD year + 56 (Jan–Apr) or +57 (May–Dec)
-  const bsYear =
-    date.getMonth() < 3 ? date.getFullYear() + 56 : date.getFullYear() + 57;
-  // Nepali month starts ~mid-April; this maps roughly
-  const nepaliMonthIndex = (date.getMonth() + 9) % 12;
-  return {
-    year: bsYear,
-    month: NEPALI_MONTHS[nepaliMonthIndex],
-    day: date.getDate(),
-  };
-};
-
 const formatEnglishDate = (date: Date) =>
   date.toLocaleDateString("en-US", {
     weekday: "long",
@@ -46,8 +34,7 @@ const formatEnglishDate = (date: Date) =>
 
 const DashboardCalendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const today = new Date();
-  const nepali = toNepaliApprox(today);
+  const nepali = new NepaliDate(date);
 
   return (
     <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">
@@ -61,7 +48,8 @@ const DashboardCalendar = () => {
         <div className="flex items-center gap-1 rounded-md bg-slate-50 px-2 py-1">
           <span className="text-[10px] font-medium text-slate-400">BS</span>
           <span className="text-[10px] font-semibold text-slate-600">
-            {nepali.month} {nepali.day}, {nepali.year}
+            {NEPALI_MONTHS[nepali.getMonth()]} {nepali.getDate()},{" "}
+            {nepali.getYear()}
           </span>
         </div>
       </div>
@@ -74,13 +62,13 @@ const DashboardCalendar = () => {
             Today
           </p>
           <p className="text-sm font-semibold text-slate-700">
-            {formatEnglishDate(today)}
+            {formatEnglishDate(date ?? new Date())}
           </p>
         </div>
         <div className="text-right">
           <p className="text-[10px] text-slate-400">Nepali</p>
           <p className="text-xs font-medium text-slate-600">
-            {nepali.day} {nepali.month}
+            {nepali.getDate()} {NEPALI_MONTHS[nepali.getMonth()]}
           </p>
         </div>
       </div>

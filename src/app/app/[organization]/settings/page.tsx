@@ -23,7 +23,14 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "~/components/ui/combobox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "~/components/ui/combobox";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -39,7 +46,12 @@ import currencies from "~/lib/data/currencies.json";
 import timezones from "~/lib/data/timezones.json";
 import { cn } from "~/lib/utils";
 
-type TabId = "profile" | "professional" | "security" | "notifications" | "preferences";
+type TabId =
+  | "profile"
+  | "professional"
+  | "security"
+  | "notifications"
+  | "preferences";
 
 const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
   { id: "profile", label: "My Profile", icon: UserCircleIcon },
@@ -64,8 +76,9 @@ export default function SettingsPage() {
             </div>
             <div>
               <h5 className="text-lg font-bold text-slate-800">Settings</h5>
-              <p className="text-sm text-muted-foreground">
-                Manage your account structure, security, and personal preferences.
+              <p className="text-muted-foreground text-sm">
+                Manage your account structure, security, and personal
+                preferences.
               </p>
             </div>
           </div>
@@ -73,7 +86,7 @@ export default function SettingsPage() {
 
         <div className="flex flex-col gap-8 md:flex-row">
           <aside className="w-full shrink-0 md:w-64">
-            <nav className="flex flex-row gap-1 overflow-x-auto md:flex-col pb-2 md:pb-0">
+            <nav className="flex flex-row gap-1 overflow-x-auto pb-2 md:flex-col md:pb-0">
               {TABS.map((tab) => {
                 const isActive = activeTab === tab.id;
                 const Icon = tab.icon;
@@ -82,13 +95,16 @@ export default function SettingsPage() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors whitespace-nowrap",
+                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors",
                       isActive
                         ? "bg-primary/5 text-primary border-primary/20 border"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent"
+                        : "border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900",
                     )}
                   >
-                    <Icon size={16} className={isActive ? "text-primary" : "text-slate-500"} />
+                    <Icon
+                      size={16}
+                      className={isActive ? "text-primary" : "text-slate-500"}
+                    />
                     {tab.label}
                   </button>
                 );
@@ -98,14 +114,15 @@ export default function SettingsPage() {
 
           <div className="flex-1 space-y-6">
             {activeTab === "profile" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 duration-300">
                 <Card className="border-border shadow-sm">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-base font-semibold text-slate-800">
                       Profile Picture
                     </CardTitle>
                     <CardDescription>
-                      This image will be displayed publicly on your WorkForge profile.
+                      This image will be displayed publicly on your WorkForge
+                      profile.
                     </CardDescription>
                   </CardHeader>
                   <Separator />
@@ -116,7 +133,7 @@ export default function SettingsPage() {
                           src="https://yt3.ggpht.com/I1ckvWK4apdppBpymT0AKYkj4qOTg7Bn_cgbddnU0JJi1_Sn9hoEI6yuv-MkaaQQeWrhs5JgJRw=s88-c-k-c0x00ffffff-no-rj"
                           alt="Aiden Cooper"
                         />
-                        <AvatarFallback className="rounded-full bg-primary/10 text-xl font-bold text-primary">
+                        <AvatarFallback className="bg-primary/10 text-primary rounded-full text-xl font-bold">
                           AC
                         </AvatarFallback>
                       </Avatar>
@@ -129,7 +146,7 @@ export default function SettingsPage() {
                             Remove
                           </Button>
                         </div>
-                        <p className="text-[11px] text-muted-foreground">
+                        <p className="text-muted-foreground text-[11px]">
                           Recommended format: JPG, PNG. Max size: 5MB.
                         </p>
                       </div>
@@ -143,7 +160,8 @@ export default function SettingsPage() {
                       Personal Information
                     </CardTitle>
                     <CardDescription>
-                      Your basic personal data. This affects how others identify you.
+                      Your basic personal data. This affects how others identify
+                      you.
                     </CardDescription>
                   </CardHeader>
                   <Separator />
@@ -161,7 +179,10 @@ export default function SettingsPage() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
                         <Label>Email Address</Label>
-                        <Input type="email" defaultValue="aiden.cooper@workforge.team" />
+                        <Input
+                          type="email"
+                          defaultValue="aiden.cooper@workforge.team"
+                        />
                       </div>
                       <div className="space-y-1.5">
                         <Label>Phone Number</Label>
@@ -171,7 +192,7 @@ export default function SettingsPage() {
                     <div className="space-y-1.5">
                       <Label>Bio</Label>
                       <textarea
-                        className="border-input bg-background min-h-[100px] w-full resize-none rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+                        className="border-input bg-background focus-visible:ring-primary/20 min-h-[100px] w-full resize-none rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2"
                         defaultValue="Senior software engineer with 8 years of experience building scalable systems. Love teaching and mentoring junior devs."
                       />
                     </div>
@@ -196,11 +217,17 @@ export default function SettingsPage() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
                         <Label>LinkedIn</Label>
-                        <Input placeholder="https://linkedin.com/in/username" defaultValue="https://linkedin.com/in/aidencooper" />
+                        <Input
+                          placeholder="https://linkedin.com/in/username"
+                          defaultValue="https://linkedin.com/in/aidencooper"
+                        />
                       </div>
                       <div className="space-y-1.5">
                         <Label>GitHub</Label>
-                        <Input placeholder="https://github.com/username" defaultValue="https://github.com/aiden-acme" />
+                        <Input
+                          placeholder="https://github.com/username"
+                          defaultValue="https://github.com/aiden-acme"
+                        />
                       </div>
                     </div>
                     <div className="space-y-1.5">
@@ -217,7 +244,7 @@ export default function SettingsPage() {
             )}
 
             {activeTab === "professional" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 duration-300">
                 <Card className="border-border shadow-sm">
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between">
@@ -226,32 +253,53 @@ export default function SettingsPage() {
                           Employment Details
                         </CardTitle>
                         <CardDescription>
-                          Some details can only be changed by your HR coordinator.
+                          Some details can only be changed by your HR
+                          coordinator.
                         </CardDescription>
                       </div>
-                      <Badge className="bg-amber-50 text-amber-700 border-amber-200">Read-Only</Badge>
+                      <Badge className="border-amber-200 bg-amber-50 text-amber-700">
+                        Read-Only
+                      </Badge>
                     </div>
                   </CardHeader>
                   <Separator />
                   <CardContent className="space-y-4 py-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
                         <Label className="cursor-not-allowed">Job Title</Label>
-                        <Input defaultValue="Senior Software Engineer" readOnly className="font-semibold pointer-events-none bg-slate-50" />
+                        <Input
+                          defaultValue="Senior Software Engineer"
+                          readOnly
+                          className="pointer-events-none bg-slate-50 font-semibold"
+                        />
                       </div>
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
                         <Label className="cursor-not-allowed">Department</Label>
-                        <Input defaultValue="Engineering" readOnly className="pointer-events-none bg-slate-50" />
+                        <Input
+                          defaultValue="Engineering"
+                          readOnly
+                          className="pointer-events-none bg-slate-50"
+                        />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
-                        <Label className="cursor-not-allowed">Employment Type</Label>
-                        <Input defaultValue="Full-time" readOnly className="pointer-events-none bg-slate-50" />
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
+                        <Label className="cursor-not-allowed">
+                          Employment Type
+                        </Label>
+                        <Input
+                          defaultValue="Full-time"
+                          readOnly
+                          className="pointer-events-none bg-slate-50"
+                        />
                       </div>
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
                         <Label className="cursor-not-allowed">Start Date</Label>
-                        <Input defaultValue="March 1, 2022" readOnly className="pointer-events-none bg-slate-50" />
+                        <Input
+                          defaultValue="March 1, 2022"
+                          readOnly
+                          className="pointer-events-none bg-slate-50"
+                        />
                       </div>
                     </div>
                   </CardContent>
@@ -268,19 +316,33 @@ export default function SettingsPage() {
                           Your daily working logistics and location.
                         </CardDescription>
                       </div>
-                      <Badge className="bg-amber-50 text-amber-700 border-amber-200">Read-Only</Badge>
+                      <Badge className="border-amber-200 bg-amber-50 text-amber-700">
+                        Read-Only
+                      </Badge>
                     </div>
                   </CardHeader>
                   <Separator />
                   <CardContent className="space-y-4 py-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
-                        <Label className="cursor-not-allowed">Primary Location</Label>
-                        <Input defaultValue="Fully Remote" readOnly className="pointer-events-none bg-slate-50" />
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
+                        <Label className="cursor-not-allowed">
+                          Primary Location
+                        </Label>
+                        <Input
+                          defaultValue="Fully Remote"
+                          readOnly
+                          className="pointer-events-none bg-slate-50"
+                        />
                       </div>
-                      <div className="space-y-1.5 opacity-70 cursor-not-allowed">
-                        <Label className="cursor-not-allowed">Working Hours</Label>
-                        <Input defaultValue="09:00 AM - 05:00 PM" readOnly className="pointer-events-none bg-slate-50" />
+                      <div className="cursor-not-allowed space-y-1.5 opacity-70">
+                        <Label className="cursor-not-allowed">
+                          Working Hours
+                        </Label>
+                        <Input
+                          defaultValue="09:00 AM - 05:00 PM"
+                          readOnly
+                          className="pointer-events-none bg-slate-50"
+                        />
                       </div>
                     </div>
                   </CardContent>
@@ -289,7 +351,7 @@ export default function SettingsPage() {
             )}
 
             {activeTab === "security" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 duration-300">
                 <Card className="border-border shadow-sm">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-base font-semibold text-slate-800">
@@ -301,11 +363,11 @@ export default function SettingsPage() {
                   </CardHeader>
                   <Separator />
                   <CardContent className="space-y-4 py-6">
-                    <div className="space-y-1.5 max-w-md">
+                    <div className="max-w-md space-y-1.5">
                       <Label>Current Password</Label>
                       <Input type="password" placeholder="••••••••" />
                     </div>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-md">
+                    <div className="grid max-w-md grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
                         <Label>New Password</Label>
                         <Input type="password" placeholder="••••••••" />
@@ -333,10 +395,15 @@ export default function SettingsPage() {
                   </CardHeader>
                   <Separator />
                   <CardContent className="pt-6">
-                    <div className="flex items-center justify-between gap-4 p-4 rounded-lg border border-border bg-slate-50">
+                    <div className="border-border flex items-center justify-between gap-4 rounded-lg border bg-slate-50 p-4">
                       <div>
-                        <p className="text-sm font-semibold text-slate-800">Authenticator App</p>
-                        <p className="text-sm text-muted-foreground mt-0.5">Use an app like Google Authenticator or 1Password to generate a one-time code.</p>
+                        <p className="text-sm font-semibold text-slate-800">
+                          Authenticator App
+                        </p>
+                        <p className="text-muted-foreground mt-0.5 text-sm">
+                          Use an app like Google Authenticator or 1Password to
+                          generate a one-time code.
+                        </p>
                       </div>
                       <Button variant="outline">Set Up</Button>
                     </div>
@@ -356,32 +423,52 @@ export default function SettingsPage() {
                   <CardContent className="space-y-4 py-6">
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex size-10 items-center justify-center rounded-full bg-blue-50 border border-blue-100">
+                        <div className="flex size-10 items-center justify-center rounded-full border border-blue-100 bg-blue-50">
                           <LaptopIcon className="size-5 text-blue-600" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-slate-800">MacBook Pro (Mac OS)</p>
-                          <p className="text-xs text-muted-foreground">Chrome · New York, USA</p>
+                          <p className="text-sm font-semibold text-slate-800">
+                            MacBook Pro (Mac OS)
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            Chrome · New York, USA
+                          </p>
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-1">
-                        <Badge variant="outline" className="text-[10px] bg-emerald-50 text-emerald-600 border-emerald-200">Active Now</Badge>
+                        <Badge
+                          variant="outline"
+                          className="border-emerald-200 bg-emerald-50 text-[10px] text-emerald-600"
+                        >
+                          Active Now
+                        </Badge>
                       </div>
                     </div>
                     <Separator className="bg-neutral-100" />
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex size-10 items-center justify-center rounded-full bg-slate-50 border border-slate-200">
+                        <div className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50">
                           <SmartPhone01Icon className="size-5 text-slate-500" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-slate-800">iPhone 14 Pro (iOS)</p>
-                          <p className="text-xs text-muted-foreground">WorkForge Native App · New York, USA</p>
+                          <p className="text-sm font-semibold text-slate-800">
+                            iPhone 14 Pro (iOS)
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            WorkForge Native App · New York, USA
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] text-muted-foreground">Yesterday</span>
-                        <Button variant="ghost" className="text-sm text-red-600 hover:text-red-700 hover:bg-red-50 px-2 h-8">Revoke</Button>
+                        <span className="text-muted-foreground text-[11px]">
+                          Yesterday
+                        </span>
+                        <Button
+                          variant="ghost"
+                          className="h-8 px-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700"
+                        >
+                          Revoke
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -390,14 +477,15 @@ export default function SettingsPage() {
             )}
 
             {activeTab === "notifications" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 duration-300">
                 <Card className="border-border shadow-sm">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-base font-semibold text-slate-800">
                       Notification Preferences
                     </CardTitle>
                     <CardDescription>
-                      Control which notifications you receive across different channels.
+                      Control which notifications you receive across different
+                      channels.
                     </CardDescription>
                   </CardHeader>
                   <Separator />
@@ -405,8 +493,13 @@ export default function SettingsPage() {
                     <div className="space-y-6">
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1">
-                          <Label className="text-base">Mentions & Replies</Label>
-                          <p className="text-[13px] text-muted-foreground">When someone mentions you in a project or replies to your comment.</p>
+                          <Label className="text-base">
+                            Mentions & Replies
+                          </Label>
+                          <p className="text-muted-foreground text-[13px]">
+                            When someone mentions you in a project or replies to
+                            your comment.
+                          </p>
                         </div>
                         <Switch id="mentions" defaultChecked />
                       </div>
@@ -415,7 +508,9 @@ export default function SettingsPage() {
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1">
                           <Label className="text-base">Leave Activity</Label>
-                          <p className="text-[13px] text-muted-foreground">Updates regarding leave requests or team approvals.</p>
+                          <p className="text-muted-foreground text-[13px]">
+                            Updates regarding leave requests or team approvals.
+                          </p>
                         </div>
                         <Switch id="leave" defaultChecked />
                       </div>
@@ -423,8 +518,13 @@ export default function SettingsPage() {
 
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1">
-                          <Label className="text-base">Performance Check-ins</Label>
-                          <p className="text-[13px] text-muted-foreground">Reminders to update goals or view new performance statistics.</p>
+                          <Label className="text-base">
+                            Performance Check-ins
+                          </Label>
+                          <p className="text-muted-foreground text-[13px]">
+                            Reminders to update goals or view new performance
+                            statistics.
+                          </p>
                         </div>
                         <Switch id="perf" defaultChecked />
                       </div>
@@ -433,7 +533,10 @@ export default function SettingsPage() {
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1">
                           <Label className="text-base">Weekly Digest</Label>
-                          <p className="text-[13px] text-muted-foreground">An email summary rounding up completed tasks and team wins.</p>
+                          <p className="text-muted-foreground text-[13px]">
+                            An email summary rounding up completed tasks and
+                            team wins.
+                          </p>
                         </div>
                         <Switch id="digest" />
                       </div>
@@ -444,7 +547,7 @@ export default function SettingsPage() {
             )}
 
             {activeTab === "preferences" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 duration-300">
                 <Card className="border-border shadow-sm">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-base font-semibold text-slate-800">
@@ -457,32 +560,43 @@ export default function SettingsPage() {
                   <Separator />
                   <CardContent className="space-y-4 py-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div className="space-y-1.5 flex flex-col">
+                      <div className="flex flex-col space-y-1.5">
                         <Label>Timezone</Label>
                         <Combobox items={timezones}>
-                          <ComboboxInput className={"h-10"} placeholder="Select a timezone" />
+                          <ComboboxInput
+                            className={"h-10"}
+                            placeholder="Select a timezone"
+                          />
                           <ComboboxContent>
                             <ComboboxEmpty>No timezone found.</ComboboxEmpty>
                             <ComboboxList>
                               {(item) => (
-                                <ComboboxItem key={item.value} value={item.value}>
+                                <ComboboxItem
+                                  key={item.value}
+                                  value={item.value}
+                                >
                                   {item.label}
                                 </ComboboxItem>
                               )}
                             </ComboboxList>
                           </ComboboxContent>
                         </Combobox>
-
                       </div>
-                      <div className="space-y-1.5 flex flex-col">
+                      <div className="flex flex-col space-y-1.5">
                         <Label>Currency</Label>
                         <Combobox items={currencies}>
-                          <ComboboxInput className={"h-10"} placeholder="Select a currency" />
+                          <ComboboxInput
+                            className={"h-10"}
+                            placeholder="Select a currency"
+                          />
                           <ComboboxContent>
                             <ComboboxEmpty>No currency found.</ComboboxEmpty>
                             <ComboboxList>
                               {(item) => (
-                                <ComboboxItem key={item.value} value={item.value}>
+                                <ComboboxItem
+                                  key={item.value}
+                                  value={item.value}
+                                >
                                   {item.label}
                                 </ComboboxItem>
                               )}
@@ -499,7 +613,7 @@ export default function SettingsPage() {
                           <SelectTrigger>
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent position="popper">
+                          <SelectContent>
                             <SelectItem value="mdy">MM/DD/YYYY</SelectItem>
                             <SelectItem value="dmy">DD/MM/YYYY</SelectItem>
                             <SelectItem value="ymd">YYYY-MM-DD</SelectItem>
@@ -515,7 +629,6 @@ export default function SettingsPage() {
                 </Card>
               </div>
             )}
-
           </div>
         </div>
       </div>

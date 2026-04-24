@@ -402,7 +402,7 @@ const Project = () => {
                                   <SelectValue placeholder="Change status" />
                                 </SelectTrigger>
 
-                                <SelectContent position="popper">
+                                <SelectContent>
                                   {taskStatusOptions.map((status) => (
                                     <SelectItem key={status} value={status}>
                                       {status.replaceAll("_", " ")}

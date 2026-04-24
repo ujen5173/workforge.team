@@ -163,7 +163,7 @@ export default function LeaveManagementPage() {
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent position="popper">
+                      <SelectContent>
                         <SelectItem value="annual">Annual leave</SelectItem>
                         <SelectItem value="sick">Sick leave</SelectItem>
                         <SelectItem value="personal">Personal leave</SelectItem>
@@ -412,7 +412,7 @@ export default function LeaveManagementPage() {
                           <SelectTrigger className="w-full">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent position="popper">
+                          <SelectContent>
                             <SelectItem value="annual">Annual leave</SelectItem>
                             <SelectItem value="sick">Sick leave</SelectItem>
                             <SelectItem value="personal">
@@ -541,7 +541,7 @@ export default function LeaveManagementPage() {
                       <SelectTrigger className="w-36">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent position="popper">
+                      <SelectContent>
                         <SelectItem value="all">All statuses</SelectItem>
                         <SelectItem value="pending">Pending</SelectItem>
                         <SelectItem value="approved">Approved</SelectItem>

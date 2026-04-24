@@ -13,6 +13,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    CALENDARIFIC_API_KEY: z.string(),
+    RESEND_API_KEY: z.string(),
   },
 
   client: {
@@ -28,6 +30,10 @@ export const env = createEnv({
       process.env.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+
+    CALENDARIFIC_API_KEY: process.env.CALENDARIFIC_API_KEY,
+
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,

@@ -4,19 +4,22 @@ import { useAppStore } from "./StoreProvider";
 export const useDate = () =>
   useAppStore(
     useShallow((s) => ({
-      selectedDate: s.selectedDate,
-      setSelectedDate: s.setSelectedDate,
-      clearDate: s.clearDate,
+      todayBS: s.todayBS,
+      holidays: s.holidays,
+
+      setHolidaysAndToday: s.setHolidaysAndToday,
     })),
   );
 
 export const useTimer = () =>
   useAppStore(
     useShallow((s) => ({
-      isRunning: s.isRunning,
-      elapsedMs: s.elapsedMs,
+      status: s.status,
+      elapsedSec: s.getElapsedSec,
       start: s.start,
+      endedTime: s.endedTime,
+      sessions: s.sessions,
       stop: s.stop,
-      reset: s.reset,
+      endSession: s.endSession,
     })),
   );

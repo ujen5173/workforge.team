@@ -80,7 +80,11 @@ const teamMembers = [
 ];
 
 const hiringPipeline = [
-  { role: "Senior Frontend Engineer", stage: "Interview", owner: "Engineering" },
+  {
+    role: "Senior Frontend Engineer",
+    stage: "Interview",
+    owner: "Engineering",
+  },
   { role: "QA Engineer", stage: "Take-home", owner: "Engineering" },
   { role: "Content Marketer", stage: "Screening", owner: "Growth" },
 ];
@@ -133,7 +137,9 @@ export default function TeamPage() {
               <CardTitle className="text-xl">15</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">11 full-time • 4 collaborators</p>
+              <p className="text-muted-foreground text-xs">
+                11 full-time • 4 collaborators
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -142,7 +148,9 @@ export default function TeamPage() {
               <CardTitle className="text-xl">6</CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">Engineering is currently largest</p>
+              <p className="text-muted-foreground text-xs">
+                Engineering is currently largest
+              </p>
             </CardContent>
           </Card>
         </section>
@@ -166,11 +174,14 @@ export default function TeamPage() {
                 />
                 <div className="flex items-center gap-2">
                   <FilterIcon className="text-muted-foreground size-4" />
-                  <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+                  <Select
+                    value={departmentFilter}
+                    onValueChange={setDepartmentFilter}
+                  >
                     <SelectTrigger className="w-40">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent position="popper">
+                    <SelectContent>
                       <SelectItem value="all">All departments</SelectItem>
                       <SelectItem value="Leadership">Leadership</SelectItem>
                       <SelectItem value="Engineering">Engineering</SelectItem>
@@ -202,7 +213,9 @@ export default function TeamPage() {
                           </Avatar>
                           <div>
                             <p className="text-sm font-medium">{member.name}</p>
-                            <p className="text-muted-foreground text-xs">{member.email}</p>
+                            <p className="text-muted-foreground text-xs">
+                              {member.email}
+                            </p>
                           </div>
                         </div>
                       </TableCell>
@@ -211,10 +224,18 @@ export default function TeamPage() {
                       <TableCell>{member.location}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Button size="xs" variant="outline" icon={MessageSquareIcon}>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            icon={MessageSquareIcon}
+                          >
                             Message
                           </Button>
-                          <Button size="xs" variant="outline" icon={PhoneCallIcon}>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            icon={PhoneCallIcon}
+                          >
                             Call
                           </Button>
                           <span className="text-muted-foreground text-xs">

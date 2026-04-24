@@ -1,58 +1,27 @@
 "use client";
 
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
 import { Calendar03Icon, GiftIcon } from "hugeicons-react";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { cn } from "~/lib/utils";
 import { useDate } from "~/stores/hooks";
 
-type HolidayType = "public" | "optional" | "restricted";
+export type HolidayType = {
+  date: string; // BS date string
+  dateInAD: string; // ISO date string e.g. "2025-04-14"
+  title: string;
+  description: string;
+  type: string;
+};
 
-interface Holiday {
-  name: string;
-  enDate: string;
-  npDate: string; // Bikram Sambat date string
-  daysLeft: number;
-  type: HolidayType;
-  description?: string;
+function getDaysLeft(dateInAD: string): number {
+  return differenceInCalendarDays(parseISO(dateInAD), new Date());
 }
 
-const HOLIDAY_TYPE_CONFIG: Record<
-  HolidayType,
-  { label: string; badge: "default" | "secondary" | "outline" }
-> = {
-  public: { label: "Public Holiday", badge: "secondary" },
-  optional: { label: "Optional", badge: "outline" },
-  restricted: { label: "Restricted", badge: "outline" },
-};
-
-const NEXT_HOLIDAY: Holiday = {
-  name: "Vijaya Dashami",
-  enDate: "Oct 12, 2025",
-  npDate: "Ashwin 26, 2082 BS",
-  daysLeft: 14,
-  type: "public",
-  description:
-    "The tenth day of Dashain — the most celebrated festival in Nepal.",
-};
-
-// Upcoming holidays after the next one
-const UPCOMING_HOLIDAYS: Holiday[] = [
-  {
-    name: "Laxmi Puja",
-    enDate: "Oct 20, 2025",
-    npDate: "Kartik 03, 2082 BS",
-    daysLeft: 22,
-    type: "public",
-  },
-  {
-    name: "Tihar (Bhai Tika)",
-    enDate: "Oct 24, 2025",
-    npDate: "Kartik 07, 2082 BS",
-    daysLeft: 26,
-    type: "public",
-  },
-];
+function fmtAD(dateInAD: string): string {
+  return format(parseISO(dateInAD), "MMM d, yyyy");
+}
 
 const DaysLeftRing = ({ days }: { days: number }) => {
   const max = 30;
@@ -110,12 +79,39 @@ const DaysLeftRing = ({ days }: { days: number }) => {
 };
 
 const NextHoliday = () => {
-  const { selectedDate, setSelectedDate } = useDate();
+  const { holidays } = useDate();
 
-  console.log({
-    selectedDate,
-    setSelectedDate,
-  });
+  const upcoming = holidays
+    .filter((h) => getDaysLeft(h.dateInAD) >= 0)
+    .sort((a, b) => getDaysLeft(a.dateInAD) - getDaysLeft(b.dateInAD))
+    .reduce(
+      (accum, current) => {
+        if (Object.hasOwn(accum, current.date)) {
+          accum[current.date] = {
+            ...accum[current.date]!,
+            title: accum[current.date]!.title + ` / ${current.title}`,
+          };
+        } else {
+          accum[current.date] = current;
+        }
+        return accum;
+      },
+      {} as Record<string, HolidayType>,
+    );
+
+  const upcomingList = Object.values(upcoming);
+  const next = upcomingList[0];
+  const rest = upcomingList.slice(0, 2);
+
+  if (!next) {
+    return (
+      <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">
+        <p className="text-sm text-slate-400">No upcoming holidays.</p>
+      </div>
+    );
+  }
+
+  const nextDaysLeft = getDaysLeft(next.dateInAD);
 
   return (
     <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">
@@ -127,25 +123,24 @@ const NextHoliday = () => {
           <p className="text-sm font-semibold text-slate-800">Next Holiday</p>
         </div>
         <Badge
-          variant={HOLIDAY_TYPE_CONFIG[NEXT_HOLIDAY.type].badge}
-          className="px-1.5 py-0 text-[10px] font-medium"
+          variant="secondary"
+          className="px-1.5 py-0 text-[10px] font-medium capitalize"
         >
-          {HOLIDAY_TYPE_CONFIG[NEXT_HOLIDAY.type].label}
+          {next.type}
         </Badge>
       </div>
 
       <Separator className="my-3" />
 
       <div className="from-primary/5 to-primary/2 ring-primary/10 mb-4 flex items-center gap-4 rounded-xl bg-gradient-to-br px-4 py-3.5 ring-1">
-        <DaysLeftRing days={NEXT_HOLIDAY.daysLeft} />
-
+        <DaysLeftRing days={nextDaysLeft} />
         <div className="min-w-0 flex-1">
           <p className="text-sm leading-snug font-semibold text-slate-800">
-            {NEXT_HOLIDAY.name}
+            {next.title}
           </p>
-          {NEXT_HOLIDAY.description && (
+          {next.description && (
             <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-slate-400">
-              {NEXT_HOLIDAY.description}
+              {next.description}
             </p>
           )}
         </div>
@@ -159,7 +154,7 @@ const NextHoliday = () => {
               English (AD)
             </span>
             <span className="text-xs font-semibold text-slate-700">
-              {NEXT_HOLIDAY.enDate}
+              {fmtAD(next.dateInAD)}
             </span>
           </div>
         </div>
@@ -170,44 +165,55 @@ const NextHoliday = () => {
               Nepali (BS)
             </span>
             <span className="text-xs font-semibold text-slate-700">
-              {NEXT_HOLIDAY.npDate}
+              {next.date}
             </span>
           </div>
         </div>
       </div>
 
-      <div>
-        <p className="mb-2 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-          Coming Up
-        </p>
-        <div className="space-y-1.5">
-          {UPCOMING_HOLIDAYS.map((h, i) => (
-            <div
-              key={i}
-              className="flex cursor-pointer items-center gap-3 rounded-lg px-1.5 py-1.5 transition-colors hover:bg-slate-50"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-slate-100 text-center">
-                <span className="text-[10px] leading-none font-bold text-slate-500">
-                  {h.enDate.split(" ")[1]!.replace(",", "")}
-                  <br />
-                  <span className="font-medium text-slate-400">
-                    {h.enDate.split(" ")[0]!.slice(0, 3)}
+      {rest.length > 0 && (
+        <div>
+          <p className="mb-2 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            Coming Up
+          </p>
+          <div className="space-y-1.5">
+            {rest.map((h, i) => {
+              const parsed = parseISO(h.dateInAD);
+              const dayNum = format(parsed, "d");
+              const monAbbr = format(parsed, "MMM");
+              const dLeft = getDaysLeft(h.dateInAD);
+
+              return (
+                <div
+                  key={i}
+                  className="flex cursor-pointer items-center gap-3 rounded-lg px-1.5 py-1.5 transition-colors hover:bg-slate-50"
+                >
+                  {/* Mini calendar tile */}
+                  <div className="flex h-8 w-8 shrink-0 flex-col items-center justify-center rounded-md bg-slate-100 text-center">
+                    <span className="text-[10px] leading-none font-bold text-slate-500">
+                      {dayNum}
+                    </span>
+                    <span className="text-[9px] font-medium text-slate-400">
+                      {monAbbr}
+                    </span>
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-xs font-medium text-slate-700">
+                      {h.title}
+                    </p>
+                    <p className="text-[10px] text-slate-400">{h.date}</p>
+                  </div>
+
+                  <span className="shrink-0 text-[10px] font-medium text-slate-400">
+                    {dLeft}d
                   </span>
-                </span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-medium text-slate-700">
-                  {h.name}
-                </p>
-                <p className="text-[10px] text-slate-400">{h.npDate}</p>
-              </div>
-              <span className="shrink-0 text-[10px] font-medium text-slate-400">
-                {h.daysLeft}d
-              </span>
-            </div>
-          ))}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

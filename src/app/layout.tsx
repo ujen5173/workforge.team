@@ -7,13 +7,19 @@ import { StoreProvider } from "~/stores/StoreProvider";
 import "~/styles/globals.css";
 import { TRPCReactProvider } from "~/trpc/react";
 import Header from "./_components/headers/main-header";
+import { DateHydrator } from "./_components/layouts/RootLayoutContainer";
+import { getDateData } from "./actions/date";
 import { bagossVF } from "./config/font";
 
 export const metadata: Metadata = constructMetadata();
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const dateData = await getDateData();
+
+  console.log({ dateData });
+
   return (
     <html
       lang="en"
@@ -23,6 +29,7 @@ export default function RootLayout({
       <body>
         <TRPCReactProvider>
           <StoreProvider>
+            <DateHydrator data={dateData} />
             <TooltipProvider>
               <Header />
 

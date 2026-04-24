@@ -829,7 +829,7 @@ const CompanyOnboardingPage = () => {
                           >
                             <SelectValue placeholder="Select your industry…" />
                           </SelectTrigger>
-                          <SelectContent position="popper">
+                          <SelectContent>
                             {INDUSTRIES.map((ind) => (
                               <SelectItem key={ind} value={ind}>
                                 {ind}
@@ -1119,7 +1119,7 @@ const CompanyOnboardingPage = () => {
                       <SelectTrigger className="h-9 w-[140px]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent position="popper">
+                      <SelectContent>
                         {INVITE_ROLE_OPTIONS.map((r) => (
                           <SelectItem key={r.value} value={r.value}>
                             {r.label}

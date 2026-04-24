@@ -16,7 +16,9 @@ export const useStore = create<RootStore>()(
       {
         name: "workforge-store",
         storage: createJSONStorage(() => localStorage),
-        partialize: (s) => ({}),
+        partialize: (s) => ({
+          elapsedTime: s.getElapsedSec(),
+        }),
         version: 1,
       },
     ),
