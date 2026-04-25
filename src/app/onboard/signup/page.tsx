@@ -71,8 +71,6 @@ const SignupPage = () => {
         return;
       }
 
-      console.log({ value });
-
       toast.success("Form submitted successfully");
     },
   });

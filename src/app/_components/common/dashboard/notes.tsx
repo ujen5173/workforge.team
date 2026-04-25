@@ -97,7 +97,7 @@ const Notes = () => {
             <p className="text-xs text-slate-300">No notes remaining.</p>
           </div>
         )}
-        <ScrollArea className="h-60 w-full flex-1">
+        <ScrollArea className="h-full max-h-60 w-full flex-1">
           {notes.map((note) => (
             <div
               key={note.id}

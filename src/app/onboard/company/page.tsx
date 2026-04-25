@@ -447,7 +447,6 @@ const CompanyOnboardingPage = () => {
         toast.error("Please fix the errors before submitting.");
         return;
       }
-      console.log({ ...value, logo: logoPreview, invites });
       toast.success("Workspace created! Welcome to WorkForge 🎉");
       // router.push(`/dashboard`);
     },

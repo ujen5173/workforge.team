@@ -48,8 +48,6 @@ const LoginPage = () => {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log({ value });
-
       toast.success("Form submitted successfully");
     },
   });

@@ -27,7 +27,6 @@ export const createDateSlice: StateCreator<
   holidays: [],
 
   setHolidaysAndToday: (data) => {
-    console.log({ data });
     set({ todayBS: data?.todayBS ?? "N/A", holidays: data?.holidays ?? [] });
   },
 });

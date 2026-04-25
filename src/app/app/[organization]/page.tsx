@@ -11,6 +11,22 @@ import GlobalSearch from "~/app/_components/common/global-search";
 import { Button } from "~/components/ui/button";
 
 const App = () => {
+  const getGreetings = () => {
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+      return "Good Morningggg";
+    }
+
+    if (hour >= 12 && hour < 17) {
+      return "Good Afternoon";
+    }
+
+    if (hour >= 17 && hour < 21) {
+      return "Good Evening";
+    }
+  };
+
   return (
     <>
       <header className="mb-4 flex items-center justify-between">
@@ -24,7 +40,7 @@ const App = () => {
           />
           <div className="flex flex-col gap-0.5">
             <p className="text-foreground mb-0 text-sm font-semibold">
-              Good Evening, <span className="text-primary">Ujen Basi</span>
+              {getGreetings()}, <span className="text-primary">Ujen Basi</span>
             </p>
             <span className="text-xs text-slate-700">CEO and Co-founder</span>
           </div>

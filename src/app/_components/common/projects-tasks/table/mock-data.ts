@@ -1,6 +1,3 @@
-// ─── Mock data for development / testing ──────────────────────────────────────
-// Replace with your tRPC/API call in the real page.
-
 import type { Project } from "./types";
 
 export const mockProjects: Project[] = [
@@ -117,30 +114,3 @@ export const mockProjects: Project[] = [
     updatedAt: new Date("2025-04-19"),
   },
 ];
-
-// ─── Example page.tsx usage ───────────────────────────────────────────────────
-/*
-// app/dashboard/projects/page.tsx
-
-import { ProjectsTable } from "@/features/projects/projects-table";
-import { mockProjects } from "@/features/projects/mock-data";
-// Replace with: const projects = await api.projects.list()
-
-export default function ProjectsPage() {
-  return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Manage and track all your team projects.
-        </p>
-      </div>
-
-      <ProjectsTable
-        data={mockProjects}
-        onCreateProject={() => console.log("open create dialog")}
-      />
-    </div>
-  );
-}
-*/

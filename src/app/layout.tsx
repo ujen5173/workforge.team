@@ -18,8 +18,6 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const dateData = await getDateData();
 
-  console.log({ dateData });
-
   return (
     <html
       lang="en"

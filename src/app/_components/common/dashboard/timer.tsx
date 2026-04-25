@@ -92,7 +92,7 @@ const Timer = () => {
         <div
           className={cn(
             "border-border flex items-center justify-between border-b bg-slate-50 px-2 py-1",
-            !!endedTime && "opacity-50",
+            endedTime > 0 && "opacity-50",
           )}
         >
           <div className="flex items-center gap-1.5">

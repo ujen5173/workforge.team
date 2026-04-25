@@ -700,7 +700,7 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
 
         <SidebarGroup className="p-0">
           <SidebarGroupLabel className="flex h-auto items-center justify-between px-2 pt-3 pb-1.5 text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-            <span>Project Channel</span>
+            <span>Channels</span>
             <button className="rounded-md p-1 text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900">
               <PlusSignIcon className="size-3.5" />
             </button>

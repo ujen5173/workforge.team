@@ -15,16 +15,33 @@ function loadSessions(): Session[] {
   }
 }
 
-function loadEndedTime(): { status: boolean; endedTime: number } {
+function loadEndedTime(): {
+  status: boolean;
+  endedTime: number;
+  createdAt: string | null;
+} {
   try {
-    return JSON.parse(
+    const res = JSON.parse(
       localStorage.getItem(ENDED_TIMER_STORAGE_KEY) ??
-        "{status: false, endedTime: -1}",
-    ) as { status: boolean; endedTime: number };
+        "{status: false, endedTime: -1, createdAt: null}",
+    ) as { status: boolean; endedTime: number; createdAt: string };
+
+    console.log({ res });
+
+    if (new Date(res.createdAt) < new Date()) {
+      return {
+        status: false,
+        endedTime: -1,
+        createdAt: null,
+      };
+    } else {
+      return res;
+    }
   } catch {
     return {
       status: false,
       endedTime: -1,
+      createdAt: null,
     };
   }
 }
@@ -39,6 +56,7 @@ function saveSessionEnded(time: number) {
     JSON.stringify({
       status: true,
       endedTime: time,
+      createdAt: new Date().toLocaleDateString(),
     }),
   );
 }
