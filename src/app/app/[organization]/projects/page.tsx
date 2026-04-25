@@ -7,6 +7,7 @@ import {
   PlusSignIcon,
   Search01Icon,
 } from "hugeicons-react";
+
 import { mockProjects } from "~/app/_components/common/projects-tasks/table/mock-data";
 import { ProjectsTable } from "~/app/_components/common/projects-tasks/table/projects-table";
 import { Button } from "~/components/ui/button";

@@ -2,10 +2,13 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ArrowRight01Icon, Folder01Icon } from "hugeicons-react";
+import Image from "next/image";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DataTableColumnHeader } from "@/components/ui/data-table";
 import { Progress } from "@/components/ui/progress";
 import {
   Tooltip,
@@ -13,11 +16,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-import { DataTableColumnHeader } from "@/components/ui/data-table";
 import { cn } from "@/lib/utils";
-import { ArrowRight01Icon, Folder01Icon } from "hugeicons-react";
-import Image from "next/image";
+
 import type { Project, ProjectPriority, ProjectStatus } from "./types";
 
 const STATUS_CONFIG: Record<

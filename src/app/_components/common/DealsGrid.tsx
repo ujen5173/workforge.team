@@ -9,6 +9,7 @@ import {
   Wallet,
 } from "lucide-react";
 import React from "react";
+
 import { siteConfig } from "~/lib/site";
 
 type DealCardProps = {

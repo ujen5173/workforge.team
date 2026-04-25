@@ -7,6 +7,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
+
 import {
   INVITATION_STATUS,
   LOCATION_TYPE,

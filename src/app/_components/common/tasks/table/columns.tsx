@@ -5,15 +5,15 @@ import { format } from "date-fns";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { DataTableColumnHeader } from "@/components/ui/data-table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-import { DataTableColumnHeader } from "@/components/ui/data-table";
 import { cn } from "@/lib/utils";
+
 import { DIFFICULTY_LEVEL, TASK_STATUS, type Tasks } from "./types";
 
 const STATUS_CONFIG: Record<TASK_STATUS, { label: string; className: string }> =

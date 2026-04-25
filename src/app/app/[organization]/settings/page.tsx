@@ -12,6 +12,7 @@ import {
   UserCircleIcon,
 } from "hugeicons-react";
 import { useState } from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -42,7 +43,6 @@ import {
 } from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
-import currencies from "~/lib/data/currencies.json";
 import timezones from "~/lib/data/timezones.json";
 import { cn } from "~/lib/utils";
 
@@ -52,6 +52,11 @@ type TabId =
   | "security"
   | "notifications"
   | "preferences";
+
+type TimezoneAndCurrency = {
+  value: string;
+  label: string;
+};
 
 const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
   { id: "profile", label: "My Profile", icon: UserCircleIcon },
@@ -63,8 +68,9 @@ const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<TabId>("profile");
-  const [timezone, setTimezone] = useState("est");
-  const [currency, setCurrency] = useState("usd");
+
+  const timezonesArray = timezones as TimezoneAndCurrency[];
+  const currenciesArray = timezones as TimezoneAndCurrency[];
 
   return (
     <main className="w-full">
@@ -562,7 +568,7 @@ export default function SettingsPage() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="flex flex-col space-y-1.5">
                         <Label>Timezone</Label>
-                        <Combobox items={timezones}>
+                        <Combobox items={timezonesArray}>
                           <ComboboxInput
                             className={"h-10"}
                             placeholder="Select a timezone"
@@ -570,7 +576,7 @@ export default function SettingsPage() {
                           <ComboboxContent>
                             <ComboboxEmpty>No timezone found.</ComboboxEmpty>
                             <ComboboxList>
-                              {(item) => (
+                              {(item: TimezoneAndCurrency) => (
                                 <ComboboxItem
                                   key={item.value}
                                   value={item.value}
@@ -584,7 +590,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex flex-col space-y-1.5">
                         <Label>Currency</Label>
-                        <Combobox items={currencies}>
+                        <Combobox items={currenciesArray}>
                           <ComboboxInput
                             className={"h-10"}
                             placeholder="Select a currency"
@@ -592,13 +598,8 @@ export default function SettingsPage() {
                           <ComboboxContent>
                             <ComboboxEmpty>No currency found.</ComboboxEmpty>
                             <ComboboxList>
-                              {(item) => (
-                                <ComboboxItem
-                                  key={item.value}
-                                  value={item.value}
-                                >
-                                  {item.label}
-                                </ComboboxItem>
+                              {(item: TimezoneAndCurrency) => (
+                                <ComboboxItem>{item.label}</ComboboxItem>
                               )}
                             </ComboboxList>
                           </ComboboxContent>

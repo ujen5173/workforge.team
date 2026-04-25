@@ -1,9 +1,10 @@
 "use client";
 
+import { usePathname } from "next/dist/client/components/navigation";
 import Link from "next/link";
 
-import { usePathname } from "next/dist/client/components/navigation";
 import { Button } from "~/components/ui/button";
+
 import Logo from "../common/Logo";
 
 const navItems = [

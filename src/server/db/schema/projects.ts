@@ -9,6 +9,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
+
 import {
   CLIENT_TYPE,
   DIFFICULTY_LEVEL,
@@ -108,6 +109,7 @@ export const tasks = pgTable(
     end: date("end"),
     estimatedHours: integer("estimated_hours"),
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentId: text("parent_id").references((): any => tasks.id, {
       onDelete: "cascade",
     }),
@@ -155,6 +157,7 @@ export const discussions = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentId: text("parent_id").references((): any => discussions.id, {
       onDelete: "cascade",
     }),

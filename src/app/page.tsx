@@ -1,7 +1,9 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import Link from "next/link";
+
 import { Button } from "~/components/ui/button";
 import { siteConfig } from "~/lib/site";
+
 import FaqSection from "./_components/common/FaqSection";
 import FeaturesSection from "./_components/common/FeaturesSection";
 import FooterSection from "./_components/common/FooterSection";

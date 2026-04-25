@@ -1,12 +1,6 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   ArrowRight01Icon,
   CalendarRemove01Icon,
   ChartIncreaseIcon,
@@ -22,7 +16,14 @@ import {
 } from "hugeicons-react";
 import { KanbanIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, type ComponentType } from "react";
+import { type ComponentType, useState } from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { buttonVariants } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";

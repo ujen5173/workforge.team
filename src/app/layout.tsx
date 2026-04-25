@@ -1,11 +1,13 @@
+import "~/styles/globals.css";
+
 import { type Metadata } from "next";
 
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { constructMetadata } from "~/lib/site";
 import { cn } from "~/lib/utils";
 import { StoreProvider } from "~/stores/StoreProvider";
-import "~/styles/globals.css";
 import { TRPCReactProvider } from "~/trpc/react";
+
 import Header from "./_components/headers/main-header";
 import { DateHydrator } from "./_components/layouts/RootLayoutContainer";
 import { getDateData } from "./actions/date";

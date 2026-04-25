@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/ui/data-table";
+
 import { projectColumns } from "./columns";
 import { ProjectDetailPanel } from "./project-detail-panel";
 import { ProjectsToolbar } from "./projects-toolbar";

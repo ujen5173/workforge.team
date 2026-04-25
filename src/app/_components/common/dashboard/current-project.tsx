@@ -1,5 +1,6 @@
 import { EnergyIcon } from "hugeicons-react";
 import Image from "next/image";
+
 import {
   Avatar,
   AvatarFallback,

@@ -6,7 +6,9 @@ import {
   Twitter,
 } from "lucide-react";
 import Link from "next/link";
+
 import { siteConfig } from "~/lib/site";
+
 import Logo from "./Logo";
 
 const footerColumns = [

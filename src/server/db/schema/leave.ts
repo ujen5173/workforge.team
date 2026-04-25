@@ -1,4 +1,5 @@
 import { date, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
 import { LEAVE_STATUS, LEAVE_TYPE } from "./enum";
 import { member } from "./organization";
 

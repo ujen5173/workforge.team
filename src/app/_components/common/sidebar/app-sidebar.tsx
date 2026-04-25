@@ -1,5 +1,35 @@
 "use client";
 
+import {
+  ArrowRight01Icon,
+  ArrowUpDownIcon,
+  Calendar01Icon,
+  CalendarRemove01Icon,
+  ChartIncreaseIcon,
+  CircleLock02Icon,
+  CreditCardPosIcon,
+  DashboardSquare01Icon,
+  DocumentAttachmentIcon,
+  KanbanIcon,
+  Logout01Icon,
+  MessageSecure02Icon,
+  MoreHorizontalIcon,
+  Notification01Icon,
+  Pdf01Icon,
+  PlusSignIcon,
+  SecurityCheckIcon,
+  Settings01Icon,
+  SparklesIcon,
+  TaskDaily02Icon,
+  Tick01Icon,
+  UserCircleIcon,
+  UserGroup03Icon,
+  Video01Icon,
+} from "hugeicons-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import * as React from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -36,35 +66,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import {
-  ArrowRight01Icon,
-  ArrowUpDownIcon,
-  Calendar01Icon,
-  CalendarRemove01Icon,
-  ChartIncreaseIcon,
-  CircleLock02Icon,
-  CreditCardPosIcon,
-  DashboardSquare01Icon,
-  DocumentAttachmentIcon,
-  KanbanIcon,
-  Logout01Icon,
-  MessageSecure02Icon,
-  MoreHorizontalIcon,
-  Notification01Icon,
-  Pdf01Icon,
-  PlusSignIcon,
-  SecurityCheckIcon,
-  Settings01Icon,
-  SparklesIcon,
-  TaskDaily02Icon,
-  Tick01Icon,
-  UserCircleIcon,
-  UserGroup03Icon,
-  Video01Icon,
-} from "hugeicons-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import * as React from "react";
 import { Kbd } from "~/components/ui/kbd";
 
 type Role = "ceo" | "hr" | "manager" | "employee";

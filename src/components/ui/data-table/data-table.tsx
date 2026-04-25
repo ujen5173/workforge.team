@@ -4,16 +4,17 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   type ExpandedState,
-  type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type SortingState,
   useReactTable,
+  type VisibilityState,
 } from "@tanstack/react-table";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import {
@@ -24,9 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+
 import { DataTablePagination } from "./data-table-pagination";
 
 export interface DataTableProps<TData extends { id: string }, TValue> {

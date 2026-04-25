@@ -1,11 +1,12 @@
-import { db } from "@/server/db";
-import * as schema from "@/server/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { emailOTP, organization } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
 import { Resend } from "resend";
+
+import { db } from "@/server/db";
+import * as schema from "@/server/db/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

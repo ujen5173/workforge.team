@@ -1,18 +1,18 @@
 "use client";
 
 import { type Table } from "@tanstack/react-table";
-import { X } from "lucide-react";
-
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
 import {
   GridViewIcon,
   LeftToRightListTriangleIcon,
   PlusSignIcon,
   Search01Icon,
 } from "hugeicons-react";
+import { X } from "lucide-react";
+
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
+
 import type { Project, ProjectPriority, ProjectStatus } from "./types";
 
 interface ProjectsToolbarProps {

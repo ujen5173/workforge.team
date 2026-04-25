@@ -78,6 +78,7 @@ const coordinateGetter: KeyboardCoordinateGetter = (event, { context }) => {
       if (data) {
         const { type, children } = data;
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (type === "container" && children?.length > 0) {
           if (active.data.current?.type !== "container") {
             return;
@@ -86,22 +87,22 @@ const coordinateGetter: KeyboardCoordinateGetter = (event, { context }) => {
       }
 
       switch (event.code) {
-        case KeyboardCode.Down:
+        case "ArrowDown":
           if (collisionRect.top < rect.top) {
             filteredContainers.push(entry);
           }
           break;
-        case KeyboardCode.Up:
+        case "ArrowUp":
           if (collisionRect.top > rect.top) {
             filteredContainers.push(entry);
           }
           break;
-        case KeyboardCode.Left:
+        case "ArrowLeft":
           if (collisionRect.left >= rect.left + rect.width) {
             filteredContainers.push(entry);
           }
           break;
-        case KeyboardCode.Right:
+        case "ArrowRight":
           if (collisionRect.left + collisionRect.width <= rect.left) {
             filteredContainers.push(entry);
           }

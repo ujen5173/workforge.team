@@ -1,4 +1,5 @@
 import React from "react";
+
 import AuthHeader from "../_components/headers/auth";
 
 const OnBoardingLayuout = ({ children }: { children: React.ReactNode }) => {

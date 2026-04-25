@@ -14,16 +14,17 @@ import {
   UserSettings01Icon,
 } from "hugeicons-react";
 import { ChevronLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
+
 import { Button } from "~/components/ui/button";
 import {
   Field,
   FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
 } from "~/components/ui/field";
@@ -36,15 +37,11 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 type TeamInvite = {
   id: string;
   email: string;
   role: string;
 };
-
-// ─── Constants ────────────────────────────────────────────────────────────────
 
 const INDUSTRIES = [
   "Technology & Software",
@@ -137,8 +134,6 @@ const step3Schema = z.object({
 
 const fullSchema = step1Schema.merge(step2Schema).merge(step3Schema);
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 const toSlug = (name: string) =>
   name
     .toLowerCase()
@@ -148,8 +143,6 @@ const toSlug = (name: string) =>
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
     .slice(0, 32);
-
-// ─── Step Indicator ───────────────────────────────────────────────────────────
 
 const StepIndicator = ({ current }: { current: number }) => (
   <div className="mb-8 flex items-center gap-1.5">
@@ -195,8 +188,6 @@ const StepIndicator = ({ current }: { current: number }) => (
   </div>
 );
 
-// ─── Logo Uploader ────────────────────────────────────────────────────────────
-
 const LogoUploader = ({
   preview,
   companyName,
@@ -240,7 +231,7 @@ const LogoUploader = ({
         onClick={() => inputRef.current?.click()}
       >
         {preview ? (
-          <img
+          <Image
             src={preview}
             alt="Company logo"
             className="h-full w-full object-cover"
@@ -307,8 +298,6 @@ const LogoUploader = ({
   );
 };
 
-// ─── Team Size Picker ─────────────────────────────────────────────────────────
-
 const TeamSizePicker = ({
   value,
   onChange,
@@ -333,8 +322,6 @@ const TeamSizePicker = ({
     ))}
   </div>
 );
-
-// ─── Role Card ────────────────────────────────────────────────────────────────
 
 const RoleCard = ({
   role,
@@ -379,8 +366,6 @@ const RoleCard = ({
   );
 };
 
-// ─── Team Invite Row ──────────────────────────────────────────────────────────
-
 const InviteRow = ({
   invite,
   onRemove,
@@ -413,8 +398,6 @@ const InviteRow = ({
     </div>
   );
 };
-
-// ─── Page Component ───────────────────────────────────────────────────────────
 
 const CompanyOnboardingPage = () => {
   const [step, setStep] = useState(1);
@@ -522,37 +505,50 @@ const CompanyOnboardingPage = () => {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result as string;
+
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      const text = event.target?.result;
+      if (typeof text !== "string") return;
+
       const lines = text.split("\n").filter((line) => line.trim() !== "");
 
       const newInvites: TeamInvite[] = [];
       let addedCount = 0;
       let errorCount = 0;
 
-      const startIdx = lines[0].toLowerCase().includes("email") ? 1 : 0;
+      const startIdx = lines[0]?.toLowerCase().includes("email") ? 1 : 0;
 
       for (let i = startIdx; i < lines.length; i++) {
         const line = lines[i];
-        let [emailRaw, roleRaw] = line.split(",");
+        if (!line) continue;
 
-        emailRaw = emailRaw?.trim().replace(/^"|"$/g, "") || "";
-        roleRaw = roleRaw?.trim().replace(/^"|"$/g, "").toLowerCase() || "";
+        const parts = line.split(",");
+
+        const emailRaw = (parts[0] ?? "").trim().replace(/^"|"$/g, "");
+
+        const roleRaw = (parts[1] ?? "")
+          .trim()
+          .replace(/^"|"$/g, "")
+          .toLowerCase();
 
         const parsed = z.string().email().safeParse(emailRaw);
+
         if (parsed.success) {
-          if (
-            !invites.some((inv) => inv.email === emailRaw) &&
-            !newInvites.some((inv) => inv.email === emailRaw)
-          ) {
+          const isDuplicate =
+            invites.some((inv) => inv.email === emailRaw) ||
+            newInvites.some((inv) => inv.email === emailRaw);
+
+          if (!isDuplicate) {
             const validRole =
-              INVITE_ROLE_OPTIONS.find((r) => r.value === roleRaw)?.value ||
+              INVITE_ROLE_OPTIONS.find((r) => r.value === roleRaw)?.value ??
               "employee";
+
             newInvites.push({
               id: crypto.randomUUID(),
               email: emailRaw,
               role: validRole,
             });
+
             addedCount++;
           }
         } else {
@@ -562,8 +558,11 @@ const CompanyOnboardingPage = () => {
 
       if (newInvites.length > 0) {
         setInvites((prev) => [...prev, ...newInvites]);
+
         toast.success(
-          `Added ${addedCount} team members${errorCount > 0 ? ` (${errorCount} invalid rows skipped)` : ""}`,
+          `Added ${addedCount} team members${
+            errorCount > 0 ? ` (${errorCount} invalid rows skipped)` : ""
+          }`,
         );
       } else if (errorCount > 0) {
         toast.error(
@@ -573,6 +572,7 @@ const CompanyOnboardingPage = () => {
         toast.error("No valid emails found in the file.");
       }
     };
+
     reader.readAsText(file);
     e.target.value = "";
   };
@@ -683,9 +683,9 @@ const CompanyOnboardingPage = () => {
                           autoComplete="organization"
                           className="tracking-wide"
                         />
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -738,9 +738,9 @@ const CompanyOnboardingPage = () => {
                             {slugValue ?? "your-company"}.workforge.team
                           </span>
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -786,11 +786,12 @@ const CompanyOnboardingPage = () => {
                           className="italic"
                         />
                         <FieldDescription className="italic">
-                          A short motto that captures your company's spirit.
+                          A short motto that captures your company&apos;s
+                          spirit.
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -836,9 +837,9 @@ const CompanyOnboardingPage = () => {
                             ))}
                           </SelectContent>
                         </Select>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -862,9 +863,9 @@ const CompanyOnboardingPage = () => {
                           WorkForge is optimised for small teams under 50
                           people.
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -908,9 +909,9 @@ const CompanyOnboardingPage = () => {
                           iconPlacement="left"
                           className="tracking-wide"
                         />
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -958,9 +959,9 @@ const CompanyOnboardingPage = () => {
                         <FieldDescription className="italic">
                           Shown on your company profile and team invitations.
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -988,7 +989,7 @@ const CompanyOnboardingPage = () => {
                       <Field data-invalid={isInvalid}>
                         <FieldLabel>
                           <UserSettings01Icon className="mr-1.5 mb-0.5 inline h-4 w-4" />
-                          What's your role?
+                          What&apos;s your role?
                         </FieldLabel>
                         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                           {ROLES.map((role) => (
@@ -1003,9 +1004,9 @@ const CompanyOnboardingPage = () => {
                         <FieldDescription className="italic">
                           This determines your dashboard view and access level.
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -1055,9 +1056,9 @@ const CompanyOnboardingPage = () => {
                         <FieldDescription className="italic">
                           Shown on your profile and visible to your team.
                         </FieldDescription>
-                        {isInvalid && (
+                        {/* {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
-                        )}
+                        )} */}
                       </Field>
                     );
                   }}
@@ -1195,7 +1196,7 @@ const CompanyOnboardingPage = () => {
                     variant="ghost"
                     className="text-muted-foreground w-full text-sm"
                   >
-                    Skip for now, I'll invite my team later
+                    Skip for now, I&apos;ll invite my team later
                   </Button>
                 )}
               </div>

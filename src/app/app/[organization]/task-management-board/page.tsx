@@ -1,5 +1,9 @@
 "use client";
 
+import { Notification01Icon, TaskDaily02Icon } from "hugeicons-react";
+import { GripVertical } from "lucide-react";
+import * as React from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,9 +14,6 @@ import {
   KanbanItem,
   KanbanOverlay,
 } from "@/components/ui/kanban";
-import { Notification01Icon, TaskDaily02Icon } from "hugeicons-react";
-import { GripVertical } from "lucide-react";
-import * as React from "react";
 import GlobalSearch from "~/app/_components/common/global-search";
 
 interface Task {
