@@ -47,6 +47,10 @@ Built for teams that want clarity over chaos.
 | Managers               | Real-time visibility without micromanagement     |
 | Employees              | Clarity on their work, growth, and culture       |
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./public/logo-dark.svg">
+  <img alt="Workforge" src="./public/images/img/hero-image.png.svg" height="40">
+</picture>
 ---
 
 ## Table of Contents
