@@ -51,6 +51,7 @@ Built for teams that want clarity over chaos.
   <source media="(prefers-color-scheme: dark)" srcset="./public/images/img/hero-image.png">
   <img alt="Workforge" src="./public/images/img/hero-image.png" height="40">
 </picture>
+
 ---
 
 ## Table of Contents
