@@ -64,6 +64,7 @@ Built for teams that want clarity over chaos.
   - [Recruitment Pipeline](#10-recruitment-pipeline)
   - [Security & Compliance](#11-security--compliance)
   - [AI Layer](#12-ai-layer)
+  - [Email Extraction](#13-email-extraction)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Contributing](#contributing)
@@ -234,6 +235,12 @@ Built for teams that want clarity over chaos.
 
 ---
 
+### 13. Email Extractions
+
+- **Inboxes** — fetch user inbox and display the emails from inbox in the platform itself
+
+---
+
 ## Tech Stack
 
 | Layer        | Technology                          |
@@ -274,7 +281,7 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-> See the [documentation](https://docs.workforge.team) for full environment variable reference and configuration options.
+> See the [Notes.md](./notes.md).
 
 ---
 

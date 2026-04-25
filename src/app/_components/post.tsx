@@ -1,1 +1,3 @@
-export function LatestPost() { return null; }
+export function LatestPost() {
+  return null;
+}

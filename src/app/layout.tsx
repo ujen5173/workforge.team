@@ -17,6 +17,7 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const dateData = await getDateData();
+  const x = { a: 1, b: 2 };
 
   return (
     <html

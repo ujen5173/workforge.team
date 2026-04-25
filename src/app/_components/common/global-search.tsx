@@ -17,6 +17,7 @@ import {
   Search01Icon,
   SearchingIcon,
   Settings01Icon,
+  TaskDaily02Icon,
   UserGroup03Icon,
 } from "hugeicons-react";
 import { KanbanIcon } from "lucide-react";
@@ -47,6 +48,11 @@ const PAGE_META: Record<
     icon: CalendarRemove01Icon,
     route: "/app/leave-management",
   },
+  taskManagement: {
+    label: "Task Management",
+    icon: TaskDaily02Icon,
+    route: "/app/task-management-board",
+  },
   teams: { label: "Teams", icon: UserGroup03Icon, route: "/app/teams" },
   performance: {
     label: "Performance",
@@ -72,9 +78,9 @@ const HighlightedChip = ({ text, query }: { text: string; query: string }) => {
   }
 
   return (
-    <span className="bg-primary/10 text-primary ring-primary/20 inline-flex items-center rounded-md px-2 py-0.5 text-xs ring-1 ring-inset">
+    <span className="bg-primary/10 text-primary ring-primary/20 inline-flex items-center rounded-md px-2 py-0.5 text-xs whitespace-pre ring-1 ring-inset">
       {text.slice(0, idx)}
-      <span className="decoration-primary/50 mx-0.5 font-semibold underline underline-offset-2">
+      <span className="decoration-primary/50 font-semibold underline underline-offset-2">
         {text.slice(idx, idx + query.length)}
       </span>
       {text.slice(idx + query.length)}

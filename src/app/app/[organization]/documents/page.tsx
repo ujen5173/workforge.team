@@ -83,7 +83,6 @@ export default function DocumentsPage() {
     <main className="w-full">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
         <header className="border-border flex flex-wrap items-start justify-between gap-3 border-b pb-4">
-
           <div className="flex items-center gap-4">
             <div className="border-primary/40 bg-primary/5 rounded-full border p-3">
               <DocumentAttachmentIcon className="text-primary size-6" />

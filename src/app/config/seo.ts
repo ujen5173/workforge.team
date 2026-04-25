@@ -390,9 +390,7 @@ export function constructSeo(options: SeoOptions = {}): Metadata {
     title,
     description,
     keywords: flatKeywords(keywords),
-    authors: author
-      ? [{ name: author }]
-      : [{ name: SITE.name, url: SITE.url }],
+    authors: author ? [{ name: author }] : [{ name: SITE.name, url: SITE.url }],
 
     alternates: {
       canonical: canonicalUrl,
@@ -566,8 +564,7 @@ export function buildSoftwareApplicationJsonLd() {
       url: SITE.pricing,
       priceCurrency: "USD",
       price: "0",
-      description:
-        "Free trial available. Paid plans for teams of all sizes.",
+      description: "Free trial available. Paid plans for teams of all sizes.",
       availability: "https://schema.org/InStock",
     },
     publisher: {
@@ -733,7 +730,7 @@ export function buildFaqJsonLd(items: { question: string; answer: string }[]) {
 }
 
 export function buildBreadcrumbJsonLd(
-  crumbs: { name: string; path: string }[]
+  crumbs: { name: string; path: string }[],
 ) {
   return {
     "@context": "https://schema.org",

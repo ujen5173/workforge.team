@@ -15,7 +15,7 @@ import {
   PlusSignIcon,
   SparklesIcon,
   Target01Icon,
-  UserGroupIcon
+  UserGroupIcon,
 } from "hugeicons-react";
 import { useState } from "react";
 import { Badge } from "~/components/ui/badge";
@@ -280,8 +280,7 @@ function getTrendBarColor(numeric: number) {
 
 function getStatusStyle(status: Goal["status"]) {
   const map: Record<Goal["status"], string> = {
-    "on-track":
-      "bg-emerald-50 text-emerald-700 border border-emerald-200",
+    "on-track": "bg-emerald-50 text-emerald-700 border border-emerald-200",
     "at-risk": "bg-amber-50 text-amber-700 border border-amber-200",
     completed: "bg-primary/5 text-primary border border-primary/20",
     overdue: "bg-red-50 text-red-700 border border-red-200",
@@ -325,9 +324,19 @@ function ScoreArc({ score }: { score: number }) {
           : "#ef4444";
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 128, height: 128 }}>
+    <div
+      className="relative flex items-center justify-center"
+      style={{ width: 128, height: 128 }}
+    >
       <svg width={128} height={128} className="-rotate-90">
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="#f1f5f9" strokeWidth={9} />
+        <circle
+          cx={cx}
+          cy={cy}
+          r={r}
+          fill="none"
+          stroke="#f1f5f9"
+          strokeWidth={9}
+        />
         <circle
           cx={cx}
           cy={cy}
@@ -341,7 +350,12 @@ function ScoreArc({ score }: { score: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={cn("text-3xl font-black leading-none", getScoreColor(score))}>
+        <span
+          className={cn(
+            "text-3xl font-black leading-none",
+            getScoreColor(score),
+          )}
+        >
           {score}
         </span>
         <span className="text-[11px] text-muted-foreground">/&nbsp;100</span>
@@ -359,7 +373,7 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
     ...Array<null>(startDow).fill(null),
     ...data,
   ];
-  const weeks: (typeof padded[0])[][] = [];
+  const weeks: (typeof padded)[0][][] = [];
   for (let i = 0; i < padded.length; i += 7) {
     weeks.push(padded.slice(i, i + 7));
   }
@@ -572,7 +586,6 @@ export default function PerformancePage() {
   return (
     <main className="w-full">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
-
         {/* ── Header ───────────────────────────────────────────────────────── */}
         <header className="border-border flex flex-wrap items-center justify-between gap-3 border-b-2 pb-4">
           <div className="flex items-center gap-4">
@@ -704,7 +717,10 @@ export default function PerformancePage() {
                         {m.delta}
                       </span>
                     </div>
-                    <Progress value={m.numeric} className={cn("h-1", getTrendBarColor(m.numeric))} />
+                    <Progress
+                      value={m.numeric}
+                      className={cn("h-1", getTrendBarColor(m.numeric))}
+                    />
                   </div>
                 ))}
               </CardContent>
@@ -723,7 +739,8 @@ export default function PerformancePage() {
                 Activity Overview
               </CardTitle>
               <CardDescription>
-                Daily activity — tasks completed, goals updated, project contributions
+                Daily activity — tasks completed, goals updated, project
+                contributions
               </CardDescription>
             </CardHeader>
             <Separator />
@@ -1093,10 +1110,7 @@ export default function PerformancePage() {
                         >
                           Cancel
                         </Button>
-                        <Button
-                          size="xs"
-                          onClick={() => saveNote(goal.id)}
-                        >
+                        <Button size="xs" onClick={() => saveNote(goal.id)}>
                           Save
                         </Button>
                       </div>

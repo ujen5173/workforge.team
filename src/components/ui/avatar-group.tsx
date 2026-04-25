@@ -43,7 +43,8 @@ const avatarGroupVariants = cva("flex items-center", {
 });
 
 interface AvatarGroupProps
-  extends Omit<React.ComponentProps<"div">, "dir">,
+  extends
+    Omit<React.ComponentProps<"div">, "dir">,
     VariantProps<typeof avatarGroupVariants> {
   size?: number;
   max?: number;
@@ -123,7 +124,8 @@ function AvatarGroup(props: AvatarGroupProps) {
 }
 
 interface AvatarGroupItemProps
-  extends Omit<React.ComponentProps<typeof SlotPrimitive.Slot>, "dir">,
+  extends
+    Omit<React.ComponentProps<typeof SlotPrimitive.Slot>, "dir">,
     VariantProps<typeof avatarGroupVariants> {
   child: React.ReactNode;
   index: number;

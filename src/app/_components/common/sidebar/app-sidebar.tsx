@@ -56,6 +56,7 @@ import {
   SecurityCheckIcon,
   Settings01Icon,
   SparklesIcon,
+  TaskDaily02Icon,
   Tick01Icon,
   UserCircleIcon,
   UserGroup03Icon,
@@ -159,6 +160,11 @@ const mainNav: NavItem[] = [
 ];
 
 const secondaryNav: NavItem[] = [
+  {
+    title: "Task Management",
+    href: "/app/task-management-board",
+    icon: TaskDaily02Icon,
+  },
   { title: "Teams", href: "/app/team", icon: UserGroup03Icon },
   { title: "Performance", href: "/app/performance", icon: ChartIncreaseIcon },
   {
@@ -168,7 +174,6 @@ const secondaryNav: NavItem[] = [
     roles: ["employee", "hr", "manager", "ceo"],
   },
   { title: "Documents", href: "/app/documents", icon: Pdf01Icon },
-  // { title: "Rewards", href: "/app/rewards", icon: ChampionIcon, badge: "New" },
 ];
 
 const channels: Channel[] = [

@@ -1,6 +1,12 @@
 import { EnergyIcon } from "hugeicons-react";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "~/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
@@ -111,7 +117,6 @@ const CurrentProject = () => {
               </Avatar>
             ))}
             <AvatarGroupCount>+3</AvatarGroupCount>
-
           </AvatarGroup>
         </Field>
       </div>

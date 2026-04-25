@@ -19,6 +19,15 @@ export const SEARCH_TAGS = {
   ],
   projects: ["project", "task", "work", "workspace"],
   about: ["about", "company", "about us"],
+  taskManagement: [
+    "task",
+    "task management",
+    "todo",
+    "private",
+    "done",
+    "in progress",
+    "work",
+  ],
   leaveManagement: [
     "leave",
     "management",

@@ -78,8 +78,7 @@ const values = [
   },
   {
     title: "Ownership with support",
-    description:
-      "People own outcomes, and leaders remove blockers quickly.",
+    description: "People own outcomes, and leaders remove blockers quickly.",
     icon: TargetIcon,
   },
   {
@@ -141,11 +140,13 @@ const hiringTracks = [
   },
   {
     title: "Business and operations",
-    detail: "People, finance, legal, and internal ops roles for stable scaling.",
+    detail:
+      "People, finance, legal, and internal ops roles for stable scaling.",
   },
   {
     title: "Growth and customer teams",
-    detail: "Sales, onboarding, and customer success roles tied to product adoption.",
+    detail:
+      "Sales, onboarding, and customer success roles tied to product adoption.",
   },
 ];
 
@@ -230,9 +231,21 @@ const joinerJourney = [
 
 const companyResources = [
   { label: "Product Docs", value: "docs.workforge.team", icon: Link2Icon },
-  { label: "Internal Handbook", value: "Notion: Workforge Handbook", icon: Building2Icon },
-  { label: "Design System", value: "Design Documentation page", icon: LightbulbIcon },
-  { label: "Careers Inbox", value: "careers@workforge.team", icon: MessageSquareIcon },
+  {
+    label: "Internal Handbook",
+    value: "Notion: Workforge Handbook",
+    icon: Building2Icon,
+  },
+  {
+    label: "Design System",
+    value: "Design Documentation page",
+    icon: LightbulbIcon,
+  },
+  {
+    label: "Careers Inbox",
+    value: "careers@workforge.team",
+    icon: MessageSquareIcon,
+  },
 ];
 
 export default function AboutUsPage() {
@@ -256,9 +269,9 @@ export default function AboutUsPage() {
               </h1>
               <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
                 Workforge.team helps companies run onboarding, communication,
-                project execution, culture, and people operations in one connected
-                platform. This page gives new joiners a realistic view of how
-                we work, what we value, and where we are headed.
+                project execution, culture, and people operations in one
+                connected platform. This page gives new joiners a realistic view
+                of how we work, what we value, and where we are headed.
               </p>
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <Button size="sm" icon={GlobeIcon}>
@@ -280,7 +293,9 @@ export default function AboutUsPage() {
                     key={fact.label}
                     className="rounded-xl border border-border/60 bg-card/80 p-3"
                   >
-                    <p className="text-muted-foreground text-xs">{fact.label}</p>
+                    <p className="text-muted-foreground text-xs">
+                      {fact.label}
+                    </p>
                     <p className="mt-1 text-sm font-medium">{fact.value}</p>
                   </div>
                 ))}
@@ -291,7 +306,10 @@ export default function AboutUsPage() {
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {values.map((value) => (
-            <Card key={value.title} className="border border-border/60 bg-card/90">
+            <Card
+              key={value.title}
+              className="border border-border/60 bg-card/90"
+            >
               <CardHeader className="gap-2">
                 <div className="bg-primary/12 text-primary inline-flex size-9 items-center justify-center rounded-xl">
                   <value.icon className="size-4" />
@@ -424,7 +442,10 @@ export default function AboutUsPage() {
 
               {activeTab === "overview" && (
                 <div className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
-                  <Card size="sm" className="border border-border/60 bg-background/70">
+                  <Card
+                    size="sm"
+                    className="border border-border/60 bg-background/70"
+                  >
                     <CardHeader>
                       <CardTitle className="text-sm">Founder message</CardTitle>
                     </CardHeader>
@@ -441,16 +462,21 @@ export default function AboutUsPage() {
                         feel this in every product decision we make.
                       </p>
                       <p className="text-muted-foreground">
-                        We are still early, and we are honest about that. We move
-                        fast, but we do not compromise on integrity, user trust,
-                        and long-term product quality.
+                        We are still early, and we are honest about that. We
+                        move fast, but we do not compromise on integrity, user
+                        trust, and long-term product quality.
                       </p>
                     </CardContent>
                   </Card>
 
-                  <Card size="sm" className="border border-border/60 bg-background/70">
+                  <Card
+                    size="sm"
+                    className="border border-border/60 bg-background/70"
+                  >
                     <CardHeader>
-                      <CardTitle className="text-sm">New joiner journey</CardTitle>
+                      <CardTitle className="text-sm">
+                        New joiner journey
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {joinerJourney.map((item) => (
@@ -458,8 +484,12 @@ export default function AboutUsPage() {
                           key={item.week}
                           className="rounded-xl border border-border/60 bg-card/80 p-3"
                         >
-                          <p className="text-xs font-semibold uppercase">{item.week}</p>
-                          <p className="mt-1 text-sm font-medium">{item.goal}</p>
+                          <p className="text-xs font-semibold uppercase">
+                            {item.week}
+                          </p>
+                          <p className="mt-1 text-sm font-medium">
+                            {item.goal}
+                          </p>
                           <p className="text-muted-foreground mt-1 text-sm">
                             {item.detail}
                           </p>
@@ -480,7 +510,9 @@ export default function AboutUsPage() {
                         className="border border-border/60 bg-background/70"
                       >
                         <CardHeader className="pb-1">
-                          <CardTitle className="text-sm">{practice.title}</CardTitle>
+                          <CardTitle className="text-sm">
+                            {practice.title}
+                          </CardTitle>
                         </CardHeader>
                         <CardContent>
                           <p className="text-muted-foreground text-sm">
@@ -492,7 +524,9 @@ export default function AboutUsPage() {
                   </div>
                   <Card className="border border-border/60 bg-background/70">
                     <CardHeader>
-                      <CardTitle className="text-sm">What success means</CardTitle>
+                      <CardTitle className="text-sm">
+                        What success means
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 text-sm">
                       <div className="flex items-start gap-2">
@@ -528,7 +562,9 @@ export default function AboutUsPage() {
                         <CardHeader>
                           <div className="flex items-center gap-2">
                             <BriefcaseBusinessIcon className="size-4 text-primary" />
-                            <CardTitle className="text-sm">{track.title}</CardTitle>
+                            <CardTitle className="text-sm">
+                              {track.title}
+                            </CardTitle>
                           </div>
                         </CardHeader>
                         <CardContent>
@@ -543,9 +579,15 @@ export default function AboutUsPage() {
                   <Card className="border border-border/60 bg-background/70 py-0">
                     <CardHeader className="border-b border-border/60 py-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <CardTitle className="text-sm">Open positions</CardTitle>
+                        <CardTitle className="text-sm">
+                          Open positions
+                        </CardTitle>
                         <div className="flex items-center gap-2">
-                          <Button size="xs" variant="outline" icon={PlusCircleIcon}>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            icon={PlusCircleIcon}
+                          >
                             Add opening
                           </Button>
                           <Button size="xs" variant="outline" icon={Share2Icon}>
@@ -564,20 +606,26 @@ export default function AboutUsPage() {
                             <TableHead>Location</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Referrals</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
+                            <TableHead className="text-right">
+                              Actions
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {openings.map((opening) => (
                             <TableRow key={opening.role}>
-                              <TableCell className="font-medium">{opening.role}</TableCell>
+                              <TableCell className="font-medium">
+                                {opening.role}
+                              </TableCell>
                               <TableCell>{opening.team}</TableCell>
                               <TableCell>{opening.type}</TableCell>
                               <TableCell>{opening.location}</TableCell>
                               <TableCell>
                                 <Badge
                                   variant={
-                                    opening.status === "Open" ? "default" : "secondary"
+                                    opening.status === "Open"
+                                      ? "default"
+                                      : "secondary"
                                   }
                                   className="h-5 text-[10px]"
                                 >
@@ -587,10 +635,18 @@ export default function AboutUsPage() {
                               <TableCell>{opening.referrals}</TableCell>
                               <TableCell>
                                 <div className="flex justify-end gap-1.5">
-                                  <Button size="xs" variant="ghost" icon={Share2Icon}>
+                                  <Button
+                                    size="xs"
+                                    variant="ghost"
+                                    icon={Share2Icon}
+                                  >
                                     Share
                                   </Button>
-                                  <Button size="xs" variant="ghost" icon={UsersIcon}>
+                                  <Button
+                                    size="xs"
+                                    variant="ghost"
+                                    icon={UsersIcon}
+                                  >
                                     Refer
                                   </Button>
                                 </div>
@@ -619,7 +675,9 @@ export default function AboutUsPage() {
                   </div>
                   <Card className="border border-border/60 bg-background/70">
                     <CardHeader>
-                      <CardTitle className="text-sm">Policy ownership</CardTitle>
+                      <CardTitle className="text-sm">
+                        Policy ownership
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 text-sm">
                       <div className="flex items-center gap-2">
@@ -649,15 +707,22 @@ export default function AboutUsPage() {
                     >
                       <CardHeader className="gap-2">
                         <div className="flex items-center justify-between gap-2">
-                          <Badge variant="outline" className="w-fit text-[11px]">
+                          <Badge
+                            variant="outline"
+                            className="w-fit text-[11px]"
+                          >
                             {news.category}
                           </Badge>
-                          <span className="text-muted-foreground text-xs">{news.date}</span>
+                          <span className="text-muted-foreground text-xs">
+                            {news.date}
+                          </span>
                         </div>
                         <CardTitle className="text-sm">{news.title}</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
-                        <p className="text-muted-foreground text-sm">{news.description}</p>
+                        <p className="text-muted-foreground text-sm">
+                          {news.description}
+                        </p>
                         <Button
                           size="xs"
                           variant="ghost"
@@ -690,7 +755,9 @@ export default function AboutUsPage() {
                     <resource.icon className="size-4 text-primary" />
                     {resource.label}
                   </p>
-                  <p className="text-muted-foreground mt-1 text-sm">{resource.value}</p>
+                  <p className="text-muted-foreground mt-1 text-sm">
+                    {resource.value}
+                  </p>
                 </div>
               ))}
             </CardContent>
@@ -698,7 +765,9 @@ export default function AboutUsPage() {
 
           <Card className="border border-border/60 bg-card/90">
             <CardHeader>
-              <CardTitle className="text-base">Contact and operating details</CardTitle>
+              <CardTitle className="text-base">
+                Contact and operating details
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <div className="flex items-center gap-2">

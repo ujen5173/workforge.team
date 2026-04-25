@@ -12,7 +12,7 @@ import {
   MoneyBag02Icon,
   PlusSignIcon,
   PurseIcon,
-  ViewOffSlashIcon
+  ViewOffSlashIcon,
 } from "hugeicons-react";
 import { useState } from "react";
 import { Badge } from "~/components/ui/badge";
@@ -91,7 +91,8 @@ export default function FinancePage() {
             <div className="">
               <h5 className="text-slate-700">Finance & Payroll</h5>
               <p className="text-sm text-muted-foreground">
-                View your pay statements, banking details, and compensation history.
+                View your pay statements, banking details, and compensation
+                history.
               </p>
             </div>
           </div>
@@ -121,7 +122,10 @@ export default function FinancePage() {
                     For pay period: March 1 – March 31, 2026
                   </CardDescription>
                 </div>
-                <Badge variant="default" className="bg-green-600/10 text-green-700 hover:bg-green-600/20 border-green-600/20">
+                <Badge
+                  variant="default"
+                  className="bg-green-600/10 text-green-700 hover:bg-green-600/20 border-green-600/20"
+                >
                   Calculated
                 </Badge>
               </div>
@@ -131,8 +135,12 @@ export default function FinancePage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="py-2">
                   <div className="flex items-end gap-3 mb-8">
-                    <h2 className="text-4xl font-black tracking-tight text-slate-800">$7,200.00</h2>
-                    <p className="text-sm text-muted-foreground mb-1 pb-1">Net Pay</p>
+                    <h2 className="text-4xl font-black tracking-tight text-slate-800">
+                      $7,200.00
+                    </h2>
+                    <p className="text-sm text-muted-foreground mb-1 pb-1">
+                      Net Pay
+                    </p>
                   </div>
 
                   <div className="flex flex-col gap-4">
@@ -141,8 +149,12 @@ export default function FinancePage() {
                         <Clock01Icon className="size-4 text-blue-600" />
                       </div>
                       <div>
-                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">Pay Basis</p>
-                        <p className="text-sm font-semibold text-slate-700">Hourly — $45.00 / hr</p>
+                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                          Pay Basis
+                        </p>
+                        <p className="text-sm font-semibold text-slate-700">
+                          Hourly — $45.00 / hr
+                        </p>
                       </div>
                     </div>
 
@@ -151,8 +163,12 @@ export default function FinancePage() {
                         <Briefcase01Icon className="size-4 text-amber-600" />
                       </div>
                       <div>
-                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">Hours Tracked</p>
-                        <p className="text-sm font-semibold text-slate-700">160 hrs · March 2026</p>
+                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                          Hours Tracked
+                        </p>
+                        <p className="text-sm font-semibold text-slate-700">
+                          160 hrs · March 2026
+                        </p>
                       </div>
                     </div>
 
@@ -161,8 +177,15 @@ export default function FinancePage() {
                         <PurseIcon className="size-4 text-emerald-600" />
                       </div>
                       <div>
-                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">Money day</p>
-                        <p className="text-sm font-semibold text-slate-700">March 15th <span className="text-slate-500">(6 days remaining)</span></p>
+                        <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                          Money day
+                        </p>
+                        <p className="text-sm font-semibold text-slate-700">
+                          March 15th{" "}
+                          <span className="text-slate-500">
+                            (6 days remaining)
+                          </span>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -199,9 +222,30 @@ export default function FinancePage() {
                       viewBox="0 0 430 272"
                       preserveAspectRatio="xMidYMid slice"
                     >
-                      <circle cx="430" cy="272" r="180" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                      <circle cx="430" cy="272" r="135" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                      <circle cx="430" cy="272" r="90" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+                      <circle
+                        cx="430"
+                        cy="272"
+                        r="180"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.06)"
+                        strokeWidth="1"
+                      />
+                      <circle
+                        cx="430"
+                        cy="272"
+                        r="135"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.05)"
+                        strokeWidth="1"
+                      />
+                      <circle
+                        cx="430"
+                        cy="272"
+                        r="90"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.05)"
+                        strokeWidth="1"
+                      />
                     </svg>
                     <div
                       className="absolute top-0 left-0 right-0 h-px"
@@ -217,30 +261,66 @@ export default function FinancePage() {
                           <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40 mb-0.5">
                             Direct Deposit
                           </p>
-                          <p className="text-base font-bold tracking-[0.18em] text-white uppercase">WorkForge</p>
+                          <p className="text-base font-bold tracking-[0.18em] text-white uppercase">
+                            WorkForge
+                          </p>
                         </div>
                         <button
-                          onClick={() => setShowAccountDetails(!showAccountDetails)}
+                          onClick={() =>
+                            setShowAccountDetails(!showAccountDetails)
+                          }
                           className="flex items-center gap-1.5 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/60 hover:text-white"
                         >
                           {showAccountDetails ? (
-                            <><ViewOffSlashIcon size={12} /></>
+                            <>
+                              <ViewOffSlashIcon size={12} />
+                            </>
                           ) : (
-                            <><EyeIcon size={12} /></>
+                            <>
+                              <EyeIcon size={12} />
+                            </>
                           )}
                         </button>
                       </div>
 
                       <div>
-                        <svg width="28" height="22" viewBox="0 0 28 22" fill="none" className="mb-2 opacity-50">
-                          <path d="M4 11 C4 6.58 7.58 3 12 3" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" />
-                          <path d="M1 11 C1 4.92 5.92 0 12 0" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.5" />
-                          <path d="M7 11 C7 8.24 9.24 6 12 6" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" />
+                        <svg
+                          width="28"
+                          height="22"
+                          viewBox="0 0 28 22"
+                          fill="none"
+                          className="mb-2 opacity-50"
+                        >
+                          <path
+                            d="M4 11 C4 6.58 7.58 3 12 3"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                          <path
+                            d="M1 11 C1 4.92 5.92 0 12 0"
+                            stroke="white"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            fill="none"
+                            opacity="0.5"
+                          />
+                          <path
+                            d="M7 11 C7 8.24 9.24 6 12 6"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
                           <circle cx="12" cy="11" r="2.5" fill="white" />
                         </svg>
                         <p
                           className="font-mono font-medium text-white tracking-[0.25em] transition-all duration-300"
-                          style={{ fontSize: "20px", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+                          style={{
+                            fontSize: "20px",
+                            textShadow: "0 2px 10px rgba(0,0,0,0.5)",
+                          }}
                         >
                           {showAccountDetails
                             ? "9876  5432  1098  7654"
@@ -251,15 +331,25 @@ export default function FinancePage() {
                       <div className="flex items-end justify-between">
                         <div className="flex gap-5">
                           <div>
-                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">Card Holder</p>
-                            <p className="text-[13px] font-semibold tracking-wider text-white uppercase">Alex Johnson</p>
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">
+                              Card Holder
+                            </p>
+                            <p className="text-[13px] font-semibold tracking-wider text-white uppercase">
+                              Alex Johnson
+                            </p>
                           </div>
                           <div>
-                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">Bank</p>
-                            <p className="text-[13px] font-semibold tracking-wider text-white uppercase">Chase</p>
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">
+                              Bank
+                            </p>
+                            <p className="text-[13px] font-semibold tracking-wider text-white uppercase">
+                              Chase
+                            </p>
                           </div>
                           <div>
-                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">Routing</p>
+                            <p className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">
+                              Routing
+                            </p>
                             <p className="font-mono text-[13px] tracking-widest text-white">
                               {showAccountDetails ? "122000248" : "•••••••••"}
                             </p>
@@ -289,8 +379,12 @@ export default function FinancePage() {
 
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-medium text-slate-800">Pay History</h3>
-              <p className="text-sm text-muted-foreground">Detailed history of your past payments and statements.</p>
+              <h3 className="text-lg font-medium text-slate-800">
+                Pay History
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Detailed history of your past payments and statements.
+              </p>
             </div>
 
             <div className="rounded-xl border bg-card">
@@ -303,18 +397,29 @@ export default function FinancePage() {
                     <TableHead>Type</TableHead>
                     <TableHead>Hours / Rate</TableHead>
                     <TableHead className="text-right">Net Amount</TableHead>
-                    <TableHead className="w-[100px] text-center">Status</TableHead>
+                    <TableHead className="w-[100px] text-center">
+                      Status
+                    </TableHead>
                     <TableHead className="w-[80px]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {mockPayHistory.map((row) => (
                     <TableRow key={row.id}>
-                      <TableCell className="font-mono text-xs text-muted-foreground">{row.id}</TableCell>
-                      <TableCell className="font-medium">{row.period}</TableCell>
-                      <TableCell className="text-muted-foreground">{row.date}</TableCell>
+                      <TableCell className="font-mono text-xs text-muted-foreground">
+                        {row.id}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {row.period}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {row.date}
+                      </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="bg-slate-50 text-slate-600">
+                        <Badge
+                          variant="outline"
+                          className="bg-slate-50 text-slate-600"
+                        >
                           {row.type}
                         </Badge>
                       </TableCell>
@@ -325,12 +430,19 @@ export default function FinancePage() {
                         {row.amount}
                       </TableCell>
                       <TableCell className="text-center">
-                        <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-200 border-0">
+                        <Badge
+                          variant="default"
+                          className="bg-green-100 text-green-700 hover:bg-green-200 border-0"
+                        >
                           {row.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="icon-sm" className="h-8 w-8 text-muted-foreground">
+                        <Button
+                          variant="ghost"
+                          size="icon-sm"
+                          className="h-8 w-8 text-muted-foreground"
+                        >
                           <Download01Icon size={16} />
                         </Button>
                       </TableCell>

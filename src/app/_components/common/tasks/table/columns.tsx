@@ -17,37 +17,37 @@ import { cn } from "@/lib/utils";
 import { DIFFICULTY_LEVEL, TASK_STATUS, type Tasks } from "./types";
 
 const STATUS_CONFIG: Record<TASK_STATUS, { label: string; className: string }> =
-{
-  [TASK_STATUS.BACKLOG]: {
-    label: "Backlog",
-    className: "bg-slate-50 text-slate-600 border-slate-200",
-  },
+  {
+    [TASK_STATUS.BACKLOG]: {
+      label: "Backlog",
+      className: "bg-slate-50 text-slate-600 border-slate-200",
+    },
 
-  [TASK_STATUS.IN_PROGRESS]: {
-    label: "In Progress",
-    className: "bg-blue-50 text-blue-700 border-blue-200",
-  },
-  [TASK_STATUS.NEED_REVIEW]: {
-    label: "Need Review",
-    className: "bg-purple-50 text-purple-700 border-purple-200",
-  },
-  [TASK_STATUS.COMPLETED]: {
-    label: "Completed",
-    className: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  },
-  [TASK_STATUS.BLOCKED]: {
-    label: "Blocked",
-    className: "bg-red-50 text-red-700 border-red-200",
-  },
-  [TASK_STATUS.ON_HOLD]: {
-    label: "On Hold",
-    className: "bg-amber-50 text-amber-700 border-amber-200",
-  },
-  [TASK_STATUS.CANCELLED]: {
-    label: "Cancelled",
-    className: "bg-slate-100 text-slate-500 border-slate-200",
-  },
-};
+    [TASK_STATUS.IN_PROGRESS]: {
+      label: "In Progress",
+      className: "bg-blue-50 text-blue-700 border-blue-200",
+    },
+    [TASK_STATUS.NEED_REVIEW]: {
+      label: "Need Review",
+      className: "bg-purple-50 text-purple-700 border-purple-200",
+    },
+    [TASK_STATUS.COMPLETED]: {
+      label: "Completed",
+      className: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    },
+    [TASK_STATUS.BLOCKED]: {
+      label: "Blocked",
+      className: "bg-red-50 text-red-700 border-red-200",
+    },
+    [TASK_STATUS.ON_HOLD]: {
+      label: "On Hold",
+      className: "bg-amber-50 text-amber-700 border-amber-200",
+    },
+    [TASK_STATUS.CANCELLED]: {
+      label: "Cancelled",
+      className: "bg-slate-100 text-slate-500 border-slate-200",
+    },
+  };
 
 const DIFFICULTY_CONFIG: Record<
   DIFFICULTY_LEVEL,

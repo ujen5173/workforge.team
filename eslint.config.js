@@ -2,6 +2,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
 // @ts-ignore -- no types for this plugin
 import drizzle from "eslint-plugin-drizzle";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -16,6 +17,7 @@ export default tseslint.config(
     files: ["**/*.ts", "**/*.tsx"],
     plugins: {
       drizzle,
+      "simple-import-sort": simpleImportSort,
     },
     extends: [
       ...tseslint.configs.recommended,
@@ -23,6 +25,8 @@ export default tseslint.config(
       ...tseslint.configs.stylisticTypeChecked,
     ],
     rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-type-imports": [
