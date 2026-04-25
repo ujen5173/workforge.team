@@ -48,8 +48,8 @@ Built for teams that want clarity over chaos.
 | Employees              | Clarity on their work, growth, and culture       |
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./public/logo-dark.svg">
-  <img alt="Workforge" src="./public/images/img/hero-image.png.svg" height="40">
+  <source media="(prefers-color-scheme: dark)" srcset="./public/images/img/hero-image.png">
+  <img alt="Workforge" src="./public/images/img/hero-image.png" height="40">
 </picture>
 ---
 
