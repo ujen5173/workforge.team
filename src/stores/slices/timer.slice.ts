@@ -26,8 +26,6 @@ function loadEndedTime(): {
         "{status: false, endedTime: -1, createdAt: null}",
     ) as { status: boolean; endedTime: number; createdAt: string };
 
-    console.log({ res });
-
     if (new Date(res.createdAt) < new Date()) {
       return {
         status: false,

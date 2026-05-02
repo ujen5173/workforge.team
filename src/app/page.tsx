@@ -85,7 +85,6 @@ const Hero = () => {
               width={1920}
               height={1080}
               className="h-auto w-full rounded-lg object-cover"
-              priority={"true"}
             />
           </div>
         </div>

@@ -8,6 +8,9 @@ import { cn } from "~/lib/utils";
 import { StoreProvider } from "~/stores/StoreProvider";
 import { TRPCReactProvider } from "~/trpc/react";
 
+import { headers } from "next/headers";
+import { Toaster } from "sonner";
+import { auth } from "~/server/better-auth";
 import Header from "./_components/headers/main-header";
 import { DateHydrator } from "./_components/layouts/RootLayoutContainer";
 import { getDateData } from "./actions/date";
@@ -19,7 +22,12 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const dateData = await getDateData();
-  const x = { a: 1, b: 2 };
+
+  const user = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  console.log({ user });
 
   return (
     <html
@@ -36,6 +44,8 @@ export default async function RootLayout({
 
               {children}
             </TooltipProvider>
+
+            <Toaster />
           </StoreProvider>
         </TRPCReactProvider>
       </body>

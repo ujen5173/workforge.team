@@ -3,10 +3,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-* {
-  scroll-behavior: smooth;
-}
-
 @theme {
   --animate-shine: shine 3s ease-out infinite;
   --animate-gradient-flow: gradient-flow 10s ease infinite;

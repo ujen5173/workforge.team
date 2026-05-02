@@ -1,12 +1,6 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
-export const ROLES = pgEnum("role", [
-  "OWNER",
-  "HR",
-  "EMPLOYEE",
-  "MANAGER",
-  "FINANCE_MANAGER",
-]);
+export const ROLES = pgEnum("member_role", ["OWNER", "EMPLOYEE", "MANAGER"]);
 
 export const LOCATION_TYPE = pgEnum("location_type", [
   "ONSITE",

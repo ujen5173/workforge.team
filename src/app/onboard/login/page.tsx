@@ -2,7 +2,6 @@
 
 import { useForm } from "@tanstack/react-form";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import z from "zod";
@@ -77,26 +76,6 @@ const LoginPage = () => {
           <p className="text-foreground mb-6 text-sm">
             Sign in using the form, or the Google account you use at work
           </p>
-
-          <Button
-            variant="oauth"
-            icon={() => (
-              <Image
-                src={"/images/svg/google.svg"}
-                alt="Google Logo"
-                width={16}
-                height={16}
-              />
-            )}
-          >
-            Sign in using Google
-          </Button>
-
-          <div className="my-4 flex items-center gap-3 opacity-60">
-            <div className="bg-border h-0.5 flex-1" />
-            <p>or</p>
-            <div className="bg-border h-0.5 flex-1" />
-          </div>
 
           <form
             onSubmit={(e) => {

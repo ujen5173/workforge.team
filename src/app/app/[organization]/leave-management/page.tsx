@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarRemove01Icon } from "hugeicons-react";
+import { CalendarRemove01Icon, Notification01Icon } from "hugeicons-react";
 import {
   CalendarIcon,
   FilterIcon,
@@ -10,6 +10,7 @@ import {
   TriangleAlertIcon,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -127,7 +128,7 @@ export default function LeaveManagementPage() {
       : "Select date";
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
         <header className="border-border flex flex-wrap items-center justify-between gap-3 border-b pb-4">
           <div className="flex items-center gap-4">
@@ -142,7 +143,17 @@ export default function LeaveManagementPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <GlobalSearch />
+              {/* TODO: Add interactive bell icon, like silent or not */}
+              <Button
+                size="icon-sm"
+                variant={"ghost"}
+                icon={Notification01Icon}
+              />
+            </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
             <Dialog>
               <DialogTrigger asChild>
                 <Button size="sm" icon={PlusCircleIcon}>

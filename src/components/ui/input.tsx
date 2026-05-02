@@ -29,7 +29,12 @@ function Input({
   return (
     <div className="relative flex w-full items-center">
       {Icon && iconPlacement === "left" && (
-        <div className="absolute top-1/2 left-3 -translate-y-1/2">
+        <div
+          className={cn(
+            "absolute top-1/2 -translate-y-1/2",
+            size === "sm" ? "left-2" : "left-3",
+          )}
+        >
           <Icon className={iconStyle} />
         </div>
       )}
@@ -39,8 +44,16 @@ function Input({
         className={cn(
           "border-input file:text-foreground placeholder:text-foreground/60 focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 min-h-8 w-full min-w-0 rounded-sm border bg-white px-4.5 py-3 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-white file:text-sm file:font-medium focus-visible:ring-3 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm",
           sizeClasses[size], // Apply size classes
-          Icon && iconPlacement === "left" ? "pl-9" : "",
-          Icon && iconPlacement === "right" ? "pr-9" : "",
+          Icon && iconPlacement === "left"
+            ? size === "sm"
+              ? "pl-7"
+              : "pl-9"
+            : "",
+          Icon && iconPlacement === "right"
+            ? size === "sm"
+              ? "pl-7"
+              : "pr-9"
+            : "",
           className,
         )}
         {...props}

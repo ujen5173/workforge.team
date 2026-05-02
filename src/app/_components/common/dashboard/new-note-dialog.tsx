@@ -1,9 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { Add01Icon, Calendar01Icon } from "hugeicons-react";
-import { useState } from "react";
+import { Add01Icon } from "hugeicons-react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,13 +25,7 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 import { Button } from "~/components/ui/button";
-import { Calendar } from "~/components/ui/calendar";
 import { Input } from "~/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -63,9 +55,7 @@ interface Note {
   id: string;
   title: string;
   description: string;
-  tags: string[];
   priority?: Priority;
-  dueDate: Date;
   completed: boolean;
 }
 
@@ -75,65 +65,6 @@ interface NewNoteDialogProps {
   setNotes: React.Dispatch<React.SetStateAction<Note[]>>;
   notesKey: string;
 }
-
-const TagsInput = ({
-  value,
-  onChange,
-}: {
-  value: string[];
-  onChange: (tags: string[]) => void;
-}) => {
-  const [tagInput, setTagInput] = useState("");
-
-  const addTag = () => {
-    const trimmed = tagInput.trim();
-    if (trimmed && !value.includes(trimmed)) {
-      onChange([...value, trimmed]);
-    }
-    setTagInput("");
-  };
-
-  return (
-    <>
-      <div className="flex gap-2">
-        <Input
-          value={tagInput}
-          onChange={(e) => setTagInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              addTag();
-            }
-          }}
-          placeholder="Add tag and press Enter"
-          autoComplete="off"
-        />
-        <Button type="button" variant="outline" onClick={addTag}>
-          Add
-        </Button>
-      </div>
-      {value.length > 0 && (
-        <div className="mt-1 flex flex-wrap gap-1">
-          {value.map((tag) => (
-            <span
-              key={tag}
-              className="bg-muted inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs"
-            >
-              {tag}
-              <button
-                type="button"
-                className="hover:text-destructive"
-                onClick={() => onChange(value.filter((t) => t !== tag))}
-              >
-                ×
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-    </>
-  );
-};
 
 const NewNoteDialog = ({
   open,
@@ -146,9 +77,7 @@ const NewNoteDialog = ({
     defaultValues: {
       title: "",
       description: "",
-      tags: [],
       priority: "moderate",
-      dueDate: new Date(),
       completed: false,
     },
   });
@@ -183,25 +112,54 @@ const NewNoteDialog = ({
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
-            <Controller
-              name="title"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">Title</FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-rhf-demo-title"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="Login button not working on mobile"
-                    autoComplete="off"
-                  />
-                  {fieldState.error && (
-                    <FieldError>{fieldState.error.message}</FieldError>
+            <div className="flex items-center gap-2">
+              <Controller
+                name="title"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-rhf-demo-title">Title</FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-rhf-demo-title"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Login button not working on mobile"
+                      autoComplete="off"
+                    />
+                    {fieldState.error && (
+                      <FieldError>{fieldState.error.message}</FieldError>
+                    )}
+                  </Field>
+                )}
+              />
+              <div className="max-w-[10rem] w-full">
+                <Controller
+                  name="priority"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel>Priority</FieldLabel>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="bg-white!">
+                          <SelectValue placeholder="Select priority" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="urgent">🔴 Urgent</SelectItem>
+                          <SelectItem value="moderate">🟡 Moderate</SelectItem>
+                          <SelectItem value="low">🟢 Low</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {fieldState.error && (
+                        <FieldError>{fieldState.error.message}</FieldError>
+                      )}
+                    </Field>
                   )}
-                </Field>
-              )}
-            />
+                />
+              </div>
+            </div>
 
             <Controller
               name="description"
@@ -226,82 +184,6 @@ const NewNoteDialog = ({
                       </InputGroupText>
                     </InputGroupAddon>
                   </InputGroup>
-                  {fieldState.error && (
-                    <FieldError>{fieldState.error.message}</FieldError>
-                  )}
-                </Field>
-              )}
-            />
-            <div className="flex items-center gap-2">
-              <Controller
-                name="priority"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Priority</FieldLabel>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="bg-white!">
-                        <SelectValue placeholder="Select priority" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="urgent">🔴 Urgent</SelectItem>
-                        <SelectItem value="moderate">🟡 Moderate</SelectItem>
-                        <SelectItem value="low">🟢 Low</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {fieldState.error && (
-                      <FieldError>{fieldState.error.message}</FieldError>
-                    )}
-                  </Field>
-                )}
-              />
-
-              <Controller
-                name="dueDate"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="form-rhf-demo-duedate">
-                      Due Date
-                    </FieldLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          data-empty={!field.value}
-                          className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
-                        >
-                          <Calendar01Icon />
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Due Date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    {fieldState.error && (
-                      <FieldError>{fieldState.error.message}</FieldError>
-                    )}
-                  </Field>
-                )}
-              />
-            </div>
-
-            <Controller
-              name="tags"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Tags</FieldLabel>
-                  <TagsInput value={field.value} onChange={field.onChange} />
                   {fieldState.error && (
                     <FieldError>{fieldState.error.message}</FieldError>
                   )}

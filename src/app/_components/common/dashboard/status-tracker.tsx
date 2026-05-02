@@ -119,20 +119,20 @@ const StatusTracker = () => {
   ).length;
 
   return (
-    <div className="border-border h-full w-full max-w-sm rounded-xl border bg-white p-4 shadow-sm">
-      <div className="flex items-center justify-between gap-4">
+    <div className="bg-white shadow-sm p-4 border border-border rounded-xl w-full max-w-sm h-full">
+      <div className="flex justify-between items-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="bg-primary/8 text-primary flex h-7 w-7 items-center justify-center rounded-lg">
+          <div className="flex justify-center items-center bg-primary/8 rounded-lg w-7 h-7 text-primary">
             <UserMultiple02Icon size={15} />
           </div>
-          <p className="text-sm font-semibold text-slate-800">Team Status</p>
+          <p className="font-semibold text-slate-800 text-sm">Team Status</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="relative flex w-2 h-2">
+            <span className="inline-flex absolute bg-emerald-400 opacity-75 rounded-full w-full h-full animate-ping" />
+            <span className="inline-flex relative bg-emerald-500 rounded-full w-2 h-2" />
           </span>
-          <span className="text-xs text-slate-500">{activeCount} online</span>
+          <span className="text-slate-500 text-xs">{activeCount} online</span>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ const StatusTracker = () => {
           <div
             key={member.id}
             className={cn(
-              "flex items-center gap-3 rounded-lg px-2 py-2 transition-colors duration-150",
+              "flex items-center gap-3 px-2 py-2 rounded-lg transition-colors duration-150",
               member.status === "offline"
                 ? "opacity-50"
                 : "cursor-pointer hover:bg-slate-50",
@@ -158,18 +158,18 @@ const StatusTracker = () => {
               </Avatar>
               <span
                 className={cn(
-                  "absolute -right-0.5 -bottom-0.5 h-2.5 w-2.5 rounded-full border-2 border-white",
+                  "-right-0.5 -bottom-0.5 absolute border-2 border-white rounded-full w-2.5 h-2.5",
                   STATUS_CONFIG[member.status].dot,
                 )}
               />
             </div>
 
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm leading-tight font-medium text-slate-700">
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-slate-700 text-sm truncate leading-tight">
                 {member.name}
               </p>
               {member.status !== "offline" ? (
-                <p className="truncate text-[12px] text-slate-400">
+                <p className="text-[12px] text-slate-400 truncate">
                   <span className="text-slate-500">{member.task}</span>
                 </p>
               ) : (
@@ -179,7 +179,7 @@ const StatusTracker = () => {
 
             <Badge
               className={cn(
-                "shrink-0 px-1.5 py-0 text-[10px] font-medium",
+                "px-1.5 py-0 font-medium text-[10px] shrink-0",
                 STATUS_CONFIG[member.status].badge,
               )}
             >

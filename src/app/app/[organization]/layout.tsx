@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar role="ceo" />
-      <SidebarInset className="p-4">{children}</SidebarInset>
+      <SidebarInset className="bg-slate-50">{children}</SidebarInset>
     </SidebarProvider>
   );
 }

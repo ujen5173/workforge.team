@@ -179,25 +179,32 @@ const secondaryNav: NavItem[] = [
 
 const channels: Channel[] = [
   {
-    id: "1",
-    title: "General",
-    href: "/app/projects/q2-hiring",
-    color: "#8B5CF6",
+    id: "0",
+    title: "#General",
+    href: "/app/channels/general",
+    color: "#EF4444",
     shortcut: "⌘ 1",
   },
   {
-    id: "2",
-    title: "ElevenHype",
-    href: "/app/projects/design-sprint",
-    color: "#EF4444",
+    id: "1",
+    title: "#Project 1",
+    href: "/app/channels/p1",
+    color: "#8B5CF6",
     shortcut: "⌘ 2",
   },
   {
-    id: "3",
-    title: "Trinity CMS",
-    href: "/app/projects/onboarding",
+    id: "2",
+    title: "#Project 2",
+    href: "/app/channels/p2",
     color: "#F59E0B",
     shortcut: "⌘ 3",
+  },
+  {
+    id: "3",
+    title: "#Updates",
+    href: "/app/channels/updates",
+    color: "#F59E0B",
+    shortcut: "⌘ 4",
   },
 ];
 

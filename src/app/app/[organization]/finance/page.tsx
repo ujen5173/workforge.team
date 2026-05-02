@@ -10,11 +10,13 @@ import {
   FileExportIcon,
   Invoice01Icon,
   MoneyBag02Icon,
+  Notification01Icon,
   PlusSignIcon,
   PurseIcon,
   ViewOffSlashIcon,
 } from "hugeicons-react";
 import { useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -82,7 +84,7 @@ export default function FinancePage() {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto max-w-7xl">
         <header className="border-border flex items-center justify-between border-b-2 pb-4">
           <div className="flex items-center gap-4">
@@ -97,13 +99,24 @@ export default function FinancePage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Button size="sm" variant={"outline"} icon={FileExportIcon}>
-              Export History
-            </Button>
-            <Button size="sm" variant={"default"} icon={PlusSignIcon}>
-              Issue Paycheck
-            </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <GlobalSearch />
+              <Button
+                variant={"ghost"}
+                size="icon-sm"
+                icon={Notification01Icon}
+              />
+            </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant={"outline"} icon={FileExportIcon}>
+                Export History
+              </Button>
+              <Button size="sm" variant={"default"} icon={PlusSignIcon}>
+                Issue Paycheck
+              </Button>
+            </div>
           </div>
         </header>
 

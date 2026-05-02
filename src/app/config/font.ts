@@ -201,6 +201,16 @@ export const bagossStandard = localFont({
   display: "swap",
 });
 
+export const spicySales = localFont({
+  src: [
+    {
+      path: "../../../public/font-family/howdybun/howdybun.regular.otf",
+      // weight: "100",
+      // style: "normal",
+    },
+  ],
+});
+
 export const bagossVF = localFont({
   src: "../../../public/font-family/bagoss/BagossCollectionVF-TRIAL.ttf",
   variable: "--font-bagoss-vf",

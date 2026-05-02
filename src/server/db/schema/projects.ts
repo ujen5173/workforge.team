@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   date,
   index,
@@ -24,7 +25,9 @@ import { user } from "./users";
 export const projects = pgTable(
   "project",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
 
     name: text("name").notNull(),
     logo: text("logo"),
@@ -68,7 +71,9 @@ export const projects = pgTable(
 export const projectMembers = pgTable(
   "project_member",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
     projectId: text("project_id")
       .notNull()
       .references(() => projects.id, { onDelete: "cascade" }),
@@ -91,7 +96,9 @@ export const projectMembers = pgTable(
 export const tasks = pgTable(
   "task",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
 
     title: text("title").notNull(),
     description: text("description"),
@@ -149,7 +156,9 @@ export const taskAssignees = pgTable(
 export const discussions = pgTable(
   "discussion",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
     title: text("title"),
     body: text("body").notNull(),
 

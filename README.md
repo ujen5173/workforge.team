@@ -4,7 +4,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./public/logo-dark.svg">
-  <img alt="Workforge" src="./public/logo-light.svg" height="40">
+  <img alt="Workforge" src="./public/logo.svg" height="40">
 </picture>
 
 <br />

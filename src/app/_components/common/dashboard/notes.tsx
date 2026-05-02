@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Calendar01Icon,
-  CheckmarkCircle02Icon,
-  Delete02Icon,
-  NoteIcon,
-} from "hugeicons-react";
+import { CheckmarkCircle02Icon, Delete02Icon, NoteIcon } from "hugeicons-react";
 import { useEffect, useState } from "react";
 
 import { Badge } from "~/components/ui/badge";
@@ -17,15 +12,12 @@ import { cn } from "~/lib/utils";
 import NewNoteDialog from "./new-note-dialog";
 
 type Priority = "urgent" | "moderate" | "low";
-type Tag = string;
 
 interface Note {
   id: string;
   title: string;
   description: string;
-  tags: Tag[];
   priority?: Priority;
-  dueDate: Date;
   completed: boolean;
 }
 
@@ -48,7 +40,7 @@ const Notes = () => {
     try {
       const raw = localStorage.getItem(NOTES_KEY) ?? "[]";
       const parsed = JSON.parse(raw) as Note[];
-      setNotes(parsed.map((n) => ({ ...n, dueDate: new Date(n.dueDate) })));
+      setNotes(parsed.map((n) => ({ ...n })));
     } catch {
       setNotes([]);
     }
@@ -132,7 +124,7 @@ const Notes = () => {
                 </p>
                 <p
                   className={cn(
-                    "text-xs leading-snug",
+                    "text-xs leading-snug line-clamp-2",
                     note.completed ? "text-slate-300" : "text-slate-400",
                   )}
                 >
@@ -146,15 +138,6 @@ const Notes = () => {
                   )}
                 >
                   <div className="flex flex-wrap items-center gap-1">
-                    {note.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="px-1.5 py-0 text-[10px] font-medium"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
                     {note.priority && (
                       <Badge
                         variant={PRIORITY_CONFIG[note.priority].variant}
@@ -163,19 +146,6 @@ const Notes = () => {
                         {PRIORITY_CONFIG[note.priority].label}
                       </Badge>
                     )}
-                  </div>
-                  <div className="flex shrink-0 items-center gap-1 text-[11px] text-slate-400">
-                    <Calendar01Icon size={12} />
-                    <span>
-                      {note.dueDate instanceof Date &&
-                      !isNaN(note.dueDate.getTime())
-                        ? note.dueDate.toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })
-                        : "—"}
-                    </span>
                   </div>
                 </div>
               </div>

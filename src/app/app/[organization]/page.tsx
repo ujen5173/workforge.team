@@ -16,7 +16,7 @@ const App = () => {
     const hour = new Date().getHours();
 
     if (hour >= 5 && hour < 12) {
-      return "Good Morningggg";
+      return "Good Morning";
     }
 
     if (hour >= 12 && hour < 17) {
@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <>
-      <header className="mb-4 flex items-center justify-between">
+      <header className="flex justify-between items-center mb-4 p-4 pb-0">
         <div className="flex items-center gap-2">
           <Image
             src="/images/img/avatar.png"
@@ -40,13 +40,13 @@ const App = () => {
             className="rounded-full"
           />
           <div className="flex flex-col gap-0.5">
-            <p className="text-foreground mb-0 text-sm font-semibold">
+            <p className="mb-0 font-semibold text-foreground text-sm">
               {getGreetings()}, <span className="text-primary">Ujen Basi</span>
             </p>
-            <span className="text-xs text-slate-700">CEO and Co-founder</span>
+            <span className="text-slate-700 text-xs">CEO and Co-founder</span>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex justify-end items-center gap-4">
           <div className="flex items-center gap-2">
             <GlobalSearch />
             <Button
@@ -55,7 +55,7 @@ const App = () => {
               icon={Notification01Icon}
             />
           </div>
-          <div className="bg-border mx-1 h-6 w-px"></div>
+          <div className="mx-1 bg-border w-px h-6"></div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2">
               <Button size="sm" variant={"secondary"} icon={PlusIcon}>
@@ -69,14 +69,14 @@ const App = () => {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl space-y-4 py-4">
-        <div className="grid grid-cols-3 items-start gap-4">
+      <main className="space-y-4 mx-auto p-4 max-w-7xl">
+        <div className="items-start gap-4 grid grid-cols-3">
           <Timer />
           <CurrentProject />
           <Notes />
         </div>
 
-        <div className="grid grid-cols-3 items-start gap-4">
+        <div className="items-start gap-4 grid grid-cols-3">
           <StatusTracker />
           <DashboardCalendar />
           <NextHoliday />

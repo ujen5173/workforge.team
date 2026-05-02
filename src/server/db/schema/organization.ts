@@ -8,6 +8,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
+import { sql } from "drizzle-orm";
 import {
   INVITATION_STATUS,
   LOCATION_TYPE,
@@ -18,7 +19,9 @@ import {
 import { user } from "./users";
 
 export const organization = pgTable("organization", {
-  id: text("id").primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .default(sql`uuidv7()`),
   name: text("name").notNull(),
   slug: text("slug").unique(), // subdomain: {organization}.workforge.team
   logo: text("logo"),
@@ -51,7 +54,9 @@ export const organization = pgTable("organization", {
 export const member = pgTable(
   "member",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
     organizationId: text("organization_id")
       .notNull()
       .references(() => organization.id, { onDelete: "cascade" }),
@@ -81,7 +86,6 @@ export const member = pgTable(
     startDate: date("start_date"),
     dateFormat: text("date_format"),
 
-    companyEmail: text("company_email").notNull().unique(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
@@ -99,7 +103,9 @@ export const member = pgTable(
 export const invitation = pgTable(
   "invitation",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
     organizationId: text("organization_id")
       .notNull()
       .references(() => organization.id, { onDelete: "cascade" }),

@@ -3,7 +3,6 @@
 import { useForm } from "@tanstack/react-form";
 import { EyeIcon, Key01Icon } from "hugeicons-react";
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,7 +18,9 @@ import {
   FieldLabel,
 } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
+import { env } from "~/env";
 import { siteConfig } from "~/lib/site";
+import { authClient } from "~/server/better-auth/client";
 
 const passwordRules = z
   .string()
@@ -50,18 +51,17 @@ const formSchema = z.object({
     .email("Please enter a valid email address.")
     .max(254, "Email must be at most 254 characters."),
   password: passwordRules.or(z.literal("")),
-  firstName: nameField("First Name"),
-  lastName: nameField("Last Name"),
+  name: nameField("Name"),
 });
 
 const SignupPage = () => {
   const [proceed, setProceed] = useState(false);
+
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
-      firstName: "",
-      lastName: "",
+      name: "",
     },
     validators: {
       onSubmit: formSchema,
@@ -71,6 +71,14 @@ const SignupPage = () => {
         setProceed(true);
         return;
       }
+
+      const { data, error } = await authClient.signUp.email({
+        ...value,
+        image: `${env.NEXT_PUBLIC_APP_URL}/image.png`,
+        callbackURL: `${env.NEXT_PUBLIC_APP_URL}/callback`,
+      });
+
+      console.log({ data, error });
 
       toast.success("Form submitted successfully");
     },
@@ -85,7 +93,6 @@ const SignupPage = () => {
 
     const length = Math.floor(Math.random() * 9) + 8;
 
-    // Guarantee at least one of each required character type
     const required = [
       uppercase[Math.floor(Math.random() * uppercase.length)],
       lowercase[Math.floor(Math.random() * lowercase.length)],
@@ -133,26 +140,6 @@ const SignupPage = () => {
           <p className="text-foreground mb-6 text-sm">
             Sign up using the form, or the Google account you use at work
           </p>
-
-          <Button
-            variant="oauth"
-            icon={() => (
-              <Image
-                src={"/images/svg/google.svg"}
-                alt="Google Logo"
-                width={16}
-                height={16}
-              />
-            )}
-          >
-            Sign up using Google
-          </Button>
-
-          <div className="my-4 flex items-center gap-3 opacity-60">
-            <div className="bg-border h-0.5 flex-1" />
-            <p>or</p>
-            <div className="bg-border h-0.5 flex-1" />
-          </div>
 
           <form
             onSubmit={(e) => {
@@ -263,7 +250,7 @@ const SignupPage = () => {
                   </form.Field>
                 </FieldGroup>
                 <FieldGroup>
-                  <form.Field name="firstName">
+                  <form.Field name="name">
                     {(field) => {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid;
@@ -271,7 +258,7 @@ const SignupPage = () => {
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor={field.name}>
-                            First Name
+                            Full Name
                           </FieldLabel>
                           <Input
                             id={field.name}
@@ -281,39 +268,8 @@ const SignupPage = () => {
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
-                            placeholder="John"
+                            placeholder="John Doe"
                             autoComplete="given-name"
-                            className="tracking-wider"
-                          />
-                          {isInvalid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                        </Field>
-                      );
-                    }}
-                  </form.Field>
-                </FieldGroup>
-                <FieldGroup>
-                  <form.Field name="lastName">
-                    {(field) => {
-                      const isInvalid =
-                        field.state.meta.isTouched && !field.state.meta.isValid;
-
-                      return (
-                        <Field data-invalid={isInvalid}>
-                          <FieldLabel htmlFor={field.name}>
-                            Last Name
-                          </FieldLabel>
-                          <Input
-                            id={field.name}
-                            name={field.name}
-                            type="text"
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            aria-invalid={isInvalid}
-                            placeholder="Doe"
-                            autoComplete="family-name"
                             className="tracking-wider"
                           />
                           {isInvalid && (

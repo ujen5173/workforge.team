@@ -90,7 +90,7 @@ const TaskManagementBoard = () => {
   });
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto max-w-7xl">
         <header className="border-border flex items-center justify-between border-b-2 pb-4">
           <div className="flex items-center gap-4">

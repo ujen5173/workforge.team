@@ -5,7 +5,7 @@ import { env } from "~/env";
 export const siteConfig = {
   name: "WorkForge",
   fullName: "WorkForge.team",
-  tagline: "Where great teams get work done.",
+  spirit: "Keep building.",
   description:
     "WorkForge is an all-in-one employee management portal. Track tasks, monitor performance, manage leaves, and reward your best people.",
   url: `${env.NEXT_PUBLIC_APP_URL}`,
@@ -52,7 +52,7 @@ export function constructMetadata({
 }: MetadataOptions = {}): Metadata {
   const fullTitle = title
     ? `${title} | ${siteConfig.name}`
-    : `${siteConfig.name} — ${siteConfig.tagline}`;
+    : `${siteConfig.name} — ${siteConfig.spirit}`;
 
   const mergedKeywords = [...new Set([...siteConfig.keywords, ...keywords])];
 
@@ -78,7 +78,7 @@ export function constructMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+          alt: `${siteConfig.name} — ${siteConfig.spirit}`,
         },
       ],
     },

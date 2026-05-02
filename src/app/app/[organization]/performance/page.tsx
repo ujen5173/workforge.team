@@ -12,12 +12,14 @@ import {
   Clock01Icon,
   Edit01Icon,
   FolderLibraryIcon,
+  Notification01Icon,
   PlusSignIcon,
   SparklesIcon,
   Target01Icon,
   UserGroupIcon,
 } from "hugeicons-react";
 import { useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -84,8 +86,6 @@ interface Goal {
   targetDate: string;
   note?: string;
 }
-
-// ─── Mock Data ──────────────────────────────────────────────────────────────────
 
 const periodData: Record<
   Period,
@@ -254,8 +254,6 @@ const initialGoals: Goal[] = [
   },
 ];
 
-// ─── Helpers ────────────────────────────────────────────────────────────────────
-
 function getScoreColor(score: number) {
   if (score >= 90) return "text-emerald-600";
   if (score >= 75) return "text-primary";
@@ -306,8 +304,6 @@ function getHeatCell(count: number) {
   if (count <= 6) return "bg-primary/70";
   return "bg-primary";
 }
-
-// ─── Score Arc ──────────────────────────────────────────────────────────────────
 
 function ScoreArc({ score }: { score: number }) {
   const r = 52;
@@ -365,8 +361,6 @@ function ScoreArc({ score }: { score: number }) {
   );
 }
 
-// ─── Heatmap ────────────────────────────────────────────────────────────────────
-
 function Heatmap({ data }: { data: { date: string; count: number }[] }) {
   const firstDate = new Date(data[0]!.date);
   const startDow = firstDate.getDay();
@@ -398,7 +392,6 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
   return (
     <TooltipProvider delayDuration={0}>
       <div className="flex gap-2">
-        {/* Day labels */}
         <div className="flex flex-col gap-[3px] pt-[22px]">
           {dayLabels.map((d, i) => (
             <div
@@ -410,9 +403,7 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="flex flex-col gap-1 overflow-x-auto">
-          {/* Month labels */}
           <div className="relative flex h-[18px] gap-[3px]">
             {weeks.map((_, wi) => {
               const lbl = monthLabels.find((m) => m.col === wi);
@@ -428,7 +419,6 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
             })}
           </div>
 
-          {/* Cells */}
           <div className="flex gap-[3px]">
             {weeks.map((week, wi) => (
               <div key={wi} className="flex flex-col gap-[3px]">
@@ -462,7 +452,6 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
         </div>
       </div>
 
-      {/* Legend */}
       <div className="mt-3 flex items-center gap-1.5">
         <span className="text-[10px] text-muted-foreground">Less</span>
         {[
@@ -479,8 +468,6 @@ function Heatmap({ data }: { data: { date: string; count: number }[] }) {
     </TooltipProvider>
   );
 }
-
-// ─── Donut ──────────────────────────────────────────────────────────────────────
 
 function Donut({
   completed,
@@ -535,8 +522,6 @@ function Donut({
   );
 }
 
-// ─── Page ───────────────────────────────────────────────────────────────────────
-
 export default function PerformancePage() {
   const [period, setPeriod] = useState<Period>("quarter");
   const [goals, setGoals] = useState<Goal[]>(initialGoals);
@@ -585,9 +570,8 @@ export default function PerformancePage() {
   }
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        {/* ── Header ───────────────────────────────────────────────────────── */}
         <header className="border-border flex flex-wrap items-center justify-between gap-3 border-b-2 pb-4">
           <div className="flex items-center gap-4">
             <div className="border-primary/40 bg-primary/5 rounded-full border p-3">
@@ -602,32 +586,41 @@ export default function PerformancePage() {
             </div>
           </div>
 
-          {/* Period toggle */}
-          <div className="flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-0.5">
-            {(["month", "quarter", "year"] as Period[]).map((p) => (
-              <button
-                key={p}
-                onClick={() => setPeriod(p)}
-                className={cn(
-                  "rounded-md px-3.5 py-1.5 text-sm font-medium transition-all duration-150",
-                  period === p
-                    ? "bg-white text-slate-800 shadow-sm"
-                    : "text-muted-foreground hover:text-slate-700",
-                )}
-              >
-                {p === "month"
-                  ? "This Month"
-                  : p === "quarter"
-                    ? "This Quarter"
-                    : "This Year"}
-              </button>
-            ))}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <GlobalSearch />
+              <Button
+                variant={"ghost"}
+                size="icon-sm"
+                icon={Notification01Icon}
+              />
+            </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
+
+            <div className="flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-0.5">
+              {(["month", "quarter", "year"] as Period[]).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPeriod(p)}
+                  className={cn(
+                    "rounded-md px-3.5 py-1.5 text-sm font-medium transition-all duration-150",
+                    period === p
+                      ? "bg-white text-slate-800 shadow-sm"
+                      : "text-muted-foreground hover:text-slate-700",
+                  )}
+                >
+                  {p === "month"
+                    ? "This Month"
+                    : p === "quarter"
+                      ? "This Quarter"
+                      : "This Year"}
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 
-        {/* ── Score Hero ───────────────────────────────────────────────────── */}
         <section className="grid gap-4 md:grid-cols-[auto_1fr]">
-          {/* Left: arc + label */}
           <Card className="flex flex-col items-center justify-center gap-3 px-8 py-6">
             <ScoreArc score={score} />
             <div className="flex flex-col items-center gap-1.5 text-center">
@@ -656,7 +649,6 @@ export default function PerformancePage() {
             </div>
           </Card>
 
-          {/* Right: insight + metric mini-list */}
           <div className="flex flex-col gap-4">
             <Card className="gap-0">
               <CardHeader className="pb-3">
@@ -729,7 +721,6 @@ export default function PerformancePage() {
           </div>
         </section>
 
-        {/* ── Activity Heatmap ─────────────────────────────────────────────── */}
         <section>
           <Card className="gap-0">
             <CardHeader className="pb-3">
@@ -751,9 +742,7 @@ export default function PerformancePage() {
           </Card>
         </section>
 
-        {/* ── Tasks + Projects ─────────────────────────────────────────────── */}
         <section className="grid gap-4 lg:grid-cols-2">
-          {/* Tasks */}
           <Card className="gap-0">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm">
@@ -768,7 +757,6 @@ export default function PerformancePage() {
             </CardHeader>
             <Separator />
             <CardContent className="pt-4 space-y-4">
-              {/* Stat pills */}
               <div className="grid grid-cols-4 gap-2">
                 {[
                   {
@@ -806,7 +794,6 @@ export default function PerformancePage() {
                 ))}
               </div>
 
-              {/* Donut + legend */}
               <div className="flex items-center gap-5">
                 <Donut
                   completed={taskStats.completed}
@@ -851,7 +838,6 @@ export default function PerformancePage() {
 
               <Separator />
 
-              {/* Recent tasks */}
               <div>
                 <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-slate-400">
                   Recently Completed
@@ -881,7 +867,6 @@ export default function PerformancePage() {
             </CardContent>
           </Card>
 
-          {/* Projects */}
           <Card className="gap-0">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm">
@@ -896,7 +881,6 @@ export default function PerformancePage() {
             </CardHeader>
             <Separator />
             <CardContent className="pt-4 space-y-4">
-              {/* Stats */}
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { label: "Active", val: 3, color: "text-primary" },
@@ -923,7 +907,6 @@ export default function PerformancePage() {
 
               <Separator />
 
-              {/* Project rows */}
               <div className="space-y-3.5">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
                   Active Projects
@@ -961,7 +944,6 @@ export default function PerformancePage() {
           </Card>
         </section>
 
-        {/* ── Goals ────────────────────────────────────────────────────────── */}
         <section>
           <Card className="gap-0">
             <CardHeader className="pb-3">
@@ -1032,7 +1014,6 @@ export default function PerformancePage() {
             <Separator />
 
             <CardContent className="pt-4 space-y-3">
-              {/* Active goals */}
               {activeGoals.length === 0 && (
                 <p className="py-6 text-center text-sm text-muted-foreground">
                   No active goals. Add one to start tracking your growth.
@@ -1073,7 +1054,6 @@ export default function PerformancePage() {
                     </div>
                   </div>
 
-                  {/* Progress bar */}
                   <div className="space-y-1">
                     <div className="flex justify-between text-[11px]">
                       <span className="text-muted-foreground">Progress</span>
@@ -1092,7 +1072,6 @@ export default function PerformancePage() {
                     />
                   </div>
 
-                  {/* Note */}
                   {editNoteId === goal.id ? (
                     <div className="space-y-2">
                       <textarea
@@ -1143,7 +1122,6 @@ export default function PerformancePage() {
                 </div>
               ))}
 
-              {/* Completed goals collapsible */}
               {doneGoals.length > 0 && (
                 <>
                   <Separator />

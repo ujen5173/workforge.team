@@ -1,6 +1,6 @@
 "use client";
 
-import { UserGroupIcon } from "hugeicons-react";
+import { Notification01Icon, UserGroupIcon } from "hugeicons-react";
 import {
   FilterIcon,
   MailIcon,
@@ -10,6 +10,7 @@ import {
   UserPlusIcon,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -107,9 +108,9 @@ export default function TeamPage() {
   }, [query, departmentFilter]);
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
-        <header className="border-border flex flex-wrap items-start justify-between gap-3 border-b pb-4">
+        <header className="border-border flex flex-wrap items-center justify-between gap-3 border-b pb-4">
           <div className="flex items-center gap-4">
             <div className="border-primary/40 bg-primary/5 rounded-full border p-3">
               <UserGroupIcon className="text-primary size-6" />
@@ -121,13 +122,24 @@ export default function TeamPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" icon={MailIcon}>
-              Invite by email
-            </Button>
-            <Button size="sm" icon={UserPlusIcon}>
-              Add team member
-            </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <GlobalSearch />
+              <Button
+                variant={"ghost"}
+                size="icon-sm"
+                icon={Notification01Icon}
+              />
+            </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" icon={MailIcon}>
+                Invite by email
+              </Button>
+              <Button size="sm" icon={UserPlusIcon}>
+                Add team member
+              </Button>
+            </div>
           </div>
         </header>
 

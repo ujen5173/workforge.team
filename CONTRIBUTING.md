@@ -9,16 +9,17 @@ Thank you for your interest in contributing to **WorkForge** — a multi-tenant 
 1. [Code of Conduct](#code-of-conduct)
 2. [Project Overview](#project-overview)
 3. [Getting Started](#getting-started)
-4. [Branch Strategy](#branch-strategy)
-5. [Commit Conventions](#commit-conventions)
-6. [Pull Request Process](#pull-request-process)
-7. [Architecture & Structure](#architecture--structure)
-8. [Role & Access Model](#role--access-model)
-9. [Feature Modules](#feature-modules)
-10. [Coding Standards](#coding-standards)
-11. [Testing](#testing)
-12. [Multi-Tenancy Guidelines](#multi-tenancy-guidelines)
-13. [Reporting Issues](#reporting-issues)
+4. [AI Prompting Guidelines](#ai-prompting-guidelines)
+5. [Branch Strategy](#branch-strategy)
+6. [Commit Conventions](#commit-conventions)
+7. [Pull Request Process](#pull-request-process)
+8. [Architecture & Structure](#architecture--structure)
+9. [Role & Access Model](#role--access-model)
+10. [Feature Modules](#feature-modules)
+11. [Coding Standards](#coding-standards)
+12. [Testing](#testing)
+13. [Multi-Tenancy Guidelines](#multi-tenancy-guidelines)
+14. [Reporting Issues](#reporting-issues)
 
 ---
 
@@ -61,6 +62,10 @@ Collaboration features (notifications, chat, comments/mentions, activity feed, v
 - pnpm >= 8.x
 - Git
 - Energy, drive and motivation to build something.
+
+### AI Conventions
+
+View [AGENTS.md](./AGENTS.md) file to get AI conventions. This is a must to follow.
 
 ### Setup
 

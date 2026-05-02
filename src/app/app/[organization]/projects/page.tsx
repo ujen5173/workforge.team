@@ -5,8 +5,8 @@ import {
   KanbanIcon,
   Notification01Icon,
   PlusSignIcon,
-  Search01Icon,
 } from "hugeicons-react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { mockProjects } from "~/app/_components/common/projects-tasks/table/mock-data";
 import { ProjectsTable } from "~/app/_components/common/projects-tasks/table/projects-table";
@@ -14,7 +14,7 @@ import { Button } from "~/components/ui/button";
 
 const ProjectsTasks = () => {
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto max-w-7xl">
         <header className="border-border flex items-center justify-between border-b-2 pb-4">
           <div className="flex items-center gap-4">
@@ -31,7 +31,7 @@ const ProjectsTasks = () => {
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Button size="icon-sm" variant={"ghost"} icon={Search01Icon} />
+              <GlobalSearch />
               {/* TODO: Add interactive bell icon, like silent or not */}
               <Button
                 size="icon-sm"

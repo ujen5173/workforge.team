@@ -17,12 +17,7 @@ export type DateSlice = {
   ) => void;
 };
 
-export const createDateSlice: StateCreator<
-  DateSlice,
-  [["zustand/immer", never]],
-  [],
-  DateSlice
-> = (set) => ({
+export const createDateSlice: StateCreator<DateSlice> = (set) => ({
   todayBS: null,
   holidays: [],
 

@@ -1,18 +1,23 @@
 import { date, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
+import { sql } from "drizzle-orm";
 import { LEAVE_STATUS, LEAVE_TYPE } from "./enum";
-import { member } from "./organization";
+import { member, organization } from "./organization";
 
 export const leaveRequests = pgTable(
   "leave_request",
   {
-    id: text("id").primaryKey(),
+    id: text("id")
+      .primaryKey()
+      .default(sql`uuidv7()`),
 
     memberId: text("member_id")
       .notNull()
       .references(() => member.id, { onDelete: "cascade" }),
 
-    organizationId: text("organization_id").notNull(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
 
     type: LEAVE_TYPE().notNull(),
     status: LEAVE_STATUS().notNull().default("PENDING"),

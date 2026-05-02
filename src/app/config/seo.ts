@@ -43,7 +43,7 @@ type SeoOptions = {
 
 const SITE = {
   name: "WorkForge",
-  tagline: "The All-in-One Company Operating System",
+  spirit: "The All-in-One Company Operating System",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "https://workforge.team",
   description:
     "WorkForge is an all-in-one company operating system — hire, onboard, communicate, manage tasks, run payroll, and grow your team from one unified platform. Replace Rippling, Slack, Notion, and BambooHR with a single product built for companies with 5 to 500 people.",
@@ -372,7 +372,7 @@ export function constructSeo(options: SeoOptions = {}): Metadata {
     description = SITE.description,
     path = "/",
     image = SITE.og.image,
-    imageAlt = `${SITE.name} — ${SITE.tagline}`,
+    imageAlt = `${SITE.name} — ${SITE.spirit}`,
     ogType = "website",
     twitterCard = "summary_large_image",
     keywords = [],
@@ -465,7 +465,7 @@ export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE.url),
 
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
+    default: `${SITE.name} — ${SITE.spirit}`,
     template: `%s — ${SITE.name}`,
   },
 

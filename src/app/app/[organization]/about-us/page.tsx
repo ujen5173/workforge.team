@@ -1,6 +1,12 @@
 "use client";
 
 import {
+  Building02Icon,
+  FolderExportIcon,
+  Notification01Icon,
+  PlusSignIcon,
+} from "hugeicons-react";
+import {
   ArrowUpRightIcon,
   BriefcaseBusinessIcon,
   Building2Icon,
@@ -16,13 +22,13 @@ import {
   MilestoneIcon,
   NewspaperIcon,
   PlusCircleIcon,
-  ScaleIcon,
   Share2Icon,
   ShieldCheckIcon,
   TargetIcon,
   UsersIcon,
 } from "lucide-react";
 import { useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -255,542 +261,591 @@ export default function AboutUsPage() {
   >("overview");
 
   return (
-    <div className="from-background via-background to-muted/40 min-h-screen bg-linear-to-br">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
-        <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-6 shadow-sm md:p-8">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.75_0.09_200/0.18),transparent_45%)]" />
-          <div className="absolute bottom-0 left-0 h-20 w-full bg-linear-to-t from-background/50 to-transparent" />
-          <div className="relative z-10 grid gap-6 lg:grid-cols-[1.25fr_0.95fr]">
-            <div className="space-y-4">
-              <Badge className="h-6 px-3 text-[11px]" variant="secondary">
-                Workforge.team • Company Handbook
-              </Badge>
-              <h1 className="max-w-2xl text-3xl leading-tight font-semibold tracking-tight md:text-4xl">
-                Build the company operating system teams actually enjoy using
-              </h1>
-              <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
-                Workforge.team helps companies run onboarding, communication,
-                project execution, culture, and people operations in one
-                connected platform. This page gives new joiners a realistic view
-                of how we work, what we value, and where we are headed.
-              </p>
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <Button size="sm" icon={GlobeIcon}>
-                  workforge.team
-                </Button>
-                <Button size="sm" variant="outline" icon={Share2Icon}>
-                  Share company profile
-                </Button>
-              </div>
-            </div>
+    <>
+      <header className="border-border p-4 flex items-center justify-between border-b-2 pb-4">
+        <div className="flex items-center gap-4">
+          <div className="border-primary/40 bg-primary/5 rounded-full border p-3">
+            <Building02Icon className="text-primary size-6" />
+          </div>
+          <div className="">
+            <h5 className="text-slate-700">About Workforge.team</h5>
+            <p className="text-sm">
+              Get to know about the company, its culture, and spirit of what
+              drives the company.
+            </p>
+          </div>
+        </div>
 
-            <Card className="border border-border/60 bg-background/80 py-0">
-              <CardHeader className="border-b border-border/60 py-4">
-                <CardTitle className="text-sm">Company at a glance</CardTitle>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <GlobalSearch />
+            {/* TODO: Add interactive bell icon, like silent or not */}
+            <Button
+              size="icon-sm"
+              variant={"ghost"}
+              icon={Notification01Icon}
+            />
+          </div>
+          <div className="bg-border mx-1 h-6 w-px"></div>
+
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant={"ghost"} icon={FolderExportIcon}>
+              Export
+            </Button>
+            <Button size="sm" variant={"outline"} icon={PlusSignIcon}>
+              Invite People
+            </Button>
+          </div>
+        </div>
+      </header>
+      <div className="p-4 to-muted/40 min-h-screen bg-linear-to-br">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 md:px-6 md:py-8">
+          <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/90 p-6 shadow-sm md:p-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.75_0.09_200/0.18),transparent_45%)]" />
+            <div className="absolute bottom-0 left-0 h-20 w-full bg-linear-to-t from-background/50 to-transparent" />
+            <div className="relative z-10 grid gap-6 lg:grid-cols-[1.25fr_0.95fr]">
+              <div className="space-y-4">
+                <Badge className="h-6 px-3 text-[11px]" variant="secondary">
+                  Workforge.team • Company Handbook
+                </Badge>
+                <h1 className="max-w-2xl text-3xl leading-tight font-semibold tracking-tight md:text-4xl">
+                  Build the company operating system teams actually enjoy using
+                </h1>
+                <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed md:text-base">
+                  Workforge.team helps companies run onboarding, communication,
+                  project execution, culture, and people operations in one
+                  connected platform. This page gives new joiners a realistic
+                  view of how we work, what we value, and where we are headed.
+                </p>
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <Button size="sm" icon={GlobeIcon}>
+                    workforge.team
+                  </Button>
+                  <Button size="sm" variant="outline" icon={Share2Icon}>
+                    Share company profile
+                  </Button>
+                </div>
+              </div>
+
+              <Card className="border border-border/60 bg-background/80 py-0">
+                <CardHeader className="border-b border-border/60 py-4">
+                  <CardTitle className="text-sm">Company at a glance</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-2">
+                  {quickFacts.map((fact) => (
+                    <div
+                      key={fact.label}
+                      className="rounded-xl border border-border/60 bg-card/80 p-3"
+                    >
+                      <p className="text-muted-foreground text-xs">
+                        {fact.label}
+                      </p>
+                      <p className="mt-1 text-sm font-medium">{fact.value}</p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {values.map((value) => (
+              <Card
+                key={value.title}
+                className="border border-border/60 bg-card/90"
+              >
+                <CardHeader className="gap-2">
+                  <div className="bg-primary/12 text-primary inline-flex size-9 items-center justify-center rounded-xl">
+                    <value.icon className="size-4" />
+                  </div>
+                  <CardTitle className="text-base">{value.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {value.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+            <Card className="border border-border/60 bg-card/90 space-y-2">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <MilestoneIcon className="text-primary size-4" />
+                  <CardTitle className="text-base">
+                    Company milestones
+                  </CardTitle>
+                </div>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-2">
-                {quickFacts.map((fact) => (
-                  <div
-                    key={fact.label}
-                    className="rounded-xl border border-border/60 bg-card/80 p-3"
-                  >
-                    <p className="text-muted-foreground text-xs">
-                      {fact.label}
-                    </p>
-                    <p className="mt-1 text-sm font-medium">{fact.value}</p>
+              <CardContent className="space-y-4">
+                {milestoneTimeline.map((item) => (
+                  <div key={item.title} className="flex gap-3">
+                    <div className="mt-1 flex flex-col items-center">
+                      <span className="bg-primary block size-2 rounded-full" />
+                      <span className="bg-border mt-1 h-full w-px" />
+                    </div>
+                    <div className="pb-2">
+                      <p className="text-muted-foreground text-xs uppercase">
+                        {item.year}
+                      </p>
+                      <h3 className="text-sm font-medium">{item.title}</h3>
+                      <p className="text-muted-foreground mt-1 text-sm">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </CardContent>
             </Card>
-          </div>
-        </section>
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {values.map((value) => (
-            <Card
-              key={value.title}
-              className="border border-border/60 bg-card/90"
-            >
-              <CardHeader className="gap-2">
-                <div className="bg-primary/12 text-primary inline-flex size-9 items-center justify-center rounded-xl">
-                  <value.icon className="size-4" />
+            <Card className="border border-border/60 bg-card/90 space-y-2">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <TargetIcon className="text-primary size-4" />
+                  <CardTitle className="text-base">Goals this cycle</CardTitle>
                 </div>
-                <CardTitle className="text-base">{value.title}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {value.description}
-                </p>
+              <CardContent className="space-y-3">
+                {companyGoals.map((goal) => (
+                  <div
+                    key={goal}
+                    className="flex items-start gap-2 rounded-xl border border-border/60 bg-background/60 p-3"
+                  >
+                    <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
+                    <p className="text-sm leading-relaxed">{goal}</p>
+                  </div>
+                ))}
               </CardContent>
             </Card>
-          ))}
-        </section>
+          </section>
 
-        <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="border border-border/60 bg-card/90">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <MilestoneIcon className="text-primary size-4" />
-                <CardTitle className="text-base">Company milestones</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {milestoneTimeline.map((item) => (
-                <div key={item.title} className="flex gap-3">
-                  <div className="mt-1 flex flex-col items-center">
-                    <span className="bg-primary block size-2 rounded-full" />
-                    <span className="bg-border mt-1 h-full w-px" />
-                  </div>
-                  <div className="pb-2">
-                    <p className="text-muted-foreground text-xs uppercase">
-                      {item.year}
-                    </p>
-                    <h3 className="text-sm font-medium">{item.title}</h3>
-                    <p className="text-muted-foreground mt-1 text-sm">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card className="border border-border/60 bg-card/90">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <TargetIcon className="text-primary size-4" />
-                <CardTitle className="text-base">Goals this cycle</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {companyGoals.map((goal) => (
-                <div
-                  key={goal}
-                  className="flex items-start gap-2 rounded-xl border border-border/60 bg-background/60 p-3"
-                >
-                  <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
-                  <p className="text-sm leading-relaxed">{goal}</p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </section>
-
-        <section>
-          <Card className="border border-border/60 bg-card/90">
-            <CardHeader className="border-b border-border/60">
-              <CardTitle className="text-base">Company deep dive</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-4">
-              <div className="border-border mb-5 flex space-x-2 overflow-x-auto border-b pb-px sm:space-x-6">
-                <button
-                  onClick={() => setActiveTab("overview")}
-                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeTab === "overview"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                  }`}
-                >
-                  Overview
-                </button>
-                <button
-                  onClick={() => setActiveTab("culture")}
-                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeTab === "culture"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                  }`}
-                >
-                  Culture & ways of working
-                </button>
-                <button
-                  onClick={() => setActiveTab("careers")}
-                  className={`flex items-center gap-1.5 border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeTab === "careers"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                  }`}
-                >
-                  Careers
-                  <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                    {openings.length}
-                  </span>
-                </button>
-                <button
-                  onClick={() => setActiveTab("policies")}
-                  className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeTab === "policies"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                  }`}
-                >
-                  Policies
-                </button>
-                <button
-                  onClick={() => setActiveTab("updates")}
-                  className={`flex items-center gap-1.5 border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeTab === "updates"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                  }`}
-                >
-                  Updates
-                  <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                    {companyNews.length}
-                  </span>
-                </button>
-              </div>
-
-              {activeTab === "overview" && (
-                <div className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
-                  <Card
-                    size="sm"
-                    className="border border-border/60 bg-background/70"
+          <section>
+            <Card className="border border-border/60 bg-card/90 space-y-2">
+              <CardHeader className="border-b border-border/60">
+                <CardTitle className="text-base">Company deep dive</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <div className="border-border mb-5 flex space-x-2 overflow-x-auto border-b pb-px sm:space-x-6">
+                  <button
+                    onClick={() => setActiveTab("overview")}
+                    className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      activeTab === "overview"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
                   >
-                    <CardHeader>
-                      <CardTitle className="text-sm">Founder message</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3 text-sm leading-relaxed">
-                      <p>
-                        We started Workforge because teams were forced to run
-                        critical operations across disconnected tools. That made
-                        work slower, less transparent, and harder for people to
-                        trust.
-                      </p>
-                      <p className="text-muted-foreground">
-                        Our direction is simple: one platform for company
-                        operations from day one to day done. New joiners should
-                        feel this in every product decision we make.
-                      </p>
-                      <p className="text-muted-foreground">
-                        We are still early, and we are honest about that. We
-                        move fast, but we do not compromise on integrity, user
-                        trust, and long-term product quality.
-                      </p>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    size="sm"
-                    className="border border-border/60 bg-background/70"
+                    Overview
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("culture")}
+                    className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      activeTab === "culture"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
                   >
-                    <CardHeader>
-                      <CardTitle className="text-sm">
-                        New joiner journey
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {joinerJourney.map((item) => (
-                        <div
-                          key={item.week}
-                          className="rounded-xl border border-border/60 bg-card/80 p-3"
-                        >
-                          <p className="text-xs font-semibold uppercase">
-                            {item.week}
-                          </p>
-                          <p className="mt-1 text-sm font-medium">
-                            {item.goal}
-                          </p>
-                          <p className="text-muted-foreground mt-1 text-sm">
-                            {item.detail}
-                          </p>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                    Culture & ways of working
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("careers")}
+                    className={`flex items-center gap-1.5 border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      activeTab === "careers"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
+                  >
+                    Careers
+                    <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                      {openings.length}
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("policies")}
+                    className={`border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      activeTab === "policies"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
+                  >
+                    Policies
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("updates")}
+                    className={`flex items-center gap-1.5 border-b-2 px-1 pb-3 text-sm font-medium whitespace-nowrap transition-colors ${
+                      activeTab === "updates"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
+                  >
+                    Updates
+                    <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                      {companyNews.length}
+                    </span>
+                  </button>
                 </div>
-              )}
 
-              {activeTab === "culture" && (
-                <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
-                  <div className="grid gap-3">
-                    {culturePractices.map((practice) => (
-                      <Card
-                        key={practice.title}
-                        size="sm"
-                        className="border border-border/60 bg-background/70"
-                      >
-                        <CardHeader className="pb-1">
-                          <CardTitle className="text-sm">
-                            {practice.title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground text-sm">
-                            {practice.description}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                  <Card className="border border-border/60 bg-background/70">
-                    <CardHeader>
-                      <CardTitle className="text-sm">
-                        What success means
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3 text-sm">
-                      <div className="flex items-start gap-2">
-                        <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
-                        Deliver measurable outcomes, not only activity.
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
-                        Raise risks early with clear proposed solutions.
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
-                        Make decisions with customer impact and company context.
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
-                        Support teammates and document decisions clearly.
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-
-              {activeTab === "careers" && (
-                <div className="space-y-4">
-                  <div className="grid gap-3 md:grid-cols-3">
-                    {hiringTracks.map((track) => (
-                      <Card
-                        key={track.title}
-                        size="sm"
-                        className="border border-border/60 bg-background/70"
-                      >
-                        <CardHeader>
-                          <div className="flex items-center gap-2">
-                            <BriefcaseBusinessIcon className="size-4 text-primary" />
-                            <CardTitle className="text-sm">
-                              {track.title}
-                            </CardTitle>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground text-sm">
-                            {track.detail}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <Card className="border border-border/60 bg-background/70 py-0">
-                    <CardHeader className="border-b border-border/60 py-4">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <CardTitle className="text-sm">
-                          Open positions
-                        </CardTitle>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            size="xs"
-                            variant="outline"
-                            icon={PlusCircleIcon}
-                          >
-                            Add opening
-                          </Button>
-                          <Button size="xs" variant="outline" icon={Share2Icon}>
-                            Share all
-                          </Button>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="py-3">
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Role</TableHead>
-                            <TableHead>Team</TableHead>
-                            <TableHead>Type</TableHead>
-                            <TableHead>Location</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Referrals</TableHead>
-                            <TableHead className="text-right">
-                              Actions
-                            </TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {openings.map((opening) => (
-                            <TableRow key={opening.role}>
-                              <TableCell className="font-medium">
-                                {opening.role}
-                              </TableCell>
-                              <TableCell>{opening.team}</TableCell>
-                              <TableCell>{opening.type}</TableCell>
-                              <TableCell>{opening.location}</TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant={
-                                    opening.status === "Open"
-                                      ? "default"
-                                      : "secondary"
-                                  }
-                                  className="h-5 text-[10px]"
-                                >
-                                  {opening.status}
-                                </Badge>
-                              </TableCell>
-                              <TableCell>{opening.referrals}</TableCell>
-                              <TableCell>
-                                <div className="flex justify-end gap-1.5">
-                                  <Button
-                                    size="xs"
-                                    variant="ghost"
-                                    icon={Share2Icon}
-                                  >
-                                    Share
-                                  </Button>
-                                  <Button
-                                    size="xs"
-                                    variant="ghost"
-                                    icon={UsersIcon}
-                                  >
-                                    Refer
-                                  </Button>
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-
-              {activeTab === "policies" && (
-                <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
-                  <div className="grid gap-3">
-                    {rulesAndPolicies.map((rule) => (
-                      <div
-                        key={rule}
-                        className="flex items-start gap-2 rounded-xl border border-border/60 bg-background/70 p-3"
-                      >
-                        <ShieldCheckIcon className="mt-0.5 size-4 text-primary" />
-                        <p className="text-sm leading-relaxed">{rule}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <Card className="border border-border/60 bg-background/70">
-                    <CardHeader>
-                      <CardTitle className="text-sm">
-                        Policy ownership
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <LandmarkIcon className="size-4 text-primary" />
-                        Legal and compliance: policy review cadence.
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <UsersIcon className="size-4 text-primary" />
-                        People team: conduct, leave, and grievance process.
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Building2Icon className="size-4 text-primary" />
-                        Founders: final accountability for policy enforcement.
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-
-              {activeTab === "updates" && (
-                <div className="grid gap-3 md:grid-cols-3">
-                  {companyNews.map((news) => (
+                {activeTab === "overview" && (
+                  <div className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
                     <Card
-                      key={news.title}
                       size="sm"
                       className="border border-border/60 bg-background/70"
                     >
-                      <CardHeader className="gap-2">
-                        <div className="flex items-center justify-between gap-2">
-                          <Badge
-                            variant="outline"
-                            className="w-fit text-[11px]"
-                          >
-                            {news.category}
-                          </Badge>
-                          <span className="text-muted-foreground text-xs">
-                            {news.date}
-                          </span>
-                        </div>
-                        <CardTitle className="text-sm">{news.title}</CardTitle>
+                      <CardHeader>
+                        <CardTitle className="text-sm">
+                          Founder message
+                        </CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-3">
-                        <p className="text-muted-foreground text-sm">
-                          {news.description}
+                      <CardContent className="space-y-3 text-sm leading-relaxed">
+                        <p>
+                          We started Workforge because teams were forced to run
+                          critical operations across disconnected tools. That
+                          made work slower, less transparent, and harder for
+                          people to trust.
                         </p>
-                        <Button
-                          size="xs"
-                          variant="ghost"
-                          icon={ArrowUpRightIcon}
-                          className="px-0"
-                        >
-                          Read full update
-                        </Button>
+                        <p className="text-muted-foreground">
+                          Our direction is simple: one platform for company
+                          operations from day one to day done. New joiners
+                          should feel this in every product decision we make.
+                        </p>
+                        <p className="text-muted-foreground">
+                          We are still early, and we are honest about that. We
+                          move fast, but we do not compromise on integrity, user
+                          trust, and long-term product quality.
+                        </p>
                       </CardContent>
                     </Card>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </section>
 
-        <section className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
-          <Card className="border border-border/60 bg-card/90">
-            <CardHeader>
-              <CardTitle className="text-base">Company resources</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-3 md:grid-cols-2">
-              {companyResources.map((resource) => (
-                <div
-                  key={resource.label}
-                  className="group rounded-xl border border-border/60 bg-background/70 p-3 transition-colors hover:bg-background"
-                >
-                  <p className="flex items-center gap-2 text-sm font-medium">
-                    <resource.icon className="size-4 text-primary" />
-                    {resource.label}
-                  </p>
-                  <p className="text-muted-foreground mt-1 text-sm">
-                    {resource.value}
-                  </p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+                    <Card
+                      size="sm"
+                      className="border border-border/60 bg-background/70"
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-sm">
+                          New joiner journey
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        {joinerJourney.map((item) => (
+                          <div
+                            key={item.week}
+                            className="rounded-xl border border-border/60 bg-card/80 p-3"
+                          >
+                            <p className="text-xs font-semibold uppercase">
+                              {item.week}
+                            </p>
+                            <p className="mt-1 text-sm font-medium">
+                              {item.goal}
+                            </p>
+                            <p className="text-muted-foreground mt-1 text-sm">
+                              {item.detail}
+                            </p>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
 
-          <Card className="border border-border/60 bg-card/90">
-            <CardHeader>
-              <CardTitle className="text-base">
-                Contact and operating details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <MapPinIcon className="size-4 text-primary" />
-                Kathmandu, Nepal • distributed team model
-              </div>
-              <div className="flex items-center gap-2">
-                <CalendarDaysIcon className="size-4 text-primary" />
-                Weekly all-hands: Friday, 5:00 PM NPT
-              </div>
-              <div className="flex items-center gap-2">
-                <MessageSquareIcon className="size-4 text-primary" />
-                Internal updates channel: #announcements
-              </div>
-              <div className="flex items-center gap-2">
-                <NewspaperIcon className="size-4 text-primary" />
-                Monthly strategy memo shared by founders
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+                {activeTab === "culture" && (
+                  <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
+                    <div className="grid gap-3">
+                      {culturePractices.map((practice) => (
+                        <Card
+                          key={practice.title}
+                          size="sm"
+                          className="border border-border/60 bg-background/70"
+                        >
+                          <CardHeader className="pb-1">
+                            <CardTitle className="text-sm">
+                              {practice.title}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-muted-foreground text-sm">
+                              {practice.description}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                    <Card className="border border-border/60 bg-background/70">
+                      <CardHeader>
+                        <CardTitle className="text-sm">
+                          What success means
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
+                          Deliver measurable outcomes, not only activity.
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
+                          Raise risks early with clear proposed solutions.
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
+                          Make decisions with customer impact and company
+                          context.
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CircleCheckBigIcon className="mt-0.5 size-4 text-success" />
+                          Support teammates and document decisions clearly.
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+
+                {activeTab === "careers" && (
+                  <div className="space-y-4">
+                    <div className="grid gap-3 md:grid-cols-3">
+                      {hiringTracks.map((track) => (
+                        <Card
+                          key={track.title}
+                          size="sm"
+                          className="border border-border/60 bg-background/70"
+                        >
+                          <CardHeader>
+                            <div className="flex items-center gap-2">
+                              <BriefcaseBusinessIcon className="size-4 text-primary" />
+                              <CardTitle className="text-sm">
+                                {track.title}
+                              </CardTitle>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-muted-foreground text-sm">
+                              {track.detail}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+
+                    <Card className="border border-border/60 bg-background/70 py-0">
+                      <CardHeader className="border-b border-border/60 py-4">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <CardTitle className="text-sm">
+                            Open positions
+                          </CardTitle>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              size="xs"
+                              variant="outline"
+                              icon={PlusCircleIcon}
+                            >
+                              Add opening
+                            </Button>
+                            <Button
+                              size="xs"
+                              variant="outline"
+                              icon={Share2Icon}
+                            >
+                              Share all
+                            </Button>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="py-3">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Role</TableHead>
+                              <TableHead>Team</TableHead>
+                              <TableHead>Type</TableHead>
+                              <TableHead>Location</TableHead>
+                              <TableHead>Status</TableHead>
+                              <TableHead>Referrals</TableHead>
+                              <TableHead className="text-right">
+                                Actions
+                              </TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {openings.map((opening) => (
+                              <TableRow key={opening.role}>
+                                <TableCell className="font-medium">
+                                  {opening.role}
+                                </TableCell>
+                                <TableCell>{opening.team}</TableCell>
+                                <TableCell>{opening.type}</TableCell>
+                                <TableCell>{opening.location}</TableCell>
+                                <TableCell>
+                                  <Badge
+                                    variant={
+                                      opening.status === "Open"
+                                        ? "default"
+                                        : "secondary"
+                                    }
+                                    className="h-5 text-[10px]"
+                                  >
+                                    {opening.status}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>{opening.referrals}</TableCell>
+                                <TableCell>
+                                  <div className="flex justify-end gap-1.5">
+                                    <Button
+                                      size="xs"
+                                      variant="ghost"
+                                      icon={Share2Icon}
+                                    >
+                                      Share
+                                    </Button>
+                                    <Button
+                                      size="xs"
+                                      variant="ghost"
+                                      icon={UsersIcon}
+                                    >
+                                      Refer
+                                    </Button>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+
+                {activeTab === "policies" && (
+                  <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
+                    <div className="grid gap-3">
+                      {rulesAndPolicies.map((rule) => (
+                        <div
+                          key={rule}
+                          className="flex items-start gap-2 rounded-xl border border-border/60 bg-background/70 p-3"
+                        >
+                          <ShieldCheckIcon className="mt-0.5 size-4 text-primary" />
+                          <p className="text-sm leading-relaxed">{rule}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <Card className="border border-border/60 bg-background/70">
+                      <CardHeader>
+                        <CardTitle className="text-sm">
+                          Policy ownership
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <LandmarkIcon className="size-4 text-primary" />
+                          Legal and compliance: policy review cadence.
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <UsersIcon className="size-4 text-primary" />
+                          People team: conduct, leave, and grievance process.
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Building2Icon className="size-4 text-primary" />
+                          Founders: final accountability for policy enforcement.
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+
+                {activeTab === "updates" && (
+                  <div className="grid gap-3 md:grid-cols-3">
+                    {companyNews.map((news) => (
+                      <Card
+                        key={news.title}
+                        size="sm"
+                        className="border border-border/60 bg-background/70"
+                      >
+                        <CardHeader className="gap-2">
+                          <div className="flex items-center justify-between gap-2">
+                            <Badge
+                              variant="outline"
+                              className="w-fit text-[11px]"
+                            >
+                              {news.category}
+                            </Badge>
+                            <span className="text-muted-foreground text-xs">
+                              {news.date}
+                            </span>
+                          </div>
+                          <CardTitle className="text-sm">
+                            {news.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <p className="text-muted-foreground text-sm">
+                            {news.description}
+                          </p>
+                          <Button
+                            size="xs"
+                            variant="ghost"
+                            icon={ArrowUpRightIcon}
+                            className="px-0"
+                          >
+                            Read full update
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
+            <Card className="border border-border/60 bg-card/90 space-y-2">
+              <CardHeader>
+                <CardTitle className="text-base">Company resources</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-3 md:grid-cols-2">
+                {companyResources.map((resource) => (
+                  <div
+                    key={resource.label}
+                    className="group rounded-xl border border-border/60 bg-background/70 p-3 transition-colors hover:bg-background"
+                  >
+                    <p className="flex items-center gap-2 text-sm font-medium">
+                      <resource.icon className="size-4 text-primary" />
+                      {resource.label}
+                    </p>
+                    <p className="text-muted-foreground mt-1 text-sm">
+                      {resource.value}
+                    </p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card className="border border-border/60 bg-card/90 space-y-2">
+              <CardHeader>
+                <CardTitle className="text-base">
+                  Contact and operating details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <MapPinIcon className="size-4 text-primary" />
+                  Kathmandu, Nepal • distributed team model
+                </div>
+                <div className="flex items-center gap-2">
+                  <CalendarDaysIcon className="size-4 text-primary" />
+                  Weekly all-hands: Friday, 5:00 PM NPT
+                </div>
+                <div className="flex items-center gap-2">
+                  <MessageSquareIcon className="size-4 text-primary" />
+                  Internal updates channel: #announcements
+                </div>
+                <div className="flex items-center gap-2">
+                  <NewspaperIcon className="size-4 text-primary" />
+                  Monthly strategy memo shared by founders
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

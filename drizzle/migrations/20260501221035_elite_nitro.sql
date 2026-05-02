@@ -8,7 +8,7 @@ CREATE TYPE "public"."pay_structure" AS ENUM('MONTHLY', 'WEEKLY', 'BI_WEEKLY');-
 CREATE TYPE "public"."priority_level" AS ENUM('CRITICAL', 'HIGH', 'MEDIUM', 'LOW');--> statement-breakpoint
 CREATE TYPE "public"."project_member_role" AS ENUM('MANAGER', 'CONTRIBUTOR', 'VIEWER');--> statement-breakpoint
 CREATE TYPE "public"."project_status" AS ENUM('ACTIVE', 'PENDING', 'COMPLETED', 'ON_HOLD');--> statement-breakpoint
-CREATE TYPE "public"."role" AS ENUM('OWNER', 'HR', 'EMPLOYEE', 'MANAGER', 'FINANCE_MANAGER');--> statement-breakpoint
+CREATE TYPE "public"."member_role" AS ENUM('OWNER', 'EMPLOYEE', 'MANAGER');--> statement-breakpoint
 CREATE TYPE "public"."salary_type" AS ENUM('FIXED', 'HOURLY');--> statement-breakpoint
 CREATE TYPE "public"."task_status" AS ENUM('TODO', 'IN_PROGRESS', 'NEED_REVIEW', 'BLOCKED', 'ON_HOLD', 'COMPLETED');--> statement-breakpoint
 CREATE TABLE "leave_request" (
@@ -31,7 +31,7 @@ CREATE TABLE "invitation" (
 	"id" text PRIMARY KEY NOT NULL,
 	"organization_id" text NOT NULL,
 	"email" text NOT NULL,
-	"role" "role" DEFAULT 'EMPLOYEE' NOT NULL,
+	"role" "member_role" DEFAULT 'EMPLOYEE' NOT NULL,
 	"status" "invitation_status" DEFAULT 'PENDING' NOT NULL,
 	"expires_at" timestamp NOT NULL,
 	"inviter_id" text,
@@ -42,7 +42,7 @@ CREATE TABLE "member" (
 	"id" text PRIMARY KEY NOT NULL,
 	"organization_id" text NOT NULL,
 	"user_id" text NOT NULL,
-	"role" "role" DEFAULT 'EMPLOYEE' NOT NULL,
+	"role" "member_role" DEFAULT 'EMPLOYEE' NOT NULL,
 	"position" text,
 	"salary" integer,
 	"currency" text,
@@ -216,6 +216,7 @@ CREATE TABLE "verification" (
 );
 --> statement-breakpoint
 ALTER TABLE "leave_request" ADD CONSTRAINT "leave_request_member_id_member_id_fk" FOREIGN KEY ("member_id") REFERENCES "public"."member"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "leave_request" ADD CONSTRAINT "leave_request_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "leave_request" ADD CONSTRAINT "leave_request_reviewed_by_id_member_id_fk" FOREIGN KEY ("reviewed_by_id") REFERENCES "public"."member"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "invitation" ADD CONSTRAINT "invitation_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "invitation" ADD CONSTRAINT "invitation_inviter_id_member_id_fk" FOREIGN KEY ("inviter_id") REFERENCES "public"."member"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint

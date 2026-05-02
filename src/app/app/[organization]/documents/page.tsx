@@ -1,6 +1,6 @@
 "use client";
 
-import { DocumentAttachmentIcon } from "hugeicons-react";
+import { DocumentAttachmentIcon, Notification01Icon } from "hugeicons-react";
 import {
   DownloadIcon,
   FileTextIcon,
@@ -9,6 +9,7 @@ import {
   UploadIcon,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import GlobalSearch from "~/app/_components/common/global-search";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -81,9 +82,9 @@ export default function DocumentsPage() {
   }, [query]);
 
   return (
-    <main className="w-full">
+    <main className="w-full p-4">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
-        <header className="border-border flex flex-wrap items-start justify-between gap-3 border-b pb-4">
+        <header className="border-border flex flex-wrap items-center justify-between gap-3 border-b pb-4">
           <div className="flex items-center gap-4">
             <div className="border-primary/40 bg-primary/5 rounded-full border p-3">
               <DocumentAttachmentIcon className="text-primary size-6" />
@@ -96,46 +97,60 @@ export default function DocumentsPage() {
             </div>
           </div>
 
-          <Button size="sm" icon={UploadIcon}>
-            Upload document
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <GlobalSearch />
+              <Button
+                variant={"ghost"}
+                size="icon-sm"
+                icon={Notification01Icon}
+              />
+            </div>
+            <div className="bg-border mx-1 h-6 w-px"></div>
+
+            <Button size="sm" icon={UploadIcon}>
+              Upload document
+            </Button>
+          </div>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardDescription>Total documents</CardDescription>
-              <CardTitle className="text-xl">126</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">
-                Across employee and company folders
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardDescription>Employee documents</CardDescription>
-              <CardTitle className="text-xl">48</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">
-                Offer letters, contracts, onboarding docs
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardDescription>Ready to submit</CardDescription>
-              <CardTitle className="text-xl">Signed docs</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-muted-foreground text-xs">
-                Submit signed offer letters or resignation letters quickly
-              </p>
-            </CardContent>
-          </Card>
-        </section>
+        <div className="flex items-center gap-2">
+          <section className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <CardDescription>Total documents</CardDescription>
+                <CardTitle className="text-xl">126</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-muted-foreground text-xs">
+                  Across employee and company folders
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardDescription>Employee documents</CardDescription>
+                <CardTitle className="text-xl">48</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-muted-foreground text-xs">
+                  Offer letters, contracts, onboarding docs
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardDescription>Ready to submit</CardDescription>
+                <CardTitle className="text-xl">Signed docs</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <p className="text-muted-foreground text-xs">
+                  Submit signed offer letters or resignation letters quickly
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+        </div>
 
         <section>
           <Card>
