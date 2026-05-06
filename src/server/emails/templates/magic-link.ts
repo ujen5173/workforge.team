@@ -1,10 +1,16 @@
-export function getVerificationEmailHtml({ otp }: { otp: string }) {
+export function getMagicLinkEmailHtml({
+  url,
+  email,
+}: {
+  url: string;
+  email: string;
+}) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verification Code - Workforge</title>
+  <title>Sign In to Workforge</title>
 </head>
 <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8f6f3; margin: 0; padding: 40px 20px; color: #1e293b; -webkit-font-smoothing: antialiased;">
   <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
@@ -19,21 +25,37 @@ export function getVerificationEmailHtml({ otp }: { otp: string }) {
                 </h1>
               </div>
               
-              <h2 style="font-size: 18px; font-weight: 600; margin: 0 0 16px; color: #1e293b;">Verify your email address</h2>
+              <h2 style="font-size: 18px; font-weight: 600; margin: 0 0 16px; color: #1e293b;">Sign in to your account</h2>
               
               <p style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 32px;">
-                You're almost there! We need to verify your email address to continue setting up your account. Enter the following verification code when prompted.
+                Click the button below to securely sign in to your Workforge account. This link is unique to you and will expire in 24 hours.
               </p>
 
-              <div style="background-color: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 32px;">
-                <p style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 36px; font-weight: 700; letter-spacing: 12px; margin: 0; color: #009bb9; padding-left: 12px;">
-                  ${otp}
+              <div style="text-align: center; margin-bottom: 32px;">
+                <a href="${url}" style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 40px; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 16px; transition: background-color 0.2s; border: none; cursor: pointer;">
+                  Sign in to Workforge
+                </a>
+              </div>
+
+              <p style="font-size: 14px; color: #64748b; margin: 0 0 24px; text-align: center;">
+                Or copy and paste this link in your browser:
+              </p>
+
+              <div style="background-color: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 32px; word-break: break-all;">
+                <p style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; color: #475569; margin: 0; line-height: 1.4;">
+                  ${url}
                 </p>
               </div>
 
               <p style="font-size: 14px; color: #64748b; margin: 0 0 32px;">
-                This code will expire in <strong style="color: #1e293b;">5 minutes</strong>. If you didn't request this, you can safely ignore this email.
+                This link will expire in <strong style="color: #1e293b;">24 hours</strong>. If you didn't request to sign in, you can safely ignore this email. Your account will remain secure.
               </p>
+
+              <div style="background-color: #f0fdf4; border: 1px solid #dcfce7; border-radius: 12px; padding: 16px; margin-bottom: 32px;">
+                <p style="font-size: 13px; color: #166534; margin: 0; line-height: 1.5;">
+                  <strong>🔒 Security Tip:</strong> We'll never ask for your password via email. Always sign in through our official website.
+                </p>
+              </div>
 
               <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>

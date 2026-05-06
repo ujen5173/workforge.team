@@ -2,114 +2,123 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { fullSchema } from "~/app/_components/onboaring/schema";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { auth } from "~/server/better-auth";
-import { member, organization, user } from "~/server/db/schema";
+import {
+  member,
+  organization,
+  session as sessionTable,
+  user,
+} from "~/server/db/schema";
 
 export const authRouter = createTRPCRouter({
-  hello: publicProcedure.query(() => {
-    return {
-      greeting: `Hello world!`,
-    };
-  }),
-
-  sendVerificationOTP: publicProcedure
+  signUpAndSendOTP: publicProcedure
     .input(
       z.object({
         email: z.string().email(),
-        name: z.string(),
-        password: z.string(),
+        name: z.string().min(1),
+        password: z.string().min(8).max(24),
       }),
     )
-    .mutation(async ({ input }) => {
-      const { email, name, password } = input;
+    .mutation(async ({ ctx, input }) => {
       try {
-        const emailSignUp = await auth.api.signUpEmail({
-          body: { name, email, password },
+        const { email, name, password } = input;
+
+        const existing = await ctx.db.query.user.findFirst({
+          where: eq(user.email, email),
+          columns: { id: true, emailVerified: true },
         });
 
-        return emailSignUp;
+        if (existing?.emailVerified) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "An account with this email already exists.",
+          });
+        }
+
+        if (!existing) {
+          const result = await auth.api.signUpEmail({
+            body: { name, email, password },
+            headers: ctx.headers,
+          });
+
+          if (!result?.user) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to create account.",
+            });
+          }
+        }
+
+        return { success: true };
       } catch (err) {
         console.log({ err });
-      } finally {
-        const { success } = await auth.api.sendVerificationOTP({
-          body: {
-            email,
-            type: "email-verification",
-          },
+        throw new TRPCError({
+          message: "Something went wrong while runnig the code.",
+          code: "INTERNAL_SERVER_ERROR",
         });
-
-        return { success };
       }
     }),
 
-  verifyAccountAndCreateWorkspace: publicProcedure
+  createWorkspace: protectedProcedure
     .input(
-      fullSchema.merge(
-        z.object({ otp: z.string(), logo: z.string().url().nullable() }),
-      ),
+      fullSchema
+        .omit({ email: true, password: true, name: true, logo: true })
+        .merge(
+          z.object({
+            logo: z.string().url().nullable(),
+          }),
+        ),
     )
     .mutation(async ({ ctx, input }) => {
-      const {
-        otp,
-        password,
-        name,
-        email,
-        companyName,
-        jobTitle,
-        yourRole,
-        ...rest
-      } = input;
-      // Steps on creating it
-      // Verify OTP, and create the workspace
-
       try {
-        const {
-          status,
-          token,
-          user: verifiedUser,
-        } = await auth.api.verifyEmailOTP({
-          body: {
-            email,
-            otp,
-          },
-        });
+        const { companyName, jobTitle, yourRole, logo, ...rest } = input;
+        const verifiedUserId = ctx.session.user.id;
 
-        if (status) {
-          // Create the workspace
-          const org = await ctx.db
-            .insert(organization)
-            .values({
-              ...rest,
-              name: companyName,
-            })
-            .returning({
-              id: organization.id,
-            });
+        const [org] = await ctx.db
+          .insert(organization)
+          .values({
+            ...rest,
+            name: companyName,
+            logo,
+          })
+          .returning({ id: organization.id, slug: organization.slug });
 
-          const sessionUser = await ctx.db.query.user.findFirst({
-            where: eq(user.email, email),
-            select: {
-              id: true,
-            },
-          });
-
-          const mem = await ctx.db.insert(member).values({
-            organizationId: org[0]!.id,
-            role: yourRole.toUpperCase(),
-            title: jobTitle,
-            userId: sessionUser!.id,
-          });
-
-          console.log({ org, sessionUser, mem });
-        } else {
+        if (!org) {
           throw new TRPCError({
-            message: "OTP invalid",
-            code: "FORBIDDEN",
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to create workspace.",
           });
         }
+
+        await ctx.db.insert(member).values({
+          organizationId: org.id,
+          role: yourRole,
+          title: jobTitle,
+          userId: verifiedUserId,
+        });
+
+        await ctx.db
+          .update(sessionTable)
+          .set({ activeOrganizationId: org.slug })
+          .where(eq(sessionTable.token, ctx.session.session.token))
+          .returning({
+            activeOrganizationId: sessionTable.activeOrganizationId,
+          });
+
+        ctx.session.session.activeOrganizationId = org.slug;
+
+        return { success: true, orgSlug: org.slug };
       } catch (err) {
         console.log({ err });
+        throw new TRPCError({
+          message: "Something went wrong",
+          code: "INTERNAL_SERVER_ERROR",
+        });
       }
     }),
 });

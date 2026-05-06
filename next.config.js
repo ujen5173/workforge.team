@@ -1,6 +1,9 @@
 import "./src/env.js";
 
 const config = {
+  experimental: {
+    nodeMiddleware: true,
+  },
   images: {
     remotePatterns: [
       new URL("https://github.com/**"),

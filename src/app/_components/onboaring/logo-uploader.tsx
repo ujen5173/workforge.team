@@ -2,7 +2,7 @@
 
 import { Cancel01Icon, ImageUploadIcon } from "hugeicons-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 const LogoUploader = ({
@@ -16,6 +16,17 @@ const LogoUploader = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
+
+  const previewUrl = useMemo(() => {
+    if (!preview) return null;
+    return URL.createObjectURL(preview);
+  }, [preview]);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   const handleFile = (file: File) => {
     if (!file.type.startsWith("image/")) {
@@ -44,9 +55,9 @@ const LogoUploader = ({
         className="relative flex justify-center items-center bg-primary/10 hover:opacity-80 border-2 border-border rounded-xl w-16 h-16 overflow-hidden transition-all cursor-pointer shrink-0"
         onClick={() => inputRef.current?.click()}
       >
-        {preview ? (
+        {previewUrl ? (
           <Image
-            src={URL.createObjectURL(preview)}
+            src={previewUrl}
             alt="Company logo"
             fill
             className="object-cover"
@@ -101,7 +112,7 @@ const LogoUploader = ({
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="image/png, image/jpeg, image/webp, image/svg+xml, image/gif"
         className="sr-only"
         onChange={(e) => {
           const file = e.target.files?.[0];

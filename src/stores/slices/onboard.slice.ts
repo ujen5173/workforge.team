@@ -5,6 +5,7 @@ import type {
   TEAM_SIZES,
   TeamInvite,
 } from "~/app/_components/onboaring/types";
+import type { StoreState } from "../useStore";
 
 export type OnboardSlice = {
   date: string;
@@ -33,13 +34,13 @@ type OnboardFields = {
   email: string;
   password: string;
   name: string;
-  yourRole: string | null;
+  yourRole: "OWNER" | "MANAGER" | null;
   jobTitle: string;
 
-  inviteEmail?: string;
-  inviteRole?: Role | null;
-  invites?: TeamInvite[];
-  invitePassword?: string;
+  inviteEmail: string;
+  inviteRole: Role | null;
+  invites: TeamInvite[];
+  invitePassword: string;
 };
 
 type Step1Fields = Pick<
@@ -92,22 +93,29 @@ const initialState = {
   invitePassword: "",
   invites: [],
 
+  logoURL: null,
+
   // Others:
   step: 1,
 };
 
-export const createOnboardSlice: StateCreator<OnboardFormSlice> = (set) => {
+export const createOnboardSlice: StateCreator<
+  StoreState,
+  [["zustand/immer", never]],
+  [],
+  OnboardFormSlice
+> = (set) => {
   return {
     ...initialState,
 
     setLogoURL: (url) => set(() => ({ logoURL: url })),
     nextStep: (values, disableStepCount = false) =>
-      set((s) => ({
+      set((s: OnboardFormSlice) => ({
         ...values,
         step: disableStepCount ? s.step : s.step + 1,
       })),
     prevStep: (values) =>
-      set((s) => ({
+      set((s: OnboardFormSlice) => ({
         ...values,
         step: s.step - 1,
       })),

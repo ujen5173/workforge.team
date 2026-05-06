@@ -8,10 +8,9 @@ import { cn } from "~/lib/utils";
 import { StoreProvider } from "~/stores/StoreProvider";
 import { TRPCReactProvider } from "~/trpc/react";
 
-import { headers } from "next/headers";
 import { Toaster } from "sonner";
-import { auth } from "~/server/better-auth";
 import Header from "./_components/headers/main-header";
+import RootContext from "./_components/layouts/root-context";
 import { DateHydrator } from "./_components/layouts/RootLayoutContainer";
 import { getDateData } from "./actions/date";
 import { bagossVF } from "./config/font";
@@ -23,12 +22,6 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const dateData = await getDateData();
 
-  const user = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  console.log({ user });
-
   return (
     <html
       lang="en"
@@ -37,16 +30,18 @@ export default async function RootLayout({
     >
       <body>
         <TRPCReactProvider>
-          <StoreProvider>
-            <DateHydrator data={dateData} />
-            <TooltipProvider>
-              <Header />
+          <RootContext>
+            <StoreProvider>
+              <DateHydrator data={dateData} />
+              <TooltipProvider>
+                <Header />
 
-              {children}
-            </TooltipProvider>
+                {children}
+              </TooltipProvider>
 
-            <Toaster />
-          </StoreProvider>
+              <Toaster />
+            </StoreProvider>
+          </RootContext>
         </TRPCReactProvider>
       </body>
     </html>

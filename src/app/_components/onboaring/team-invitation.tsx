@@ -54,18 +54,21 @@ const TeamInvitation = () => {
     logo,
     setLogoURL,
   } = useOnboard();
-  const { mutateAsync } = api.auth.sendVerificationOTP.useMutation();
+  const { mutateAsync } = api.auth.signUpAndSendOTP.useMutation();
   const [status, setStatus] = useState<STATUS>("idle");
 
   const form = useForm({
     defaultValues: { inviteEmail, inviteRole, invites, invitePassword },
+
     onSubmit: async ({ value }) => {
       try {
         setStatus("pending");
-        await mutateAsync({ email, name, password });
-        nextStep(value);
+        const res = await mutateAsync({ email, name, password });
+        console.log({ res });
         const formData = new FormData();
-        formData.append("logo", logo!);
+        if (logo) {
+          formData.append("logo", logo);
+        }
         const logoUpload = await axios.post<{
           url: string;
           publicId: string;
@@ -74,13 +77,14 @@ const TeamInvitation = () => {
           format: string;
           bytes: string;
         }>("/api/uploads", formData);
-        if (logoUpload) {
+        if (logoUpload.status === 200) {
           setLogoURL(logoUpload.data.url);
-          setStatus("success");
         }
-        setStatus("error");
+        // Advance only after upload resolves so logoURL is set before Verification runs
+        nextStep(value);
+        setStatus("success");
       } catch (err) {
-        console.log({ err });
+        console.error(err);
         setStatus("error");
       }
     },
@@ -122,17 +126,15 @@ const TeamInvitation = () => {
         const parsed = z.string().email().safeParse(emailRaw);
 
         if (parsed.success) {
-          const isDuplicate = form.setFieldValue(
-            "invites",
+          const isDuplicate =
             (formValues.values.invites ?? []).some(
               (inv) => inv.email === emailRaw,
-            ) || newInvites.some((inv) => inv.email === emailRaw),
-          );
+            ) || newInvites.some((inv) => inv.email === emailRaw);
 
           if (!isDuplicate) {
             const validRole =
               INVITE_ROLE_OPTIONS.find((r) => r.value === roleRaw)?.value ??
-              "employee";
+              "EMPLOYEE";
 
             newInvites.push({
               id: crypto.randomUUID(),
@@ -183,14 +185,6 @@ const TeamInvitation = () => {
       setInviteError("This email has already been added.");
       return;
     }
-    form.setFieldValue("invites", [
-      ...invites,
-      {
-        id: crypto.randomUUID(),
-        email: inviteEmail.trim(),
-        role: inviteRole,
-      },
-    ]);
     form.setFieldValue("invites", [
       ...invites,
       {

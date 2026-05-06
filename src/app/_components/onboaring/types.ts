@@ -1,9 +1,9 @@
 import { Crown02Icon, UserSettings01Icon, WorkIcon } from "hugeicons-react";
 
 export const INVITE_ROLE_OPTIONS = [
-  { value: "owner", label: "Owner (CEO / Founder)" },
-  { value: "manager", label: "Manager" },
-  { value: "employee", label: "Employee" },
+  { value: "OWNER", label: "Owner (CEO / Founder)" },
+  { value: "MANAGER", label: "Manager" },
+  { value: "EMPLOYEE", label: "Employee" },
 ] as const;
 
 type Role = (typeof ROLES)[number]["value"];
@@ -38,19 +38,19 @@ export const TEAM_SIZES = [
 
 export const ROLES = [
   {
-    value: "owner",
+    value: "OWNER",
     label: "CEO / Founder",
     description: "Full access across the entire workspace",
     Icon: Crown02Icon,
   },
   {
-    value: "employee",
+    value: "EMPLOYEE",
     label: "Employee",
     description: "Manage your workflow, get recognize, manage your work",
     Icon: WorkIcon,
   },
   {
-    value: "manager",
+    value: "MANAGER",
     label: "Manager",
     description: "Manage people, payroll & leave",
     Icon: UserSettings01Icon,

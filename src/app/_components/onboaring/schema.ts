@@ -35,7 +35,7 @@ export const step1Schema = z.object({
 
 export const step2Schema = z.object({
   industry: z.enum(INDUSTRIES),
-  teamSize: z.enum(TeamSize).nullable(),
+  teamSize: z.enum(TeamSize),
   website: z
     .string()
     .url("Please enter a valid URL including https://.")
@@ -48,7 +48,7 @@ export const step2Schema = z.object({
 });
 
 export const step3Schema = z.object({
-  yourRole: z.string().min(1, "Please select your role."),
+  yourRole: z.enum(["OWNER", "MANAGER"]),
   jobTitle: z
     .string()
     .min(1, "Please enter your job title.")
@@ -70,7 +70,7 @@ export const step3Schema = z.object({
 });
 
 export const step4Schema = z.object({
-  inviteRole: z.enum(["owner", "employee", "manager"]),
+  inviteRole: z.enum(["OWNER", "EMPLOYEE", "MANAGER"]),
   inviteEmail: z
     .string()
     .min(1, "Please enter your job title.")

@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import type { StoreState } from "../useStore";
 
 export type HolidayType = {
   date: string;
@@ -17,7 +18,12 @@ export type DateSlice = {
   ) => void;
 };
 
-export const createDateSlice: StateCreator<DateSlice> = (set) => ({
+export const createDateSlice: StateCreator<
+  StoreState,
+  [["zustand/immer", never]],
+  [],
+  DateSlice
+> = (set) => ({
   todayBS: null,
   holidays: [],
 

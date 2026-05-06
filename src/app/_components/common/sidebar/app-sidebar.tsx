@@ -70,6 +70,13 @@ import { Kbd } from "~/components/ui/kbd";
 
 type Role = "ceo" | "hr" | "manager" | "employee";
 
+interface TenantOrg {
+  id: string;
+  name: string;
+  slug: string | null;
+  logo: string | null;
+}
+
 interface Company {
   id: string;
   name: string;
@@ -87,7 +94,7 @@ interface NavItem {
   href: string;
   icon: React.ElementType;
   badge?: string | number;
-  roles?: Role[];
+  roles?: string[];
   children?: { title: string; href: string }[];
 }
 
@@ -208,7 +215,7 @@ const channels: Channel[] = [
   },
 ];
 
-const WorkspaceSwitcher = () => {
+const WorkspaceSwitcher = ({ organization }: { organization: TenantOrg }) => {
   const current = companies.find((c) => c.current)!;
   const [active, setActive] = React.useState<Company>(current);
   const [open, setOpen] = React.useState(false);
@@ -225,6 +232,9 @@ const WorkspaceSwitcher = () => {
   const filteredCurrent = filterCompanies(currentCompanies);
   const filteredPast = filterCompanies(pastCompanies);
 
+  const orgInitial = organization.name?.[0]?.toUpperCase() ?? "W";
+  const orgColor = "#6366f1";
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -232,35 +242,35 @@ const WorkspaceSwitcher = () => {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="group h-15 rounded-2xl bg-linear-to-br from-white to-neutral-50 p-2.5 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] ring-1 ring-neutral-200/60 transition-all duration-300 hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.1)] hover:ring-neutral-300 data-[state=open]:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.1)] data-[state=open]:ring-neutral-300"
+              className="group bg-linear-to-br from-white to-neutral-50 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] data-[state=open]:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.1)] p-2.5 rounded-2xl ring-1 ring-neutral-200/60 data-[state=open]:ring-neutral-300 hover:ring-neutral-300 h-15 transition-all duration-300"
             >
               <div className="relative shrink-0">
-                <Avatar className="size-8 rounded-xl shadow-sm ring-1 ring-black/5">
-                  <AvatarImage
-                    className="rounded-xl object-contain"
-                    src="/images/img/trustedCompanies/deel.jpg"
-                  />
+                <Avatar className="shadow-sm rounded-xl ring-1 ring-black/5 size-8">
+                  {organization.logo ? (
+                    <AvatarImage
+                      className="rounded-xl object-contain"
+                      src={organization.logo}
+                    />
+                  ) : null}
                   <AvatarFallback
-                    className="rounded-xl text-[11px] font-bold text-white"
-                    style={{ backgroundColor: active.color }}
+                    className="rounded-xl font-bold text-[11px] text-white"
+                    style={{ backgroundColor: orgColor }}
                   >
-                    {active.name[0]}
+                    {orgInitial}
                   </AvatarFallback>
                 </Avatar>
-                {active.current && (
-                  <span className="absolute -right-0.5 -bottom-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-white ring-1 ring-neutral-100">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  </span>
-                )}
+                <span className="-right-0.5 -bottom-0.5 absolute flex justify-center items-center bg-white rounded-full ring-1 ring-neutral-100 w-2.5 h-2.5">
+                  <span className="bg-emerald-500 rounded-full w-1.5 h-1.5" />
+                </span>
               </div>
 
-              <div className="ml-1 flex min-w-0 flex-1 flex-col justify-center text-left">
-                <span className="truncate text-[13.5px] font-bold tracking-tight text-slate-700">
-                  {active.name}
+              <div className="flex flex-col flex-1 justify-center ml-1 min-w-0 text-left">
+                <span className="font-bold text-[13.5px] text-slate-700 truncate tracking-tight">
+                  {organization.name}
                 </span>
-                <div className="mt-0.5 flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 mt-0.5">
                   <span
-                    className="inline-flex h-3.5 items-center rounded px-1 text-[8.5px] font-bold tracking-wide text-white uppercase"
+                    className="inline-flex items-center px-1 rounded h-3.5 font-bold text-[8.5px] text-white uppercase tracking-wide"
                     style={{ backgroundColor: active.color }}
                   >
                     {active.role}
@@ -271,20 +281,20 @@ const WorkspaceSwitcher = () => {
                 </div>
               </div>
 
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm ring-1 ring-neutral-200/80 transition-colors duration-200 group-hover:bg-neutral-50 group-hover:text-neutral-600">
+              <div className="flex justify-center items-center bg-white group-hover:bg-neutral-50 shadow-sm rounded-full ring-1 ring-neutral-200/80 w-6 h-6 text-slate-600 group-hover:text-neutral-600 transition-colors duration-200 shrink-0">
                 <ArrowUpDownIcon className="size-3.5" />
               </div>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent
-            className="w-64 overflow-hidden rounded-2xl border border-neutral-200/80 bg-white p-0 shadow-xl shadow-neutral-200/50"
+            className="bg-white shadow-neutral-200/50 shadow-xl p-0 border border-neutral-200/80 rounded-2xl w-64 overflow-hidden"
             side="bottom"
             align="start"
             sideOffset={8}
           >
-            <div className="max-h-72 overflow-y-auto p-2">
-              <p className="px-2 pt-1 pb-1.5 text-[9.5px] font-bold tracking-widest text-slate-600 uppercase">
+            <div className="p-2 max-h-72 overflow-y-auto">
+              <p className="px-2 pt-1 pb-1.5 font-bold text-[9.5px] text-slate-600 uppercase tracking-widest">
                 Active
               </p>
               {filteredCurrent.map((co) => (
@@ -302,8 +312,8 @@ const WorkspaceSwitcher = () => {
 
               {filteredPast.length > 0 && (
                 <>
-                  <div className="my-1.5 border-t border-neutral-100" />
-                  <p className="px-2 pt-0.5 pb-1.5 text-[9.5px] font-bold tracking-widest text-slate-600 uppercase">
+                  <div className="my-1.5 border-neutral-100 border-t" />
+                  <p className="px-2 pt-0.5 pb-1.5 font-bold text-[9.5px] text-slate-600 uppercase tracking-widest">
                     Previous
                   </p>
                   <TooltipProvider delayDuration={300}>
@@ -335,10 +345,9 @@ const WorkspaceSwitcher = () => {
               )}
             </div>
 
-            {/* Footer CTA */}
-            <div className="border-t border-neutral-100 p-2">
-              <button className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-[12px] font-medium text-slate-600 transition-colors hover:bg-neutral-50 hover:text-neutral-800">
-                <div className="flex size-5 items-center justify-center rounded-md border border-dashed border-neutral-300 text-slate-600">
+            <div className="p-2 border-neutral-100 border-t">
+              <button className="flex items-center gap-2 hover:bg-neutral-50 px-2.5 py-2 rounded-lg w-full font-medium text-[12px] text-slate-600 hover:text-neutral-800 transition-colors">
+                <div className="flex justify-center items-center border border-neutral-300 border-dashed rounded-md size-5 text-slate-600">
                   <PlusSignIcon className="size-3" />
                 </div>
                 Create or join workspace
@@ -365,7 +374,7 @@ const WorkspaceItem = ({
   <button
     onClick={onSelect}
     className={cn(
-      "flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-2 py-2 text-left transition-all duration-150",
+      "flex items-center gap-2.5 px-2 py-2 rounded-xl w-full text-left transition-all duration-150 cursor-pointer",
       isSelected
         ? "bg-neutral-100 ring-1 ring-neutral-200/80"
         : "hover:bg-neutral-50",
@@ -373,47 +382,47 @@ const WorkspaceItem = ({
     )}
   >
     <div className="relative shrink-0">
-      <Avatar className="size-8 rounded-lg shadow-sm ring-1 ring-black/5">
+      <Avatar className="shadow-sm rounded-lg ring-1 ring-black/5 size-8">
         <AvatarImage
           className="rounded-xl object-contain mix-blend-multiply"
           src={`/images/img/trustedCompanies/${company.image}`}
         />
         <AvatarFallback
-          className="rounded-lg text-[11px] font-bold text-white"
+          className="rounded-lg font-bold text-[11px] text-white"
           style={{ backgroundColor: company.color }}
         >
           {company.name[0]}
         </AvatarFallback>
       </Avatar>
       {isPast && (
-        <span className="absolute -right-0.5 -bottom-0.5 flex size-3 items-center justify-center rounded-full bg-white ring-1 ring-neutral-200">
+        <span className="-right-0.5 -bottom-0.5 absolute flex justify-center items-center bg-white rounded-full ring-1 ring-neutral-200 size-3">
           <CircleLock02Icon className="size-1.5 text-slate-600" />
         </span>
       )}
     </div>
 
-    <div className="flex min-w-0 flex-1 flex-col">
+    <div className="flex flex-col flex-1 min-w-0">
       <span
         className={cn(
-          "truncate text-[12.5px] leading-tight font-semibold",
+          "font-semibold text-[12.5px] truncate leading-tight",
           isPast ? "text-slate-600" : "text-neutral-900",
         )}
       >
         {company.name}
       </span>
-      <span className="text-[10.5px] leading-tight text-slate-600">
+      <span className="text-[10.5px] text-slate-600 leading-tight">
         {company.period}
       </span>
     </div>
 
-    <div className="flex shrink-0 flex-col items-end gap-1">
+    <div className="flex flex-col items-end gap-1 shrink-0">
       {isSelected ? (
-        <span className="flex size-4 items-center justify-center rounded-full bg-emerald-500">
+        <span className="flex justify-center items-center bg-emerald-500 rounded-full size-4">
           <Tick01Icon className="size-2.5 text-white" />
         </span>
       ) : (
         <span
-          className="inline-flex h-4 items-center rounded px-1.5 text-[9px] font-bold tracking-wide text-white uppercase"
+          className="inline-flex items-center px-1.5 rounded h-4 font-bold text-[9px] text-white uppercase tracking-wide"
           style={{ backgroundColor: company.color + "cc" }}
         >
           {company.role}
@@ -441,7 +450,7 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
             <SidebarMenuButton
               tooltip={item.title}
               className={cn(
-                "group relative h-9 rounded-lg transition-all duration-200",
+                "group relative rounded-lg h-9 transition-all duration-200",
                 isActive
                   ? "bg-primary/5 hover:bg-primary/5 hover:text-primary text-primary font-medium"
                   : "text-slate-600 hover:bg-neutral-100 hover:text-neutral-900",
@@ -449,7 +458,7 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
             >
               <item.icon
                 className={cn(
-                  "size-[16px] shrink-0 transition-colors duration-150",
+                  "size-[16px] transition-colors duration-150 shrink-0",
                   isActive
                     ? "text-primary"
                     : "text-slate-600 group-hover:text-neutral-600",
@@ -462,7 +471,7 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
                 <Badge
                   variant="secondary"
                   className={cn(
-                    "ml-auto h-[18px] px-1.5 text-[9px] leading-none font-bold tracking-wide uppercase",
+                    "ml-auto px-1.5 h-[18px] font-bold text-[9px] uppercase leading-none tracking-wide",
                     typeof item.badge === "string"
                       ? "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20"
                       : "bg-neutral-100 text-neutral-600 ring-1 ring-neutral-200",
@@ -479,8 +488,8 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
               />
             </SidebarMenuButton>
           </CollapsibleTrigger>
-          <CollapsibleContent className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden">
-            <SidebarMenuSub className="mt-1 ml-5 space-y-0.5 border-l border-neutral-100 pl-3">
+          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+            <SidebarMenuSub className="space-y-0.5 mt-1 ml-5 pl-3 border-neutral-100 border-l">
               {item.children.map((child) => {
                 const childActive = pathname === child.href;
                 return (
@@ -489,14 +498,14 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
                       <Link
                         href={child.href}
                         className={cn(
-                          "flex h-8 items-center gap-2.5 rounded-md px-2 text-[12.5px] transition-all duration-200",
+                          "flex items-center gap-2.5 px-2 rounded-md h-8 text-[12.5px] transition-all duration-200",
                           childActive
                             ? "bg-primary/5 hover:bg-primary/5 hover:text-primary text-primary font-medium"
                             : "text-slate-600 hover:bg-neutral-100 hover:text-neutral-800",
                         )}
                       >
                         {childActive && (
-                          <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                          <span className="bg-emerald-500 rounded-full size-1.5 shrink-0" />
                         )}
                         {child.title}
                       </Link>
@@ -514,13 +523,13 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
   return (
     <SidebarMenuItem className="relative">
       {isActive && (
-        <span className="bg-primary absolute top-1/2 -left-3 h-5 w-1 -translate-y-1/2 rounded-r-full" />
+        <span className="top-1/2 -left-3 absolute bg-primary rounded-r-full w-1 h-5 -translate-y-1/2" />
       )}
       <SidebarMenuButton
         asChild
         tooltip={item.title}
         className={cn(
-          "h-9 rounded-lg transition-all duration-200",
+          "rounded-lg h-9 transition-all duration-200",
           isActive
             ? "bg-primary/5 hover:bg-primary/5 hover:text-primary text-primary font-medium"
             : "text-slate-600 hover:bg-neutral-100 hover:text-neutral-900",
@@ -529,7 +538,7 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
         <Link href={item.href} className="flex items-center gap-2.5">
           <item.icon
             className={cn(
-              "size-[16px] shrink-0 transition-colors duration-150",
+              "size-[16px] transition-colors duration-150 shrink-0",
               isActive ? "text-primary" : "text-slate-600",
             )}
           />
@@ -540,7 +549,7 @@ const NavItemComponent = ({ item }: { item: NavItem }) => {
             <Badge
               variant="secondary"
               className={cn(
-                "ml-auto h-[18px] px-1.5 text-[9px] leading-none font-bold tracking-wide uppercase",
+                "ml-auto px-1.5 h-[18px] font-bold text-[9px] uppercase leading-none tracking-wide",
                 typeof item.badge === "string"
                   ? "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20"
                   : "bg-neutral-100 text-neutral-600 ring-1 ring-neutral-200",
@@ -572,47 +581,47 @@ const UserFooter = () => {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="group h-[52px] rounded-xl border border-transparent px-2 transition-all duration-200 hover:border-neutral-200 hover:bg-white hover:shadow-sm data-[state=open]:border-neutral-200 data-[state=open]:bg-white data-[state=open]:shadow-sm"
+              className="group data-[state=open]:bg-white hover:bg-white data-[state=open]:shadow-sm hover:shadow-sm px-2 border border-transparent data-[state=open]:border-neutral-200 hover:border-neutral-200 rounded-xl h-[52px] transition-all duration-200"
             >
-              <Avatar className="size-8 shrink-0 rounded-lg shadow-sm ring-1 ring-neutral-200/50">
+              <Avatar className="shadow-sm rounded-lg ring-1 ring-neutral-200/50 size-8 shrink-0">
                 <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback className="rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-950 text-[11px] font-semibold text-white">
+                <AvatarFallback className="bg-gradient-to-br from-neutral-800 to-neutral-950 rounded-lg font-semibold text-[11px] text-white">
                   {user.initials}
                 </AvatarFallback>
               </Avatar>
-              <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="truncate text-[13px] leading-tight font-semibold text-neutral-900">
+              <div className="flex flex-col flex-1 gap-0.5 min-w-0">
+                <span className="font-semibold text-[13px] text-neutral-900 truncate leading-tight">
                   {user.name}
                 </span>
-                <span className="truncate text-[10.5px] leading-tight tracking-tight text-slate-600">
+                <span className="text-[10.5px] text-slate-600 truncate leading-tight tracking-tight">
                   {user.email}
                 </span>
               </div>
-              <ArrowUpDownIcon className="size-4 shrink-0 text-slate-600 transition-colors duration-150 group-hover:text-slate-600" />
+              <ArrowUpDownIcon className="size-4 text-slate-600 group-hover:text-slate-600 transition-colors duration-150 shrink-0" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-56 overflow-hidden rounded-xl border border-neutral-200 bg-white p-1 shadow-lg shadow-neutral-200/60"
+            className="bg-white shadow-lg shadow-neutral-200/60 p-1 border border-neutral-200 rounded-xl w-56 overflow-hidden"
             side="top"
             align="start"
             sideOffset={8}
           >
             <div className="flex items-center gap-2.5 px-2 py-2">
-              <Avatar className="size-8 shrink-0 rounded-lg">
-                <AvatarFallback className="rounded-lg bg-neutral-900 text-xs font-semibold text-white">
+              <Avatar className="rounded-lg size-8 shrink-0">
+                <AvatarFallback className="bg-neutral-900 rounded-lg font-semibold text-white text-xs">
                   {user.initials}
                 </AvatarFallback>
               </Avatar>
-              <div className="flex min-w-0 flex-col">
-                <span className="truncate text-[12.5px] font-semibold text-neutral-900">
+              <div className="flex flex-col min-w-0">
+                <span className="font-semibold text-[12.5px] text-neutral-900 truncate">
                   {user.name}
                 </span>
-                <span className="truncate text-[10.5px] text-slate-600">
+                <span className="text-[10.5px] text-slate-600 truncate">
                   {user.email}
                 </span>
               </div>
             </div>
-            <div className="my-1 border-t border-neutral-100" />
+            <div className="my-1 border-neutral-100 border-t" />
             {[
               {
                 href: "/app/profile",
@@ -634,19 +643,19 @@ const UserFooter = () => {
               <Link
                 key={href}
                 href={href}
-                className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[12.5px] text-neutral-700 transition-colors duration-150 hover:bg-neutral-100"
+                className="flex items-center gap-2.5 hover:bg-neutral-100 px-2.5 py-1.5 rounded-lg text-[12.5px] text-neutral-700 transition-colors duration-150 cursor-pointer"
               >
                 <Icon className="size-3.5 text-slate-600" />
                 {label}
                 {badge && (
-                  <Badge className="ml-auto h-4 bg-neutral-100 px-1.5 text-[10px] text-slate-600 hover:bg-neutral-100">
+                  <Badge className="bg-neutral-100 hover:bg-neutral-100 ml-auto px-1.5 h-4 text-[10px] text-slate-600">
                     {badge}
                   </Badge>
                 )}
               </Link>
             ))}
-            <div className="my-1 border-t border-neutral-100" />
-            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[12.5px] text-red-500 transition-colors duration-150 hover:bg-red-50">
+            <div className="my-1 border-neutral-100 border-t" />
+            <button className="flex items-center gap-2.5 hover:bg-red-50 px-2.5 py-1.5 rounded-lg w-full text-[12.5px] text-red-500 transition-colors duration-150 cursor-pointer">
               <Logout01Icon className="size-3.5" />
               Log out
             </button>
@@ -657,7 +666,13 @@ const UserFooter = () => {
   );
 };
 
-export function AppSidebar({ role = "ceo" }: { role?: Role }) {
+export function AppSidebar({
+  role = "ceo",
+  organization,
+}: {
+  role?: string;
+  organization: TenantOrg;
+}) {
   const filteredNav = mainNav.filter(
     (item) => !item.roles || item.roles.includes(role),
   );
@@ -665,15 +680,15 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-r border-neutral-200 bg-white"
+      className="bg-white border-neutral-200 border-r"
     >
-      <SidebarHeader className="border-b border-neutral-100 px-3 py-3">
-        <WorkspaceSwitcher />
+      <SidebarHeader className="px-3 py-3 border-neutral-100 border-b">
+        <WorkspaceSwitcher organization={organization} />
       </SidebarHeader>
 
       <SidebarContent className="gap-0 px-3 py-2">
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="h-auto px-2 pt-2 pb-1.5 text-[10px] font-bold tracking-widest text-slate-600 uppercase">
+          <SidebarGroupLabel className="px-2 pt-2 pb-1.5 h-auto font-bold text-[10px] text-slate-600 uppercase tracking-widest">
             Main
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -684,16 +699,16 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
               <Collapsible className="group/more">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton className="group/more-btn h-9 rounded-lg text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900">
-                      <MoreHorizontalIcon className="size-[16px] shrink-0 text-slate-600 transition-colors duration-150 group-hover/more-btn:text-neutral-600" />
+                    <SidebarMenuButton className="group/more-btn hover:bg-neutral-100 rounded-lg h-9 text-slate-600 hover:text-neutral-900 transition-all duration-200">
+                      <MoreHorizontalIcon className="size-[16px] text-slate-600 group-hover/more-btn:text-neutral-600 transition-colors duration-150 shrink-0" />
                       <span className="flex-1 text-[13px] tracking-tight">
                         Show more
                       </span>
-                      <ArrowRight01Icon className="size-3.5 text-slate-600 transition-transform duration-200 group-data-[state=open]/more:rotate-90 group-data-[state=open]/more:text-slate-600" />
+                      <ArrowRight01Icon className="size-3.5 text-slate-600 group-data-[state=open]/more:text-slate-600 group-data-[state=open]/more:rotate-90 transition-transform duration-200" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden">
-                    <SidebarMenuSub className="mt-1 ml-5 space-y-0.5 border-l border-neutral-100 pl-3">
+                  <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                    <SidebarMenuSub className="space-y-0.5 mt-1 ml-5 pl-3 border-neutral-100 border-l">
                       {secondaryNav
                         .filter(
                           (item) => !item.roles || item.roles.includes(role),
@@ -709,12 +724,12 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="mx-2 my-2 bg-neutral-100" />
+        <SidebarSeparator className="bg-neutral-100 mx-2 my-2" />
 
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="flex h-auto items-center justify-between px-2 pt-3 pb-1.5 text-[10px] font-bold tracking-widest text-slate-600 uppercase">
+          <SidebarGroupLabel className="flex justify-between items-center px-2 pt-3 pb-1.5 h-auto font-bold text-[10px] text-slate-600 uppercase tracking-widest">
             <span>Channels</span>
-            <button className="rounded-md p-1 text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900">
+            <button className="hover:bg-neutral-100 p-1 rounded-md text-slate-600 hover:text-neutral-900 transition-all duration-200">
               <PlusSignIcon className="size-3.5" />
             </button>
           </SidebarGroupLabel>
@@ -724,17 +739,17 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton
                     asChild
-                    className="group/pin h-8 rounded-lg text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900"
+                    className="group/pin hover:bg-neutral-100 rounded-lg h-8 text-slate-600 hover:text-neutral-900 transition-all duration-200"
                   >
                     <Link href={item.href} className="flex items-center gap-3">
                       <span
-                        className="size-2 shrink-0 rounded-full shadow-[0_0_0_2px_#fff] transition-transform duration-200 group-hover/pin:scale-110"
+                        className="shadow-[0_0_0_2px_#fff] rounded-full size-2 group-hover/pin:scale-110 transition-transform duration-200 shrink-0"
                         style={{ backgroundColor: item.color }}
                       />
-                      <span className="flex-1 truncate text-[12.5px] tracking-tight">
+                      <span className="flex-1 text-[12.5px] truncate tracking-tight">
                         {item.title}
                       </span>
-                      <Kbd className="gap-1 rounded-md bg-white px-1.5 py-0.5 text-[9px] font-semibold tracking-widest text-slate-600 uppercase shadow-sm ring-1 ring-neutral-200/60 transition-colors duration-200 group-hover/pin:text-slate-600">
+                      <Kbd className="gap-1 bg-white shadow-sm px-1.5 py-0.5 rounded-md ring-1 ring-neutral-200/60 font-semibold text-[9px] text-slate-600 group-hover/pin:text-slate-600 uppercase tracking-widest transition-colors duration-200">
                         {item.shortcut}
                       </Kbd>
                     </Link>
@@ -745,10 +760,10 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="mx-2 my-2 bg-neutral-100" />
+        <SidebarSeparator className="bg-neutral-100 mx-2 my-2" />
 
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="h-auto px-2 pt-3 pb-1.5 text-[10px] font-bold tracking-widest text-slate-600 uppercase">
+          <SidebarGroupLabel className="px-2 pt-3 pb-1.5 h-auto font-bold text-[10px] text-slate-600 uppercase tracking-widest">
             Tools & System
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -765,10 +780,10 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
                   <SidebarMenuButton
                     asChild
                     tooltip={tooltip}
-                    className="group h-8.5 rounded-lg text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900"
+                    className="group hover:bg-neutral-100 rounded-lg h-8.5 text-slate-600 hover:text-neutral-900 transition-all duration-200"
                   >
                     <Link href={href} className="flex items-center gap-2.5">
-                      <Icon className="size-[16px] shrink-0 text-slate-600 transition-colors duration-200 group-hover:text-neutral-600" />
+                      <Icon className="size-[16px] text-slate-600 group-hover:text-neutral-600 transition-colors duration-200 shrink-0" />
                       <span className="text-[13px] tracking-tight">
                         {label}
                       </span>
@@ -780,19 +795,19 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
                 <SidebarMenuButton
                   asChild
                   tooltip="What's New"
-                  className="group h-8.5 rounded-lg text-slate-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900"
+                  className="group hover:bg-neutral-100 rounded-lg h-8.5 text-slate-600 hover:text-neutral-900 transition-all duration-200"
                 >
                   <Link
                     href="/app/changelog"
                     className="flex items-center gap-2.5"
                   >
-                    <SparklesIcon className="size-[16px] shrink-0 text-slate-600 transition-colors duration-200 group-hover:text-amber-500" />
+                    <SparklesIcon className="size-[16px] text-slate-600 group-hover:text-amber-500 transition-colors duration-200 shrink-0" />
                     <span className="text-[13px] tracking-tight">
                       What&apos;s New
                     </span>
                     <Badge
                       variant="secondary"
-                      className="ml-auto h-[18px] bg-amber-500/10 px-1.5 py-0 text-[9px] font-bold tracking-widest text-amber-700 uppercase ring-1 ring-amber-500/20 transition-colors duration-200 hover:bg-amber-500/20"
+                      className="bg-amber-500/10 hover:bg-amber-500/20 ml-auto px-1.5 py-0 ring-1 ring-amber-500/20 h-[18px] font-bold text-[9px] text-amber-700 uppercase tracking-widest transition-colors duration-200"
                     >
                       v0.0.1
                     </Badge>
@@ -804,7 +819,7 @@ export function AppSidebar({ role = "ceo" }: { role?: Role }) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-neutral-100 px-2 py-2">
+      <SidebarFooter className="px-2 py-2 border-neutral-100 border-t">
         <UserFooter />
       </SidebarFooter>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/dist/client/components/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
@@ -26,40 +26,35 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed top-0 z-50 w-full px-4 py-3 md:px-8">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl border border-neutral-200/80 bg-white/90 px-3 shadow-[0_8px_24px_-18px_rgba(0,0,0,0.35)] backdrop-blur-md md:px-4">
-        <Link
-          href="/"
-          className="flex flex-1 items-center gap-2 text-neutral-900"
-        >
-          <Logo size="xl" color="text-neutral-900" />
-        </Link>
+    <header className="top-0 z-50 fixed px-4 md:px-8 py-3 w-full">
+      <div className="flex justify-between items-center gap-4 bg-white/90 shadow-[0_8px_24px_-18px_rgba(0,0,0,0.35)] backdrop-blur-md mx-auto px-3 md:px-4 border border-neutral-200/80 rounded-2xl max-w-6xl h-16">
+        <Logo size="xl" color="text-neutral-900" />
 
-        <nav className="hidden items-center gap-5 md:flex">
+        <nav className="hidden md:flex items-center gap-5">
           {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="hover:text-primary text-sm font-medium text-neutral-600 underline-offset-2 transition hover:underline"
+              className="font-medium text-neutral-600 hover:text-primary text-sm hover:underline underline-offset-2 transition"
             >
               {item.label}
             </Link>
           ))}
         </nav>
-        <div className="flex flex-1 items-center justify-end gap-2">
+        <div className="flex flex-1 justify-end items-center gap-2">
           <Button
             variant="ghost"
             size="sm"
-            className="hidden rounded-full border border-neutral-200 text-neutral-700 hover:bg-neutral-100 md:inline-flex"
+            className="hidden md:inline-flex hover:bg-neutral-100 border border-neutral-200 rounded-full text-neutral-700"
             asChild
           >
-            <Link href="/onboard/login" className="text-sm font-medium">
+            <Link href="/onboard/login" className="font-medium text-sm">
               Sign in
             </Link>
           </Button>
           <Button
             size="sm"
-            className="rounded-full bg-neutral-900 px-4 text-white hover:bg-neutral-800"
+            className="bg-neutral-900 hover:bg-neutral-800 px-4 rounded-full text-white"
           >
             Book a demo
           </Button>

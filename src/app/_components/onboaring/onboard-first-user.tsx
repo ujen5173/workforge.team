@@ -184,7 +184,7 @@ const OnboardFirstUser = () => {
                   What&apos;s your role?
                 </FieldLabel>
                 <div className="gap-2 grid grid-cols-1 sm:grid-cols-2">
-                  {ROLES.filter((e) => e.value !== "employee").map((role) => (
+                  {ROLES.filter((e) => e.value !== "EMPLOYEE").map((role) => (
                     <RoleCard
                       key={role.value}
                       role={role}
@@ -206,10 +206,10 @@ const OnboardFirstUser = () => {
           name="jobTitle"
           validators={{
             onChange: ({ value }) => {
-              if (!value) return "Please enter your job title.";
+              if (!value) return { message: "Please enter your job title." };
               if (value.length > 64)
-                return "Job title must be at most 64 characters.";
-              return undefined;
+                return { message: "Job title must be at most 64 characters." };
+              return { message: undefined };
             },
           }}
         >
@@ -228,13 +228,11 @@ const OnboardFirstUser = () => {
                   onChange={(e) => field.handleChange(e.target.value)}
                   aria-invalid={isInvalid}
                   placeholder={
-                    yourRole === "ceo"
+                    yourRole === "OWNER"
                       ? "CEO, Founder, Director…"
-                      : yourRole === "hr"
-                        ? "HR Manager, People Ops…"
-                        : yourRole === "manager"
-                          ? "Engineering Manager, Team Lead…"
-                          : "Software Engineer, Designer…"
+                      : yourRole === "MANAGER"
+                        ? "Engineering Manager, Team Lead…"
+                        : "Software Engineer, Designer…"
                   }
                   iconPlacement="left"
                 />

@@ -7,7 +7,6 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -20,6 +19,8 @@ import {
   FieldGroup,
   FieldLabel,
 } from "~/components/ui/field";
+import { setTenantCookie } from "~/lib/tenant-cookie";
+import { authClient } from "~/server/better-auth/client";
 import { useOnboard } from "~/stores/hooks";
 import { api } from "~/trpc/react";
 
@@ -38,11 +39,10 @@ const formatTime = (seconds: number) => {
 };
 
 const Verification = () => {
-  const router = useRouter();
   const [secondsLeft, setSecondsLeft] = useState(OTP_EXPIRY_SECONDS);
   const [isResending, setIsResending] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { logo, logoURL, step, ...rest } = useOnboard();
+  const { logo, step, logoURL, ...rest } = useOnboard();
 
   const startTimer = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -68,11 +68,19 @@ const Verification = () => {
   const handleResend = async () => {
     setIsResending(true);
     try {
-      await new Promise((res) => setTimeout(res, 800));
+      const res = await authClient.emailOtp.sendVerificationOtp({
+        email: rest.email,
+        type: "email-verification",
+      });
+      if (res.error) {
+        toast.error(res.error.message ?? "Failed to send OTP.");
+        return;
+      }
       toast.success("A new OTP has been sent to your email.");
       startTimer();
       form.resetField("verificationCode");
-    } catch {
+    } catch (err) {
+      console.log(err);
       toast.error("Failed to resend OTP. Please try again.");
     } finally {
       setIsResending(false);
@@ -81,8 +89,8 @@ const Verification = () => {
 
   const isExpired = secondsLeft === 0;
 
-  const { mutateAsync, status: mutateStatus } =
-    api.auth.verifyAccountAndCreateWorkspace.useMutation();
+  const { mutateAsync: createWorkspace } =
+    api.auth.createWorkspace.useMutation();
 
   const form = useForm({
     defaultValues: {
@@ -92,21 +100,44 @@ const Verification = () => {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      if (isExpired) {
-        toast.error("OTP has expired. Please request a new one.");
+      const res = await authClient.emailOtp.verifyEmail({
+        email: rest.email,
+        otp: value.verificationCode,
+      });
+
+      if (res.error) {
+        toast.error(res.error.message ?? "Invalid or expired OTP.");
         return;
       }
 
-      await mutateAsync({
-        ...rest,
-        logo: logoURL,
-        otp: value.verificationCode,
+      const { orgSlug, success } = await createWorkspace({
+        companyName: rest.companyName,
+        slug: rest.slug,
+        spirit: rest.spirit,
         industry: rest.industry!,
         teamSize: rest.teamSize!,
-        inviteRole: rest.inviteRole!,
-        invites: rest.invites!,
+        website: rest.website,
+        description: rest.description,
+        yourRole: rest.yourRole!,
+        jobTitle: rest.jobTitle,
+        logo: logoURL,
       });
-      toast.success("Account Activated Successfully");
+      if (success && orgSlug) {
+        // Force a fresh session fetch and set an explicit tenant cookie
+        // so the middleware knows the active organization immediately
+        await authClient.getSession({ fetchOptions: { cache: "no-store" } });
+        await setTenantCookie(orgSlug);
+
+        toast.success("Account Activated Successfully");
+        const baseDomain =
+          process.env.NODE_ENV === "production"
+            ? "workforge.team"
+            : "lvh.me:3000";
+
+        window.location.href = `http://${orgSlug}.${baseDomain}/app`;
+      } else {
+        toast.error("Failed to create workspace. Please try again.");
+      }
     },
   });
 

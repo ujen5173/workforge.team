@@ -17,7 +17,6 @@ export function useKeyPress(combo: KeyCombo, options?: Options) {
   const comboRef = useRef(combo);
   const targetRef = options?.targetRef;
 
-  // keeps latest combo without re-binding listeners
   useEffect(() => {
     comboRef.current = combo;
   }, [combo]);
@@ -36,7 +35,6 @@ export function useKeyPress(combo: KeyCombo, options?: Options) {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      // If targetRef is provided, only trigger when that element is focused
       if (targetRef?.current) {
         const active = document.activeElement;
         if (active !== targetRef.current) return;

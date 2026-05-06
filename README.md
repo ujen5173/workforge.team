@@ -284,7 +284,9 @@ pnpm db:migrate
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+Open [http://lvm.me:3000](http://lvm.me:3000) to view the app in your browser.
+
+> Note: The app will not work with localhost due to subdomain routing for workspaces. Use `lvm.me` or `lvh.me` instead.
 
 > See the [Notes.md](./notes.md).
 

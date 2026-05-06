@@ -1,13 +1,14 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { emailOTP } from "better-auth/plugins";
+import { emailOTP, magicLink } from "better-auth/plugins";
 import { Resend } from "resend";
 
 import { db } from "@/server/db";
 import * as schema from "@/server/db/schema";
 import { env } from "~/env";
 import { getVerificationEmailHtml } from "~/server/emails/templates/verification-email";
+import { getMagicLinkEmailHtml } from "../emails/templates/magic-link";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -15,6 +16,13 @@ export const auth = betterAuth({
   appName: "WorkForge",
   baseURL: env.NEXT_PUBLIC_BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
+  trustedOrigins: [
+    "http://localhost:3000",
+    "http://lvh.me:3000",
+    "http://*.lvh.me:3000",
+    "https://workforge.team",
+    "https://*.workforge.team",
+  ],
 
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -30,22 +38,52 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
   },
 
+  emailVerification: {
+    autoSignInAfterVerification: true,
+  },
+
   session: {
-    // Cache session in cookie for 5 minutes to avoid DB hit on every request
-    cookieCache: {
-      enabled: true,
-      maxAge: 60 * 5,
+    additionalFields: {
+      activeOrganizationId: {
+        type: "string",
+        required: false,
+      },
     },
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh if older than 1 day
   },
 
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          console.log({ sessionUser: session });
+          const membership = await db.query.member.findFirst({
+            where: (member, { eq }) => eq(member.userId, session.userId),
+            with: { organization: { columns: { slug: true } } },
+          });
+
+          console.log({ membership });
+
+          if (membership?.organization?.slug) {
+            return {
+              data: {
+                ...session,
+                activeOrganizationId: membership.organization.slug,
+              },
+            };
+          }
+          return { data: session };
+        },
+      },
+    },
+  },
+
   advanced: {
-    // Required for subdomain tenancy: cookie set on .workforge.team
-    // is shared across all {slug}.workforge.team subdomains
     crossSubDomainCookies: {
-      enabled: process.env.NODE_ENV === "production",
-      domain: ".workforge.team",
+      enabled: true,
+      domain:
+        process.env.NODE_ENV === "production" ? ".workforge.team" : ".lvh.me",
     },
     defaultCookieAttributes: {
       secure: process.env.NODE_ENV === "production",
@@ -72,6 +110,18 @@ export const auth = betterAuth({
           to: email,
           subject: subjects[type],
           html: getVerificationEmailHtml({ otp }),
+        });
+      },
+    }),
+
+    magicLink({
+      disableSignUp: true,
+      sendMagicLink: async ({ email, url }) => {
+        await resend.emails.send({
+          from: "WorkForge <onboarding@resend.dev>",
+          to: email,
+          subject: "Your WorkForge sign-in link",
+          html: getMagicLinkEmailHtml({ url, email }),
         });
       },
     }),

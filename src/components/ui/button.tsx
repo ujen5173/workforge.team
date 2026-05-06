@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "~/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex justify-center items-center gap-2 disabled:opacity-50 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ring-offset-background focus-visible:ring-offset-2 [&_svg]:size-4 font-medium text-sm whitespace-nowrap transition-colors cursor-pointer [&_svg]:pointer-events-none disabled:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -56,31 +56,17 @@ const buttonVariants = cva(
   },
 );
 
-interface IconProps {
-  icon: React.ElementType;
-  iconStyle?: string;
-  iconPlacement?: "left" | "right";
-}
-
-interface IconRefProps {
-  icon?: never;
-  iconStyle?: string;
-  iconPlacement?: undefined;
-}
-
 export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  icon?: React.ElementType;
+  iconStyle?: string;
+  iconPlacement?: "left" | "right";
 }
 
-export type ButtonIconProps = IconProps | IconRefProps;
-
-const Button = React.forwardRef<
-  HTMLButtonElement,
-  ButtonProps & ButtonIconProps
->(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
@@ -105,7 +91,7 @@ const Button = React.forwardRef<
         {Icon &&
           iconPlacement === "left" &&
           (effect === "expandIcon" ? (
-            <div className="w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-100 group-hover:pr-2 group-hover:opacity-100">
+            <div className="opacity-0 group-hover:opacity-100 pr-0 group-hover:pr-2 w-0 group-hover:w-5 transition-all translate-x-[0%] group-hover:translate-x-100 duration-200">
               <Icon className={iconStyle} />
             </div>
           ) : (
@@ -115,7 +101,7 @@ const Button = React.forwardRef<
         {Icon &&
           iconPlacement === "right" &&
           (effect === "expandIcon" ? (
-            <div className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100">
+            <div className="opacity-0 group-hover:opacity-100 pl-0 group-hover:pl-2 w-0 group-hover:w-5 transition-all translate-x-[100%] group-hover:translate-x-0 duration-200">
               <Icon className={iconStyle} />
             </div>
           ) : (

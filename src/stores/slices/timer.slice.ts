@@ -1,6 +1,7 @@
 // TODO: Server fetching is required to make sure the timer is ended and check the status of the timer.
 
 import type { StateCreator } from "zustand";
+import type { StoreState } from "../useStore";
 
 type Session = { start: number; end: number | null };
 
@@ -70,7 +71,12 @@ export type TimerSlice = {
   getElapsedSec: () => number;
 };
 
-export const createTimerSlice: StateCreator<TimerSlice> = (set, get) => {
+export const createTimerSlice: StateCreator<
+  StoreState,
+  [["zustand/immer", never]],
+  [],
+  TimerSlice
+> = (set, get) => {
   const persisted = loadSessions();
   const endedPersisted = loadEndedTime();
 

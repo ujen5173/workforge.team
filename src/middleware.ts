@@ -1,37 +1,89 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { auth } from "./server/better-auth";
 
-export function middleware(req: NextRequest) {
-  const hostname = req.headers.get("host") ?? "";
-  const hostWithoutPort = hostname.split(":")[0];
+export const runtime = "nodejs";
 
-  if (!hostWithoutPort) {
-    const url = req.nextUrl.clone();
-    url.pathname = `/`;
+const BASE_DOMAIN =
+  process.env.NODE_ENV === "production" ? "workforge.team" : "lvh.me:3000";
 
-    return NextResponse.rewrite(url);
+const PUBLIC_PATHS = [
+  "/onboard/login",
+  "/onboard/company",
+  "/onboard/signup",
+  "/api/auth",
+  "/api/trpc",
+  "/api/set-tenant",
+  "/api/uploads",
+];
+
+function getSubdomain(hostname: string): string | null {
+  const suffix = `.${BASE_DOMAIN}`;
+  if (!hostname.endsWith(suffix)) return null;
+  const withoutBase = hostname.slice(0, -suffix.length);
+  if (withoutBase === "www" || withoutBase === "app") return null;
+  return withoutBase || null;
+}
+
+function isPublicPath(pathname: string): boolean {
+  return PUBLIC_PATHS.some((p) => pathname.startsWith(p));
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const hostname = request.headers.get("host") ?? "";
+  const subdomain = getSubdomain(hostname);
+
+  if (isPublicPath(pathname)) return NextResponse.next();
+
+  const session = await auth.api.getSession({ headers: request.headers });
+  const tenantCookie = request.cookies.get("workforge-tenant")?.value;
+
+  // Get active org slug from session, or fallback to cookie.
+  const activeOrg =
+    session?.session?.activeOrganizationId ?? tenantCookie ?? null;
+
+  if (!subdomain) {
+    if (session?.user && activeOrg) {
+      // redirecting to user org
+      const orgUrl = new URL(
+        `http://${activeOrg}.${BASE_DOMAIN}${pathname === "/" ? "/app" : pathname}`,
+      );
+      return NextResponse.redirect(orgUrl);
+    }
+
+    return NextResponse.next();
   }
 
-  const rootDomains = ["lvh.me", "workforge.team", "localhost"];
-  const rootDomain = rootDomains.find((d) => hostWithoutPort.endsWith(d));
+  // if user is not present, redirect to login
+  if (!session?.user) {
+    const loginUrl = new URL(`http://${BASE_DOMAIN}/onboard/login`);
+    loginUrl.searchParams.set("next", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
 
-  const subdomain =
-    rootDomain && hostWithoutPort !== rootDomain
-      ? hostWithoutPort.replace(`.${rootDomain}`, "")
-      : null;
+  if (!activeOrg) {
+    // there is not activeOrg associated to user.
+    return NextResponse.redirect(
+      new URL(`http://${BASE_DOMAIN}/onboard/company`),
+    );
+  }
 
-  const { pathname } = req.nextUrl;
+  if (activeOrg !== subdomain) {
+    // if user is trying to access other orgs, it will redirect to the user active org.
+    const theirUrl = new URL(`http://${activeOrg}.${BASE_DOMAIN}${pathname}`);
+    return NextResponse.redirect(theirUrl);
+  }
 
-  // If there's a subdomain and user hits /app (or /app/*)
-  if (subdomain && pathname.startsWith("/app")) {
-    const url = req.nextUrl.clone();
-    const rest = pathname.replace("/app", "") || "";
-    url.pathname = `/app/${subdomain}${rest}`;
-    return NextResponse.rewrite(url);
+  if (pathname.startsWith("/app")) {
+    const newPath = pathname.replace("/app", `/app/${subdomain}`);
+    return NextResponse.rewrite(new URL(newPath, request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

@@ -106,9 +106,11 @@ const CompanyProfile = () => {
           validators={{
             onChange: ({ value }) => {
               const result = slugSchema.safeParse(value);
-              return result.success
-                ? undefined
-                : result.error.issues[0]?.message;
+              return {
+                message: result.success
+                  ? undefined
+                  : result.error.issues[0]?.message,
+              };
             },
           }}
         >

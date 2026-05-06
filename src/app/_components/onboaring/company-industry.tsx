@@ -111,9 +111,11 @@ const CompanyProfileIndustry = () => {
             onChange: ({ value }) => {
               if (!value) return undefined;
               const result = z.string().url().safeParse(value);
-              return result.success
-                ? undefined
-                : "Please enter a valid URL including https://.";
+              return {
+                message: result.success
+                  ? undefined
+                  : "Please enter a valid URL including https://.",
+              };
             },
           }}
         >
