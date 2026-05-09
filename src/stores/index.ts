@@ -3,4 +3,5 @@ export type { RootStore } from "./root.store";
 export type { DateSlice } from "./slices/date.slice";
 export type { OnboardFormSlice } from "./slices/onboard.slice";
 export type { TimerSlice } from "./slices/timer.slice";
+export type { UserSlice } from "./slices/user.slice";
 export type { TimerCategory, TimerStatus } from "./types";

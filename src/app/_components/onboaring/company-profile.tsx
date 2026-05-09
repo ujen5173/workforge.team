@@ -15,7 +15,7 @@ import { Input } from "~/components/ui/input";
 import { toSlug } from "~/helpers/global";
 import { useOnboard } from "~/stores/hooks";
 import LogoUploader from "./logo-uploader";
-import { slugSchema, step1Schema } from "./schema";
+import { step1Schema } from "./schema";
 
 const CompanyProfile = () => {
   const { companyName, spirit, slug, logo, nextStep } = useOnboard();
@@ -101,19 +101,7 @@ const CompanyProfile = () => {
       </FieldGroup>
 
       <FieldGroup>
-        <form.Field
-          name="slug"
-          validators={{
-            onChange: ({ value }) => {
-              const result = slugSchema.safeParse(value);
-              return {
-                message: result.success
-                  ? undefined
-                  : result.error.issues[0]?.message,
-              };
-            },
-          }}
-        >
+        <form.Field name="slug">
           {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;

@@ -1,0 +1,1 @@
+ALTER TABLE "member" ADD COLUMN "last_working_date" date;

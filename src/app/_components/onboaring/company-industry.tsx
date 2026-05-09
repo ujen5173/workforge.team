@@ -1,6 +1,5 @@
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
-import z from "zod";
 import { Button } from "~/components/ui/button";
 import {
   Field,
@@ -105,20 +104,7 @@ const CompanyProfileIndustry = () => {
         </form.Field>
       </FieldGroup>
       <FieldGroup>
-        <form.Field
-          name="website"
-          validators={{
-            onChange: ({ value }) => {
-              if (!value) return undefined;
-              const result = z.string().url().safeParse(value);
-              return {
-                message: result.success
-                  ? undefined
-                  : "Please enter a valid URL including https://.",
-              };
-            },
-          }}
-        >
+        <form.Field name="website">
           {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;

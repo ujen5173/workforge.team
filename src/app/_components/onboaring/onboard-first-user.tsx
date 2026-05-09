@@ -202,17 +202,7 @@ const OnboardFirstUser = () => {
         </form.Field>
       </FieldGroup>
       <FieldGroup>
-        <form.Field
-          name="jobTitle"
-          validators={{
-            onChange: ({ value }) => {
-              if (!value) return { message: "Please enter your job title." };
-              if (value.length > 64)
-                return { message: "Job title must be at most 64 characters." };
-              return { message: undefined };
-            },
-          }}
-        >
+        <form.Field name="jobTitle">
           {(field) => {
             const isInvalid =
               field.state.meta.isTouched && !field.state.meta.isValid;

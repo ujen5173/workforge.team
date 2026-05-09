@@ -15,6 +15,34 @@
       "when": 1777683436736,
       "tag": "20260502005716_flawless_cloak",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778175741505,
+      "tag": "20260507174221_chemical_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1778177612135,
+      "tag": "20260507181332_cloudy_tarot",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778206049476,
+      "tag": "20260508020729_parched_karen_page",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1778250918397,
+      "tag": "20260508143518_useful_havok",
+      "breakpoints": true
     }
   ]
 }

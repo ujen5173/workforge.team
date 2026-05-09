@@ -3,6 +3,7 @@ import {
   index,
   integer,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
@@ -23,8 +24,8 @@ export const organization = pgTable("organization", {
     .primaryKey()
     .default(sql`uuidv7()`),
   name: text("name").notNull(),
-  slug: text("slug").unique(), // subdomain: {organization}.workforge.team
-  logo: text("logo"),
+  slug: text("slug").notNull().unique(), // subdomain: {organization}.workforge.team
+  logo: text("logo").notNull(),
 
   spirit: text("spirit"),
   industry: text("industry"),
@@ -38,6 +39,8 @@ export const organization = pgTable("organization", {
   currency: text("currency").default("USD"),
   payStructure: PAY_STRUCTURE(),
   salaryType: SALARY_TYPE(),
+
+  memberCount: integer("member_count").notNull().default(0),
 
   // About the company (about us page)
   strongTitle: text("strong_title"),
@@ -88,6 +91,7 @@ export const member = pgTable(
 
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    lastWorking: date("last_working_date"),
   },
   (table) => [
     uniqueIndex("member_org_user_unique_idx").on(
@@ -111,6 +115,7 @@ export const invitation = pgTable(
       .references(() => organization.id, { onDelete: "cascade" }),
     email: text("email").notNull(),
     role: ROLES().notNull().default("EMPLOYEE"),
+    position: text("position"),
     status: INVITATION_STATUS().notNull().default("PENDING"),
     expiresAt: timestamp("expires_at").notNull(),
     inviterId: text("inviter_id").references(() => member.id, {
@@ -122,4 +127,17 @@ export const invitation = pgTable(
     index("invitation_org_id_idx").on(table.organizationId),
     index("invitation_org_email_idx").on(table.organizationId, table.email),
   ],
+);
+
+export const usersToOrganizations = pgTable(
+  "user_to_organizations",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.organizationId] })],
 );

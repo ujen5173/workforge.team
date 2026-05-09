@@ -12,6 +12,38 @@ import { getMagicLinkEmailHtml } from "../emails/templates/magic-link";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
+function extractCommonAndRemaining<T>(
+  arr1: T[],
+  arr2: T[],
+  compareFn: (a: T, b: T) => boolean,
+) {
+  const common: T[] = [];
+
+  const remaining2 = [...arr2];
+  const remaining: T[] = [];
+
+  for (const item1 of arr1) {
+    const index = remaining2.findIndex((item2) => compareFn(item1, item2));
+
+    if (index !== -1) {
+      common.push(item1);
+
+      // remove matched item from second array
+      remaining2.splice(index, 1);
+    } else {
+      remaining.push(item1);
+    }
+  }
+
+  // add leftover items from arr2
+  remaining.push(...remaining2);
+
+  return {
+    common,
+    remaining,
+  };
+}
+
 export const auth = betterAuth({
   appName: "WorkForge",
   baseURL: env.NEXT_PUBLIC_BETTER_AUTH_URL,
@@ -44,7 +76,7 @@ export const auth = betterAuth({
 
   session: {
     additionalFields: {
-      activeOrganizationId: {
+      activeOrganizationSlug: {
         type: "string",
         required: false,
       },
@@ -57,23 +89,24 @@ export const auth = betterAuth({
     session: {
       create: {
         before: async (session) => {
-          console.log({ sessionUser: session });
-          const membership = await db.query.member.findFirst({
+          const member = await db.query.member.findFirst({
             where: (member, { eq }) => eq(member.userId, session.userId),
-            with: { organization: { columns: { slug: true } } },
+            with: {
+              organization: {
+                columns: { slug: true, name: true, logo: true },
+              },
+            },
+            columns: {
+              role: true,
+            },
           });
 
-          console.log({ membership });
-
-          if (membership?.organization?.slug) {
-            return {
-              data: {
-                ...session,
-                activeOrganizationId: membership.organization.slug,
-              },
-            };
-          }
-          return { data: session };
+          return {
+            data: {
+              ...session,
+              activeOrganizationSlug: member?.organization.slug,
+            },
+          };
         },
       },
     },

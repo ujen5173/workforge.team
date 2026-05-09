@@ -9,3 +9,6 @@
 
 2. Email Sections
    -> https://claude.ai/share/5bb3fb47-d6ee-4b5a-bb82-62a8fef523cb
+
+3. Default Avatar:
+   -> https://api.dicebear.com/9.x/lorelei/svg?seed=<NAME>

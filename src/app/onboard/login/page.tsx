@@ -61,9 +61,9 @@ const LoginPage = () => {
       const sessionData = await authClient.getSession();
       const orgSlug = (
         sessionData.data?.session as
-          | { activeOrganizationId?: string }
+          | { activeOrganizationSlug?: string }
           | undefined
-      )?.activeOrganizationId;
+      )?.activeOrganizationSlug;
 
       if (!orgSlug) {
         toast.error("No workspace found for this account.");

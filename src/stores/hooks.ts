@@ -12,6 +12,14 @@ export const useDate = () =>
     })),
   );
 
+export const useUser = () =>
+  useAppStore(
+    useShallow((s) => ({
+      user: s.user,
+      setUser: s.setUser,
+    })),
+  );
+
 export const useTimer = () =>
   useAppStore(
     useShallow((s) => ({

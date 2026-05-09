@@ -469,8 +469,6 @@ export const rootMetadata: Metadata = {
     template: `%s — ${SITE.name}`,
   },
 
-  manifest: "/site.webmanifest",
-
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

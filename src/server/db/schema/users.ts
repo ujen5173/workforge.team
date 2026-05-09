@@ -15,7 +15,7 @@ export const user = pgTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull().default(false),
-  image: text("image"),
+  image: text("image").notNull(),
 
   socials: json("socials").$type<{
     github?: string;
@@ -53,7 +53,8 @@ export const session = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
 
-    activeOrganizationId: text("active_organization_id"),
+    activeOrganizationSlug: text("active_organization_slug"),
+    allOrganizations: json("all_organizations"),
   },
   (table) => [
     index("session_user_id_idx").on(table.userId),

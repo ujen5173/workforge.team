@@ -1,3 +1,5 @@
+// TODO: Add valiation for the multi-step form, if user have some how jumped to step 2,3,4 without the step 1. it will redirect to step 1. there will be validation in final data submittion, and will sanitize the data when setting up the data in database.
+
 import type { StateCreator } from "zustand";
 import type {
   INDUSTRIES,

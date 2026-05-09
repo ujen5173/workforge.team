@@ -13,6 +13,7 @@ import {
   organization,
   session as sessionTable,
   user,
+  usersToOrganizations,
 } from "~/server/db/schema";
 
 export const authRouter = createTRPCRouter({
@@ -42,7 +43,12 @@ export const authRouter = createTRPCRouter({
 
         if (!existing) {
           const result = await auth.api.signUpEmail({
-            body: { name, email, password },
+            body: {
+              name,
+              email,
+              password,
+              image: `https://api.dicebear.com/9.x/lorelei/svg?seed=${encodeURIComponent(name.split(" ")[0] ?? "")}`,
+            },
             headers: ctx.headers,
           });
 
@@ -102,15 +108,20 @@ export const authRouter = createTRPCRouter({
           userId: verifiedUserId,
         });
 
+        await ctx.db.insert(usersToOrganizations).values({
+          userId: ctx.session.user.id,
+          organizationId: org.id,
+        });
+
         await ctx.db
           .update(sessionTable)
-          .set({ activeOrganizationId: org.slug })
+          .set({ activeOrganizationSlug: org.slug })
           .where(eq(sessionTable.token, ctx.session.session.token))
           .returning({
-            activeOrganizationId: sessionTable.activeOrganizationId,
+            activeOrganizationSlug: sessionTable.activeOrganizationSlug,
           });
 
-        ctx.session.session.activeOrganizationId = org.slug;
+        ctx.session.session.activeOrganizationSlug = org.slug;
 
         return { success: true, orgSlug: org.slug };
       } catch (err) {
@@ -121,4 +132,16 @@ export const authRouter = createTRPCRouter({
         });
       }
     }),
+
+  getUserRole: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.db.query.member.findFirst({
+      where: eq(member.userId, ctx.session.user.id),
+      columns: {
+        role: true,
+        position: true,
+      },
+    });
+
+    return res;
+  }),
 });

@@ -52,15 +52,16 @@ const LogoUploader = ({
   return (
     <div className="flex items-center gap-4">
       <div
-        className="relative flex justify-center items-center bg-primary/10 hover:opacity-80 border-2 border-border rounded-xl w-16 h-16 overflow-hidden transition-all cursor-pointer shrink-0"
+        className="relative flex justify-center items-center bg-primary/10 hover:opacity-80 p-1.5 border-2 border-border rounded-xl w-16 h-16 overflow-hidden transition-all cursor-pointer shrink-0"
         onClick={() => inputRef.current?.click()}
       >
         {previewUrl ? (
           <Image
             src={previewUrl}
             alt="Company logo"
-            fill
-            className="object-cover"
+            width={200}
+            height={200}
+            className="w-full h-full object-cover"
           />
         ) : (
           <span className="font-bold text-primary text-lg tracking-tight select-none">

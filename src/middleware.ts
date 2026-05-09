@@ -40,7 +40,7 @@ export async function middleware(request: NextRequest) {
 
   // Get active org slug from session, or fallback to cookie.
   const activeOrg =
-    session?.session?.activeOrganizationId ?? tenantCookie ?? null;
+    session?.session?.activeOrganizationSlug ?? tenantCookie ?? null;
 
   if (!subdomain) {
     if (session?.user && activeOrg) {

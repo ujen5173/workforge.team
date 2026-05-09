@@ -7,8 +7,9 @@ import {
   type OnboardFormSlice,
 } from "./slices/onboard.slice";
 import { createTimerSlice, type TimerSlice } from "./slices/timer.slice";
+import { createUserSlice, type UserSlice } from "./slices/user.slice";
 
-export type StoreState = DateSlice & TimerSlice & OnboardFormSlice;
+export type StoreState = UserSlice & DateSlice & TimerSlice & OnboardFormSlice;
 
 export type AppStore = ReturnType<typeof createAppStore>;
 
@@ -17,6 +18,7 @@ export const createAppStore = () =>
     immer((...args) => ({
       ...createDateSlice(...args),
       ...createTimerSlice(...args),
+      ...createUserSlice(...args),
       ...createOnboardSlice(...args),
     })),
   );

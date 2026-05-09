@@ -1,7 +1,12 @@
 import { relations } from "drizzle-orm";
 
 import { leaveRequests } from "./leave";
-import { invitation, member, organization } from "./organization";
+import {
+  invitation,
+  member,
+  organization,
+  usersToOrganizations,
+} from "./organization";
 import {
   discussions,
   projectMembers,
@@ -16,6 +21,7 @@ export const userRelations = relations(user, ({ many }) => ({
   accounts: many(account),
   memberships: many(member),
   discussions: many(discussions),
+  usersToOrganizations: many(usersToOrganizations),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -30,7 +36,22 @@ export const organizationRelations = relations(organization, ({ many }) => ({
   members: many(member),
   invitations: many(invitation),
   projects: many(projects),
+  usersToOrganizations: many(usersToOrganizations),
 }));
+
+export const usersToOrganizationsRelations = relations(
+  usersToOrganizations,
+  ({ one }) => ({
+    organization: one(organization, {
+      fields: [usersToOrganizations.organizationId],
+      references: [organization.id],
+    }),
+    user: one(user, {
+      fields: [usersToOrganizations.userId],
+      references: [user.id],
+    }),
+  }),
+);
 
 export const memberRelations = relations(member, ({ one, many }) => ({
   organization: one(organization, {

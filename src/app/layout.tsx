@@ -8,7 +8,10 @@ import { cn } from "~/lib/utils";
 import { StoreProvider } from "~/stores/StoreProvider";
 import { TRPCReactProvider } from "~/trpc/react";
 
+import { headers } from "next/headers";
 import { Toaster } from "sonner";
+import { auth } from "~/server/better-auth";
+import { api } from "~/trpc/server";
 import Header from "./_components/headers/main-header";
 import RootContext from "./_components/layouts/root-context";
 import { DateHydrator } from "./_components/layouts/RootLayoutContainer";
@@ -20,7 +23,15 @@ export const metadata: Metadata = constructMetadata();
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const dateData = await getDateData();
+  const [session, dateData, orgDetails] = await Promise.all([
+    auth.api.getSession({
+      headers: await headers(),
+    }),
+
+    getDateData(),
+
+    api.organization.getUserOrgDetails(),
+  ]);
 
   return (
     <html
@@ -30,8 +41,8 @@ export default async function RootLayout({
     >
       <body>
         <TRPCReactProvider>
-          <RootContext>
-            <StoreProvider>
+          <StoreProvider>
+            <RootContext values={{ user: session?.user, orgDetails }}>
               <DateHydrator data={dateData} />
               <TooltipProvider>
                 <Header />
@@ -40,8 +51,8 @@ export default async function RootLayout({
               </TooltipProvider>
 
               <Toaster />
-            </StoreProvider>
-          </RootContext>
+            </RootContext>
+          </StoreProvider>
         </TRPCReactProvider>
       </body>
     </html>

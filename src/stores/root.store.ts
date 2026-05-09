@@ -7,8 +7,9 @@ import {
   type OnboardFormSlice,
 } from "./slices/onboard.slice";
 import { createTimerSlice, type TimerSlice } from "./slices/timer.slice";
+import { createUserSlice, type UserSlice } from "./slices/user.slice";
 
-export type RootStore = TimerSlice & DateSlice & OnboardFormSlice;
+export type RootStore = UserSlice & TimerSlice & DateSlice & OnboardFormSlice;
 
 export const useStore = create<RootStore>()(
   devtools(
@@ -16,6 +17,7 @@ export const useStore = create<RootStore>()(
       (...args) => ({
         ...createDateSlice(...args),
         ...createTimerSlice(...args),
+        ...createUserSlice(...args),
         ...createOnboardSlice(...args),
       }),
       {
